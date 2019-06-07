@@ -5,6 +5,12 @@
  */
 package Telas.Icones;
 
+import Dao.CartuchoDao;
+import controller.Cartucho;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Israel
@@ -17,6 +23,7 @@ public class TelaEstoque extends javax.swing.JDialog {
     public TelaEstoque(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        listarCartuchos();
     }
 
     /**
@@ -30,7 +37,7 @@ public class TelaEstoque extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaCartuchos = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabelAdd = new javax.swing.JLabel();
@@ -40,6 +47,13 @@ public class TelaEstoque extends javax.swing.JDialog {
         jLabelEdit = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabelRemove = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabelMovEstoque = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtAddMovEstoque = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtRemoveMovEstoque = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -49,26 +63,32 @@ public class TelaEstoque extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Estoque");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaCartuchos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tabelaCartuchos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "CÓDIGO", "TIPO", "MODELO", "COR", "QUANTIDADE"
+                "CÓDIGO", "TIPO", "MODELO", "IMPRESSORA", "COR", "QUANTIDADE"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tabelaCartuchos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaCartuchosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaCartuchos);
 
         jLabel1.setText("Adicionar Cartucho");
 
@@ -96,31 +116,49 @@ public class TelaEstoque extends javax.swing.JDialog {
 
         jLabelRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/iconfinder-trash-4341321_120557_Remover.png"))); // NOI18N
 
+        jLabel2.setText("Movimentar Estoque");
+
+        jLabelMovEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/clipboardplan_117816_MudancaEstoque.png"))); // NOI18N
+        jLabelMovEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelMovEstoqueMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
+                        .addGap(62, 62, 62)
                         .addComponent(jLabelAdd)
-                        .addGap(110, 110, 110)
+                        .addGap(93, 93, 93)
                         .addComponent(jLabelEdit)
-                        .addGap(108, 108, 108)
-                        .addComponent(jLabelRemove))
+                        .addGap(74, 74, 74))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jLabel1)
-                        .addGap(61, 61, 61)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel6)))
+                        .addGap(59, 59, 59)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabelRemove)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelVoltar, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(58, 58, 58))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabelMovEstoque)
+                        .addGap(89, 89, 89)
+                        .addComponent(jLabelVoltar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(74, 74, 74)
+                        .addComponent(jLabel3)))
+                .addGap(50, 50, 50))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,33 +168,75 @@ public class TelaEstoque extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelAdd)
                     .addComponent(jLabelEdit)
                     .addComponent(jLabelVoltar)
-                    .addComponent(jLabelRemove))
+                    .addComponent(jLabelRemove)
+                    .addComponent(jLabelMovEstoque))
                 .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        jLabel5.setText("Quantos itens serão acrescentados ao estoque do item selecionado?");
+
+        jLabel7.setText("Quantos itens serão retirados do estoque do item selecionado?");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtRemoveMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtRemoveMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
-                .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Arquivos");
@@ -191,6 +271,37 @@ public class TelaEstoque extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void listarCartuchos (){
+        CartuchoDao cd = new CartuchoDao();
+        
+        List<Cartucho> listarCartucho = cd.selectCartucho();
+        
+        DefaultTableModel modelo = new DefaultTableModel();//instanciando modelo da tabela.
+        
+        modelo.addColumn("CÓDIGO");
+        modelo.addColumn("TIPO");
+        modelo.addColumn("MODELO");
+        modelo.addColumn("IMPRESSORA");
+        modelo.addColumn("COR");
+        modelo.addColumn("QUANTIDADE");
+        
+        Object rowData[] = new Object[6]; //6 pois é a quantidade de colunas usadas na tabela tabelaCartucho.
+        
+        for(int i = 0; i<listarCartucho.size(); i++){
+            rowData[0] = listarCartucho.get(i).getIdCartucho();
+            rowData[1] = listarCartucho.get(i).getTipo();
+            rowData[2] = listarCartucho.get(i).getModelo();
+            rowData[3] = listarCartucho.get(i).getImpressora();
+            rowData[4] = listarCartucho.get(i).getCor();
+            rowData[5] = listarCartucho.get(i).getQuantidade();
+            
+            modelo.addRow(rowData);
+        }
+        
+        tabelaCartuchos.setModel(modelo);//setanto o modelo criado à tabela.
+        
+    }
+    
     private void jLabelVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVoltarMouseClicked
         dispose();
     }//GEN-LAST:event_jLabelVoltarMouseClicked
@@ -203,6 +314,53 @@ public class TelaEstoque extends javax.swing.JDialog {
         addCartucho.setVisible(true);
         //dispose();
     }//GEN-LAST:event_jLabelAddMouseClicked
+
+    private void tabelaCartuchosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCartuchosMouseClicked
+        //não utilizado.
+    }//GEN-LAST:event_tabelaCartuchosMouseClicked
+
+    private void jLabelMovEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMovEstoqueMouseClicked
+        
+        int linha = tabelaCartuchos.getSelectedRow();
+        
+        if(linha <= -1){
+            JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo, para prosseguir!");
+        }
+        //Pegando id e quantidade da linha da tabela tabelaCartuchos.
+        String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
+        //Convertendo o String id para int, atribuindo-o à variável idInt.
+        int idInt = Integer.parseInt(id);
+        
+        CartuchoDao cd = new CartuchoDao();
+        //quantidadeDB recebe o valor que o método getEstoque (CartuchoDao) retorna.
+        int quantidadeBD = cd.getEstoque(idInt);
+        
+        //coletando a quantidade digitada pelo usuário no campo txtAddMovEstoque.
+        int quantidade = Integer.parseInt(txtAddMovEstoque.getText());
+        
+        if(quantidade > 0 && quantidade <= 6){
+            Cartucho cartucho = new Cartucho();
+            //quantidadeBD recebe o valor da soma das variáveis quantidadeDB + quantidade. Método somaQuantidade está na classe Cartucho.
+            quantidadeBD = cartucho.somaQuantidade(quantidadeBD, quantidade);
+            //Setando a quantidade a ser alterada, para ser recebida pelo banco de dados.
+            cartucho.setQuantidade(quantidadeBD);
+            //Método para receber a quantidadeDB e setá-la no banco de dados, no atributo quantidade, no id_cartucho selecionado.
+            cd.atualizarQuantidade(cartucho, idInt);
+            //atualizar a lista de cartuchos na tabela.
+            listarCartuchos();
+        }
+        else if(quantidade > 6){
+            JOptionPane.showMessageDialog(null, "Você tentou inserir uma quantidade muito alta de cartuchos...\n"
+                    + "Verifique a informação e tente novamente!");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Digite um número maior que 0 e menor que 7\nno campo de adicionar item ao estoque.!");
+        }
+        
+        
+        
+    }//GEN-LAST:event_jLabelMovEstoqueMouseClicked
 
     /**
      * @param args the command line arguments
@@ -248,11 +406,15 @@ public class TelaEstoque extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelAdd;
     private javax.swing.JLabel jLabelEdit;
+    private javax.swing.JLabel jLabelMovEstoque;
     private javax.swing.JLabel jLabelRemove;
     private javax.swing.JLabel jLabelVoltar;
     private javax.swing.JMenu jMenu1;
@@ -262,7 +424,10 @@ public class TelaEstoque extends javax.swing.JDialog {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabelaCartuchos;
+    private javax.swing.JTextField txtAddMovEstoque;
+    private javax.swing.JTextField txtRemoveMovEstoque;
     // End of variables declaration//GEN-END:variables
 }

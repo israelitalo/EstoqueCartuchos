@@ -14,20 +14,23 @@ public class Cartucho {
    private Integer idCartucho;
    private String tipo;
    private String modelo;
+   private String impressora;
    private String cor;
    private Integer quantidade;
 
-    public Cartucho(Integer idCartucho, String tipo, String modelo, String cor, Integer quantidade) {
+    public Cartucho(Integer idCartucho, String tipo, String modelo, String impressora, String cor, Integer quantidade) {
         this.idCartucho = idCartucho;
         this.tipo = tipo;
         this.modelo = modelo;
+        this.impressora = impressora;
         this.cor = cor;
         this.quantidade = quantidade;
     }
 
-    public Cartucho(String tipo, String modelo, String cor, Integer quantidade) {
+    public Cartucho(String tipo, String modelo, String impressora, String cor, Integer quantidade) {
         this.tipo = tipo;
         this.modelo = modelo;
+        this.impressora = impressora;
         this.cor = cor;
         this.quantidade = quantidade;
     }
@@ -59,6 +62,14 @@ public class Cartucho {
         this.modelo = modelo;
     }
 
+    public String getImpressora() {
+        return impressora;
+    }
+
+    public void setImpressora(String impressora) {
+        this.impressora = impressora;
+    }
+    
     public String getCor() {
         return cor;
     }
@@ -73,6 +84,14 @@ public class Cartucho {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+    
+    public Integer somaQuantidade(Integer quantidadeBD, Integer quantidade){
+        return quantidadeBD + quantidade;        
+    }
+    
+    public Integer subtrairQuantidade(Integer quantidadeBD, Integer quantidade){
+        return quantidadeBD - quantidade;
     }
     
 }

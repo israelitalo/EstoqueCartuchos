@@ -22,7 +22,7 @@ public class Main {
        
         TelaPrincipal telaPrincipal = new TelaPrincipal();
         telaPrincipal.setVisible(true);
-        telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+        //telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
     }
     
 }
