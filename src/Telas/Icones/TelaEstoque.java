@@ -7,7 +7,7 @@ package Telas.Icones;
 
 /**
  *
- * @author HJP_TI-CPD2
+ * @author Israel
  */
 public class TelaEstoque extends javax.swing.JDialog {
 
@@ -33,11 +33,13 @@ public class TelaEstoque extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelAdd = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelVoltar = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabelEdit = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelRemove = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -70,11 +72,16 @@ public class TelaEstoque extends javax.swing.JDialog {
 
         jLabel1.setText("Adicionar Cartucho");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/ic_add_circle_outline_128_28123.png"))); // NOI18N
+        jLabelAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/add.png"))); // NOI18N
+        jLabelAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelAddMouseClicked(evt);
+            }
+        });
 
         jLabel3.setText("Voltar");
 
-        jLabelVoltar.setText("Icone");
+        jLabelVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Logout_37127.png"))); // NOI18N
         jLabelVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelVoltarMouseClicked(evt);
@@ -83,7 +90,11 @@ public class TelaEstoque extends javax.swing.JDialog {
 
         jLabel4.setText("Editar Cartucho");
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/1486504369-change-edit-options-pencil-settings-tools-write_81307.png"))); // NOI18N
+        jLabelEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/1486504369-change-edit-options-pencil-settings-tools-write_81307.png"))); // NOI18N
+
+        jLabel6.setText("Remover Cartucho");
+
+        jLabelRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/iconfinder-trash-4341321_120557_Remover.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -92,23 +103,24 @@ public class TelaEstoque extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabelAdd)
+                        .addGap(110, 110, 110)
+                        .addComponent(jLabelEdit)
+                        .addGap(108, 108, 108)
+                        .addComponent(jLabelRemove))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel2)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jLabel5)))
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel1)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel4)
+                        .addGap(70, 70, 70)
+                        .addComponent(jLabel6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabelVoltar))
-                .addGap(44, 44, 44))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelVoltar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(58, 58, 58))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,13 +129,14 @@ public class TelaEstoque extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelVoltar)
-                        .addComponent(jLabel5)))
+                    .addComponent(jLabelAdd)
+                    .addComponent(jLabelEdit)
+                    .addComponent(jLabelVoltar)
+                    .addComponent(jLabelRemove))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -182,6 +195,15 @@ public class TelaEstoque extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jLabelVoltarMouseClicked
 
+    private void jLabelAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddMouseClicked
+        //AdicionarCartuchoJdialog addCartucho = new AdicionarCartuchoJdialog(new javax.swing.JFrame(), true);//Tentativa 1. Funcional!
+        AdicionarCartuchoJdialog addCartucho = new AdicionarCartuchoJdialog(null, rootPaneCheckingEnabled);//Tentativa 2.
+        
+        //TelaCadastroProduto addCartucho = new TelaCadastroProduto();
+        addCartucho.setVisible(true);
+        //dispose();
+    }//GEN-LAST:event_jLabelAddMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -226,10 +248,12 @@ public class TelaEstoque extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelAdd;
+    private javax.swing.JLabel jLabelEdit;
+    private javax.swing.JLabel jLabelRemove;
     private javax.swing.JLabel jLabelVoltar;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ConexaoJdbc;
+package Dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,63 +17,66 @@ import java.sql.SQLException;
  */
 public class ConexaoJdbc {
     
-    private static final String Driver = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc.mysql://127.0.0.1:3306/cartuchoshjp?useSSL=false";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/cartuchoshjp?useSSL=false";
     private static final String USER = "root";
     private static final String PASS = "root";
     
-    public static Connection getConnection() throws SQLException{
+    public static Connection getConnection(){
         
-        try {
+        try
+        {
             
-            Class.forName(Driver);
+            Class.forName(DRIVER);
             
             System.out.println("Conexão realizada com sucesso!");
             
             return DriverManager.getConnection(URL, USER, PASS);
             
-            } catch (ClassNotFoundException ex) {
-            
-            throw new RuntimeException("Erro na conexao", ex);  
         }
+        catch (ClassNotFoundException | SQLException ex){
+            
+            throw new RuntimeException("Erro na conexao", ex);
+        }
+         
     }
     
     public static void closeConnection(Connection con){
+        
         if(con != null){
-            try{
+            try {
                 con.close();
             } catch (SQLException ex) {
-               System.err.println("Erro!" + ex);
+                System.err.println("Erro!" + ex);
             }
         }
+        
     }
     
-    public static void closeConnection(Connection con, PreparedStatement ps){
+    public static void closeConnection(Connection con, PreparedStatement stmt){
         
-        if(ps != null){
-            try{
-                ps.close();
+        if(stmt != null){
+            try {
+                stmt.close();
             } catch (SQLException ex) {
                 System.err.println("Erro!" + ex);
             }
         }
         
         closeConnection(con);
-        
     }
     
-    public static void closeConnection(Connection con, PreparedStatement ps, ResultSet rs){
+    public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs){
         
         if(rs != null){
-            try{
+            try {
                 rs.close();
             } catch (SQLException ex) {
                 System.err.println("Erro!" + ex);
             }
         }
         
-        closeConnection(con, ps);
-        
+        closeConnection(con, stmt);
     }
     
 }
