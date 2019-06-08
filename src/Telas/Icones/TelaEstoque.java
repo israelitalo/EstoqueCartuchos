@@ -57,6 +57,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         txtRemoveMovEstoque = new javax.swing.JTextField();
         icone_add_estetica = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -131,10 +132,20 @@ public class TelaEstoque extends javax.swing.JDialog {
         jLabel4.setText("Editar Cartucho");
 
         jLabelEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/1486504369-change-edit-options-pencil-settings-tools-write_81307.png"))); // NOI18N
+        jLabelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelEditMouseClicked(evt);
+            }
+        });
 
         jLabel6.setText("Remover Cartucho");
 
         jLabelRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/iconfinder-trash-4341321_120557_Remover.png"))); // NOI18N
+        jLabelRemove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelRemoveMouseClicked(evt);
+            }
+        });
 
         jLabel2.setText("Movimentar Estoque");
 
@@ -200,7 +211,7 @@ public class TelaEstoque extends javax.swing.JDialog {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jLabel5.setText("Inserir items ao estoque:");
+        jLabel5.setText("Inserir itens ao estoque:");
 
         jLabel7.setText("Saída de Itens do estoque:");
 
@@ -213,6 +224,8 @@ public class TelaEstoque extends javax.swing.JDialog {
         icone_add_estetica.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/add_pequeno.png"))); // NOI18N
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/remover_pequeno.png"))); // NOI18N
+
+        jLabel9.setText("Lista dos Cartuchos, Toners e Tintas em estoque");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -232,6 +245,10 @@ public class TelaEstoque extends javax.swing.JDialog {
                     .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(txtRemoveMovEstoque))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(220, 220, 220))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +264,9 @@ public class TelaEstoque extends javax.swing.JDialog {
                         .addComponent(jLabel7)
                         .addComponent(txtRemoveMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9)
+                .addGap(7, 7, 7))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -270,8 +289,7 @@ public class TelaEstoque extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Arquivos");
@@ -377,7 +395,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         int linha = tabelaCartuchos.getSelectedRow();
         
         if(linha <= -1){
-            JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo, para prosseguir!");
+            JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
         }
         //Pegando id e quantidade da linha da tabela tabelaCartuchos.
         String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
@@ -387,79 +405,79 @@ public class TelaEstoque extends javax.swing.JDialog {
         CartuchoDao cd = new CartuchoDao();
         //quantidadeDB recebe o valor que o método getEstoque (CartuchoDao) retorna.
         int quantidadeBD = cd.getEstoque(idInt);
-        
-        
-        //Veridicar se o campo de adicionar ao estoque está em branco.
-        if(txtAddMovEstoque.getText() != ""){
-            //coletando a quantidade digitada pelo usuário no campo txtAddMovEstoque.
-            int quantidade = Integer.parseInt(txtAddMovEstoque.getText());
-        
-            if(quantidade >= 0 && quantidade <= 6){
-                Cartucho cartucho = new Cartucho();
-                //quantidadeBD recebe o valor da soma das variáveis quantidadeDB + quantidade. Método somaQuantidade está na classe Cartucho.
-                quantidadeBD = cartucho.somaQuantidade(quantidadeBD, quantidade);
-                //Setando a quantidade a ser alterada, para ser recebida pelo banco de dados.
-                cartucho.setQuantidade(quantidadeBD);
-                //Método para receber a quantidadeDB e setá-la no banco de dados, no atributo quantidade, no id_cartucho selecionado.
-                cd.atualizarQuantidade(cartucho, idInt);
-                //atualizar a lista de cartuchos na tabela.
-                listarCartuchos();
-                
-                if(quantidade > 0){
-                    JOptionPane.showMessageDialog(null, "Quantidade inserida com sucesso!");
-                    zerarCamposIniciais();
-                }
-            }
-            else if(quantidade > 6){
-                JOptionPane.showMessageDialog(null, "Você tentou inserir uma quantidade muito alta de cartuchos...\n"
-                + "Verifique a informação e tente novamente!");
-                zerarCamposIniciais();
-            }
-            else
-            {
-            JOptionPane.showMessageDialog(null, "Digite um número maior ou igual a 0 e menor que 7\n"
-                + "no campo de adicionar item ao estoque!");
-                zerarCamposIniciais();
-            }
-        
-        }
-        
-        //Só é possível diminuir itens do estoque, caso digite 0 no valor de inclusão.
-        if(txtRemoveMovEstoque.getText() != ""){
-            int diminuirQuantidade = Integer.parseInt(txtRemoveMovEstoque.getText());
             
-            if(diminuirQuantidade >= 0 && diminuirQuantidade <= 6){
-            
-                Cartucho cartucho = new Cartucho();
-            
-                quantidadeBD = cartucho.subtrairQuantidade(quantidadeBD, diminuirQuantidade);
-                
-                if(quantidadeBD >= 0){
+            if(txtAddMovEstoque.getText() != "0"){
+                //coletando a quantidade digitada pelo usuário no campo txtAddMovEstoque.
+                int quantidade = Integer.parseInt(txtAddMovEstoque.getText());
+        
+                if(quantidade >= 0 && quantidade <= 6){
+                    Cartucho cartucho = new Cartucho();
+                    //quantidadeBD recebe o valor da soma das variáveis quantidadeDB + quantidade. Método somaQuantidade está na classe Cartucho.
+                    quantidadeBD = cartucho.somaQuantidade(quantidadeBD, quantidade);
+                    //Setando a quantidade a ser alterada, para ser recebida pelo banco de dados.
                     cartucho.setQuantidade(quantidadeBD);
-                
-                    System.out.println(quantidadeBD);
-            
+                    //Método para receber a quantidadeDB e setá-la no banco de dados, no atributo quantidade, no id_cartucho selecionado.
                     cd.atualizarQuantidade(cartucho, idInt);
-            
+                    //atualizar a lista de cartuchos na tabela.
                     listarCartuchos();
                 
-                    if(diminuirQuantidade > 0){
-                        JOptionPane.showMessageDialog(null, "Quantidade subtraída com sucesso!");
+                    if(quantidade > 0){
+                        JOptionPane.showMessageDialog(null, "Quantidade inserida com sucesso!");
                         zerarCamposIniciais();
+                    }
+                }
+                else if(quantidade > 6){
+                    JOptionPane.showMessageDialog(null, "Você tentou inserir uma quantidade muito alta de cartuchos...\n"
+                    + "Verifique a informação e tente novamente!");
+                    zerarCamposIniciais();
+                }
+                else
+                {
+                JOptionPane.showMessageDialog(null, "Digite um número maior ou igual a 0 e menor que 7\n"
+                    + "no campo de adicionar item ao estoque!");
+                    zerarCamposIniciais();
+                }
+        
+            }
+        
+            //Só é possível diminuir itens do estoque, caso digite 0 no valor de inclusão.
+            if(txtRemoveMovEstoque.getText() != "0"){
+                int diminuirQuantidade = Integer.parseInt(txtRemoveMovEstoque.getText());
+            
+                if(diminuirQuantidade >= 0 && diminuirQuantidade <= 6){
+            
+                    Cartucho cartucho = new Cartucho();
+            
+                    quantidadeBD = cartucho.subtrairQuantidade(quantidadeBD, diminuirQuantidade);
+                
+                    if(quantidadeBD >= 0){
+                        cartucho.setQuantidade(quantidadeBD);
+                
+                        System.out.println(quantidadeBD);
+            
+                        cd.atualizarQuantidade(cartucho, idInt);
+            
+                        listarCartuchos();
+                
+                        if(diminuirQuantidade > 0){
+                            JOptionPane.showMessageDialog(null, "Quantidade subtraída com sucesso!");
+                            zerarCamposIniciais();
+                        }
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "Operação não realizada. Estoque não possui a quantidade de items"
+                                + "solicitados.");
                     }
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "Operação não realizada, pois o estoque ficará negativo!");
+                    JOptionPane.showMessageDialog(null, "Digite um número maior ou igual a 0 e menor que 7\n"
+                    + "no campo de subtrair item do estoque!");
+                    zerarCamposIniciais();
                 }
             }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Digite um número maior ou igual a 0 e menor que 7\n"
-                + "no campo de subtrair item do estoque!");
-                zerarCamposIniciais();
-            }
-        }
+        
     }//GEN-LAST:event_jLabelMovEstoqueMouseClicked
 
     private void txtRemoveMovEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRemoveMovEstoqueActionPerformed
@@ -469,6 +487,32 @@ public class TelaEstoque extends javax.swing.JDialog {
     private void jMenuAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAtualizarMouseClicked
         listarCartuchos();
     }//GEN-LAST:event_jMenuAtualizarMouseClicked
+
+    private void jLabelEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelEditMouseClicked
+
+    private void jLabelRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRemoveMouseClicked
+        
+        int linha = tabelaCartuchos.getSelectedRow();
+        
+        if(linha <= -1){
+            JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
+        }
+        
+        String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
+        
+        int idInt = Integer.parseInt(id);
+        
+        Cartucho cartucho = new Cartucho();
+        
+        CartuchoDao cd = new CartuchoDao();
+        
+        cd.excluir(cartucho, idInt);
+        
+        listarCartuchos();
+        
+    }//GEN-LAST:event_jLabelRemoveMouseClicked
 
     /**
      * @param args the command line arguments
@@ -522,6 +566,7 @@ public class TelaEstoque extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAdd;
     private javax.swing.JLabel jLabelEdit;
     private javax.swing.JLabel jLabelMovEstoque;

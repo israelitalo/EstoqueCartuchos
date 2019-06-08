@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +46,7 @@ public class CartuchoDao {
             
             stmt.executeUpdate();
             
-            ConexaoJdbc.closeConnection(con, stmt);//Mesmo com a excessão aparecendo, este encerramento precisa ser feito,
+            ConexaoJdbc.closeConnection(con);//Mesmo com a excessão aparecendo, este encerramento precisa ser feito,
             //pois, sem ele, o cadastro do cartucho está sendo feito em duplicidade.
             
             return true;
@@ -100,7 +102,6 @@ public class CartuchoDao {
        
        PreparedStatement stmt = null;
        
-       System.out.println(sql);
        try{
            System.out.println("Iniciando coleção do estoque...");
            stmt = con.prepareStatement(sql);           
@@ -135,7 +136,7 @@ public class CartuchoDao {
             stmt.executeUpdate();
             
             //ConexaoJdbc.closeConnection(con, stmt);
-            System.out.println("Conexão encerrada com o BD.");
+            //System.out.println("Conexão encerrada com o BD.");
             
             return true;
         } catch (SQLException ex) {
@@ -143,6 +144,22 @@ public class CartuchoDao {
             return false;
         }
         
+    }
+    
+    public boolean excluir (Cartucho cartucho, Integer idInt){
+        
+        String sql = "DELETE FROM cartucho WHERE id_cartucho =" + idInt;
+        
+        PreparedStatement stmt = null;
+        //Não encerrei a conexão neste método, porque o método listarCartuchos já encerra a conexão com o BD.
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.err.println("Erro!" + ex);
+            return false;
+        }
     }
     
 }
