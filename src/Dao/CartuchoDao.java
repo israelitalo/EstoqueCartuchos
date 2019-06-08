@@ -44,16 +44,20 @@ public class CartuchoDao {
             
             stmt.executeUpdate();
             
+            ConexaoJdbc.closeConnection(con, stmt);//Mesmo com a excessão aparecendo, este encerramento precisa ser feito,
+            //pois, sem ele, o cadastro do cartucho está sendo feito em duplicidade.
+            
             return true;
+            
         } catch (SQLException ex) {
             System.err.println("Erro!" + ex);
             return false;
         }
-        finally
+        /*finally
         {
             ConexaoJdbc.closeConnection(con, stmt);
             System.out.println("Conexão encerrada com o DB!");
-        }
+        }*/
     }
     
     public List<Cartucho> selectCartucho (){
@@ -121,7 +125,7 @@ public class CartuchoDao {
     public boolean atualizarQuantidade(Cartucho cartucho, Integer idInt){
         
         String sql = "UPDATE cartucho SET quantidade =? WHERE id_cartucho =" + idInt;
-        System.out.println(sql);
+        
         PreparedStatement stmt = null;
     
         try{
@@ -130,7 +134,7 @@ public class CartuchoDao {
             
             stmt.executeUpdate();
             
-            ConexaoJdbc.closeConnection(con, stmt);
+            //ConexaoJdbc.closeConnection(con, stmt);
             System.out.println("Conexão encerrada com o BD.");
             
             return true;

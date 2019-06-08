@@ -65,11 +65,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(9, 9, 9))
+                    .addComponent(jLabel1)
                     .addComponent(iconEstoque))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 530, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 536, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(IconSair, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -123,9 +121,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iconEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconEstoqueMouseClicked
-        /*TelaCadastroCartuchoInternal addCartuchoInternal = new TelaCadastroCartuchoInternal();
-        jDesktopPane1.add(addCartuchoInternal); codigos para InternalFrames.
-        addCartuchoInternal.setVisible(true);*/
         TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
         telaEstoque.setVisible(true);
     }//GEN-LAST:event_iconEstoqueMouseClicked

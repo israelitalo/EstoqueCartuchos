@@ -23,6 +23,7 @@ public class TelaEstoque extends javax.swing.JDialog {
     public TelaEstoque(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        zerarCamposIniciais();
         listarCartuchos();
     }
 
@@ -54,18 +55,37 @@ public class TelaEstoque extends javax.swing.JDialog {
         txtAddMovEstoque = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtRemoveMovEstoque = new javax.swing.JTextField();
+        icone_add_estetica = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuAtualizar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Estoque");
 
-        tabelaCartuchos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tabelaCartuchos.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
         tabelaCartuchos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -148,7 +168,7 @@ public class TelaEstoque extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabelRemove)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabelMovEstoque)
@@ -180,9 +200,19 @@ public class TelaEstoque extends javax.swing.JDialog {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jLabel5.setText("Quantos itens serão acrescentados ao estoque do item selecionado?");
+        jLabel5.setText("Inserir items ao estoque:");
 
-        jLabel7.setText("Quantos itens serão retirados do estoque do item selecionado?");
+        jLabel7.setText("Saída de Itens do estoque:");
+
+        txtRemoveMovEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRemoveMovEstoqueActionPerformed(evt);
+            }
+        });
+
+        icone_add_estetica.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/add_pequeno.png"))); // NOI18N
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/remover_pequeno.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -190,29 +220,34 @@ public class TelaEstoque extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(icone_add_estetica)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtRemoveMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(txtRemoveMovEstoque))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtRemoveMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(icone_add_estetica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(txtRemoveMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -235,8 +270,8 @@ public class TelaEstoque extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Arquivos");
@@ -251,6 +286,14 @@ public class TelaEstoque extends javax.swing.JDialog {
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
+
+        jMenuAtualizar.setText("Atualizar Página");
+        jMenuAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuAtualizarMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuAtualizar);
 
         setJMenuBar(jMenuBar1);
 
@@ -302,6 +345,11 @@ public class TelaEstoque extends javax.swing.JDialog {
         
     }
     
+    public void zerarCamposIniciais(){
+        txtAddMovEstoque.setText("0");
+        txtRemoveMovEstoque.setText("0");
+    }
+    
     private void jLabelVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVoltarMouseClicked
         dispose();
     }//GEN-LAST:event_jLabelVoltarMouseClicked
@@ -319,6 +367,11 @@ public class TelaEstoque extends javax.swing.JDialog {
         //não utilizado.
     }//GEN-LAST:event_tabelaCartuchosMouseClicked
 
+    private void limparCampos(){
+        txtAddMovEstoque.setText("");
+        txtRemoveMovEstoque.setText("");
+    }
+    
     private void jLabelMovEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMovEstoqueMouseClicked
         
         int linha = tabelaCartuchos.getSelectedRow();
@@ -335,32 +388,87 @@ public class TelaEstoque extends javax.swing.JDialog {
         //quantidadeDB recebe o valor que o método getEstoque (CartuchoDao) retorna.
         int quantidadeBD = cd.getEstoque(idInt);
         
-        //coletando a quantidade digitada pelo usuário no campo txtAddMovEstoque.
-        int quantidade = Integer.parseInt(txtAddMovEstoque.getText());
         
-        if(quantidade > 0 && quantidade <= 6){
-            Cartucho cartucho = new Cartucho();
-            //quantidadeBD recebe o valor da soma das variáveis quantidadeDB + quantidade. Método somaQuantidade está na classe Cartucho.
-            quantidadeBD = cartucho.somaQuantidade(quantidadeBD, quantidade);
-            //Setando a quantidade a ser alterada, para ser recebida pelo banco de dados.
-            cartucho.setQuantidade(quantidadeBD);
-            //Método para receber a quantidadeDB e setá-la no banco de dados, no atributo quantidade, no id_cartucho selecionado.
-            cd.atualizarQuantidade(cartucho, idInt);
-            //atualizar a lista de cartuchos na tabela.
-            listarCartuchos();
+        //Veridicar se o campo de adicionar ao estoque está em branco.
+        if(txtAddMovEstoque.getText() != ""){
+            //coletando a quantidade digitada pelo usuário no campo txtAddMovEstoque.
+            int quantidade = Integer.parseInt(txtAddMovEstoque.getText());
+        
+            if(quantidade >= 0 && quantidade <= 6){
+                Cartucho cartucho = new Cartucho();
+                //quantidadeBD recebe o valor da soma das variáveis quantidadeDB + quantidade. Método somaQuantidade está na classe Cartucho.
+                quantidadeBD = cartucho.somaQuantidade(quantidadeBD, quantidade);
+                //Setando a quantidade a ser alterada, para ser recebida pelo banco de dados.
+                cartucho.setQuantidade(quantidadeBD);
+                //Método para receber a quantidadeDB e setá-la no banco de dados, no atributo quantidade, no id_cartucho selecionado.
+                cd.atualizarQuantidade(cartucho, idInt);
+                //atualizar a lista de cartuchos na tabela.
+                listarCartuchos();
+                
+                if(quantidade > 0){
+                    JOptionPane.showMessageDialog(null, "Quantidade inserida com sucesso!");
+                    zerarCamposIniciais();
+                }
+            }
+            else if(quantidade > 6){
+                JOptionPane.showMessageDialog(null, "Você tentou inserir uma quantidade muito alta de cartuchos...\n"
+                + "Verifique a informação e tente novamente!");
+                zerarCamposIniciais();
+            }
+            else
+            {
+            JOptionPane.showMessageDialog(null, "Digite um número maior ou igual a 0 e menor que 7\n"
+                + "no campo de adicionar item ao estoque!");
+                zerarCamposIniciais();
+            }
+        
         }
-        else if(quantidade > 6){
-            JOptionPane.showMessageDialog(null, "Você tentou inserir uma quantidade muito alta de cartuchos...\n"
-                    + "Verifique a informação e tente novamente!");
+        
+        //Só é possível diminuir itens do estoque, caso digite 0 no valor de inclusão.
+        if(txtRemoveMovEstoque.getText() != ""){
+            int diminuirQuantidade = Integer.parseInt(txtRemoveMovEstoque.getText());
+            
+            if(diminuirQuantidade >= 0 && diminuirQuantidade <= 6){
+            
+                Cartucho cartucho = new Cartucho();
+            
+                quantidadeBD = cartucho.subtrairQuantidade(quantidadeBD, diminuirQuantidade);
+                
+                if(quantidadeBD >= 0){
+                    cartucho.setQuantidade(quantidadeBD);
+                
+                    System.out.println(quantidadeBD);
+            
+                    cd.atualizarQuantidade(cartucho, idInt);
+            
+                    listarCartuchos();
+                
+                    if(diminuirQuantidade > 0){
+                        JOptionPane.showMessageDialog(null, "Quantidade subtraída com sucesso!");
+                        zerarCamposIniciais();
+                    }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Operação não realizada, pois o estoque ficará negativo!");
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Digite um número maior ou igual a 0 e menor que 7\n"
+                + "no campo de subtrair item do estoque!");
+                zerarCamposIniciais();
+            }
         }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Digite um número maior que 0 e menor que 7\nno campo de adicionar item ao estoque.!");
-        }
-        
-        
-        
     }//GEN-LAST:event_jLabelMovEstoqueMouseClicked
+
+    private void txtRemoveMovEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRemoveMovEstoqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRemoveMovEstoqueActionPerformed
+
+    private void jMenuAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAtualizarMouseClicked
+        listarCartuchos();
+    }//GEN-LAST:event_jMenuAtualizarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -405,6 +513,7 @@ public class TelaEstoque extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel icone_add_estetica;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -412,12 +521,14 @@ public class TelaEstoque extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelAdd;
     private javax.swing.JLabel jLabelEdit;
     private javax.swing.JLabel jLabelMovEstoque;
     private javax.swing.JLabel jLabelRemove;
     private javax.swing.JLabel jLabelVoltar;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenuAtualizar;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

@@ -41,7 +41,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtQuantidade = new javax.swing.JTextField();
         jButtonSalvar = new javax.swing.JButton();
-        jComboBoxTipo = new javax.swing.JComboBox<String>();
+        jComboBoxTipo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         txtImpressora = new javax.swing.JTextField();
 
@@ -69,7 +69,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
             }
         });
 
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Toner", "Cartucho", "Tinta" }));
+        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Toner", "Cartucho", "Tinta" }));
 
         jLabel2.setText("Impressora:");
 
@@ -131,7 +131,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
                     .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(jButtonSalvar)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,7 +150,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSalvarMouseClicked
-
+        //não usado!
     }//GEN-LAST:event_jButtonSalvarMouseClicked
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
@@ -168,8 +168,6 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
             cd.salvar(cartucho);
             JOptionPane.showMessageDialog(null, "Cartucho salvo com sucesso!");
             limparCampos();
-            TelaEstoque telaEstoque = new TelaEstoque(null, rootPaneCheckingEnabled);
-            telaEstoque.listarCartuchos();
         }
         else
         {
