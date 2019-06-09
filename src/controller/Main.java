@@ -8,8 +8,6 @@ package controller;
 import Telas.Icones.TelaLogin;
 import Telas.Icones.TelaPrincipal;
 
-
-
 /**
  *
  * @author HJP_TI-CPD2

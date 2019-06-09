@@ -6,6 +6,7 @@
 package Telas.Icones;
 
 import Dao.UsuarioDao;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,12 +47,29 @@ public class TelaLogin extends javax.swing.JDialog {
 
         jLabel1.setText("Login");
 
+        txtLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtLoginKeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("Senha");
+
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
+            }
+        });
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
+            }
+        });
+        btnLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnLoginKeyPressed(evt);
             }
         });
 
@@ -159,6 +177,75 @@ public class TelaLogin extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLoginKeyPressed
+
+    }//GEN-LAST:event_btnLoginKeyPressed
+
+    
+    private void txtLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            if(txtLogin.getText().equals("") || txtSenha.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Campos login e senha são obrigatórios!");
+                limparCampos();
+            }
+            else
+            {
+                String login = txtLogin.getText();
+                String senha = txtSenha.getText();
+            
+                UsuarioDao ud = new UsuarioDao();
+            
+                boolean testeConexao = ud.login(login, senha);
+            
+                if(testeConexao == true){
+                dispose();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
+                    limparCampos();
+                }
+            }
+            
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_END){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_txtLoginKeyPressed
+
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            if(txtLogin.getText().equals("") || txtSenha.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Campos login e senha são obrigatórios!");
+                limparCampos();
+            }
+            else
+            {
+                String login = txtLogin.getText();
+                String senha = txtSenha.getText();
+            
+                UsuarioDao ud = new UsuarioDao();
+            
+                boolean testeConexao = ud.login(login, senha);
+            
+                if(testeConexao == true){
+                dispose();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
+                    limparCampos();
+                }
+            }
+            
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_END){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_txtSenhaKeyPressed
 
     /**
      * @param args the command line arguments

@@ -397,16 +397,17 @@ public class TelaEstoque extends javax.swing.JDialog {
         if(linha <= -1){
             JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
         }
-        //Pegando id e quantidade da linha da tabela tabelaCartuchos.
+        //Pegando id da linha da tabela tabelaCartuchos.
         String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
         //Convertendo o String id para int, atribuindo-o à variável idInt.
         int idInt = Integer.parseInt(id);
         
         CartuchoDao cd = new CartuchoDao();
-        //quantidadeDB recebe o valor que o método getEstoque (CartuchoDao) retorna.
+        
+        //quantidadeDB recebe o valor que o método getEstoque na classe (CartuchoDao) retorna.
         int quantidadeBD = cd.getEstoque(idInt);
             
-            if(txtAddMovEstoque.getText() != "0"){
+            if(txtAddMovEstoque.getText() != "0" && txtRemoveMovEstoque.getText().equals("0")){
                 //coletando a quantidade digitada pelo usuário no campo txtAddMovEstoque.
                 int quantidade = Integer.parseInt(txtAddMovEstoque.getText());
         
@@ -437,11 +438,9 @@ public class TelaEstoque extends javax.swing.JDialog {
                     + "no campo de adicionar item ao estoque!");
                     zerarCamposIniciais();
                 }
-        
             }
-        
-            //Só é possível diminuir itens do estoque, caso digite 0 no valor de inclusão.
-            if(txtRemoveMovEstoque.getText() != "0"){
+            else if (txtRemoveMovEstoque.getText() != "0" && txtAddMovEstoque.getText().equals("0")){
+            
                 int diminuirQuantidade = Integer.parseInt(txtRemoveMovEstoque.getText());
             
                 if(diminuirQuantidade >= 0 && diminuirQuantidade <= 6){
@@ -466,8 +465,8 @@ public class TelaEstoque extends javax.swing.JDialog {
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(null, "Operação não realizada. Estoque não possui a quantidade de items"
-                                + "solicitados.");
+                        JOptionPane.showMessageDialog(null, "Operação não realizada. Estoque não possui a quantidade de itens"
+                        + " solicitados.");
                     }
                 }
                 else
@@ -476,6 +475,11 @@ public class TelaEstoque extends javax.swing.JDialog {
                     + "no campo de subtrair item do estoque!");
                     zerarCamposIniciais();
                 }
+            }   
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Faça uma movimentação do estoque por vez.");
+                zerarCamposIniciais();
             }
         
     }//GEN-LAST:event_jLabelMovEstoqueMouseClicked
