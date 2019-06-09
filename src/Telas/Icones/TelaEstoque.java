@@ -494,6 +494,9 @@ public class TelaEstoque extends javax.swing.JDialog {
 
     private void jLabelRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRemoveMouseClicked
         
+        TelaLogin telaLogin = new TelaLogin(null, rootPaneCheckingEnabled);
+        telaLogin.setVisible(true);
+        
         int linha = tabelaCartuchos.getSelectedRow();
         
         if(linha <= -1){

@@ -5,6 +5,7 @@
  */
 package controller;
 
+import Telas.Icones.TelaLogin;
 import Telas.Icones.TelaPrincipal;
 
 
@@ -23,6 +24,8 @@ public class Main {
         TelaPrincipal telaPrincipal = new TelaPrincipal();
         telaPrincipal.setVisible(true);
         //telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+        TelaLogin telaLogin = new TelaLogin(telaPrincipal, true);
+        telaLogin.setVisible(true);
     }
     
 }
