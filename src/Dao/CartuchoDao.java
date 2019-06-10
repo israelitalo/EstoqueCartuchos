@@ -31,6 +31,34 @@ public class CartuchoDao {
         
     }
     
+    public boolean editar (Cartucho cartucho, Integer intId){
+        
+        String sql = "UPDATE cartucho SET tipo=?, modelo=?, impressora=?, cor=? WHERE id_cartucho = '" + intId + "'";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, cartucho.getTipo());
+            stmt.setString(2, cartucho.getModelo());
+            stmt.setString(3, cartucho.getImpressora());
+            stmt.setString(4, cartucho.getCor());
+            
+            if(cartucho.getModelo().equals("") || cartucho.getImpressora().equals("") || cartucho.getCor().equals("")){
+              return false;
+            }
+            else
+            {
+                stmt.executeUpdate();
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+            return false;
+        }
+    }
+    
     public boolean salvar (Cartucho cartucho){
         
         String sql = "INSERT INTO cartucho (tipo, modelo, impressora, cor, quantidade) VALUES (?,?,?,?,?)";
@@ -60,6 +88,36 @@ public class CartuchoDao {
             ConexaoJdbc.closeConnection(con, stmt);
             System.out.println("Conexão encerrada com o DB!");
         }*/
+    }
+    
+    public List<Cartucho> selectCartuchoAlterar(){
+        
+        String sql = "SELECT id_cartucho, tipo, modelo, impressora, cor FROM cartucho";
+        
+        List<Cartucho> listaCartucho = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Cartucho cartucho = new Cartucho();
+                cartucho.setIdCartucho(rs.getInt("id_cartucho"));
+                cartucho.setTipo(rs.getString("tipo"));
+                cartucho.setModelo(rs.getString("modelo"));
+                cartucho.setImpressora(rs.getString("impressora"));
+                cartucho.setCor(rs.getString("cor"));
+                
+                listaCartucho.add(cartucho);
+            }
+            ConexaoJdbc.closeConnection(con, stmt, rs);
+            return listaCartucho;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
     
     public List<Cartucho> selectCartucho (){

@@ -42,6 +42,7 @@ public class TelaLogin extends javax.swing.JDialog {
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Login");
 
         jLabelIconeCadeado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/cadeado.png"))); // NOI18N
 
@@ -62,6 +63,7 @@ public class TelaLogin extends javax.swing.JDialog {
         });
 
         btnLogin.setText("Login");
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
@@ -74,6 +76,7 @@ public class TelaLogin extends javax.swing.JDialog {
         });
 
         btnSair.setText("Sair");
+        btnSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);

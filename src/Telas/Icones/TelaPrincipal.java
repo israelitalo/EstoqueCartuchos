@@ -37,12 +37,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Gerenciamento de Impressoras - Hospital Jesus Pequenino");
+        setTitle("Gerenciamento de Impressoras e cartuchos");
         setPreferredSize(new java.awt.Dimension(1150, 700));
 
         jLabel1.setText("Estoque");
 
         iconEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Box_1_35524.png"))); // NOI18N
+        iconEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         iconEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 iconEstoqueMouseClicked(evt);
@@ -52,6 +53,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel2.setText("Sair");
 
         IconSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Logout_37127.png"))); // NOI18N
+        IconSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         IconSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 IconSairMouseClicked(evt);

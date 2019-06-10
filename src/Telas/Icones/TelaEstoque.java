@@ -66,7 +66,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         jMenuAtualizar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Estoque");
+        setTitle("Controle de estoque");
 
         tabelaCartuchos.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
         tabelaCartuchos.setModel(new javax.swing.table.DefaultTableModel(
@@ -104,6 +104,7 @@ public class TelaEstoque extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabelaCartuchos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tabelaCartuchos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaCartuchosMouseClicked(evt);
@@ -114,6 +115,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         jLabel1.setText("Adicionar Cartucho");
 
         jLabelAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/add.png"))); // NOI18N
+        jLabelAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelAddMouseClicked(evt);
@@ -123,6 +125,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         jLabel3.setText("Voltar");
 
         jLabelVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Logout_37127.png"))); // NOI18N
+        jLabelVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelVoltarMouseClicked(evt);
@@ -132,6 +135,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         jLabel4.setText("Editar Cartucho");
 
         jLabelEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/1486504369-change-edit-options-pencil-settings-tools-write_81307.png"))); // NOI18N
+        jLabelEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelEditMouseClicked(evt);
@@ -141,6 +145,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         jLabel6.setText("Remover Cartucho");
 
         jLabelRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/iconfinder-trash-4341321_120557_Remover.png"))); // NOI18N
+        jLabelRemove.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelRemove.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelRemoveMouseClicked(evt);
@@ -150,6 +155,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         jLabel2.setText("Movimentar Estoque");
 
         jLabelMovEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/clipboardplan_117816_MudancaEstoque.png"))); // NOI18N
+        jLabelMovEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelMovEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelMovEstoqueMouseClicked(evt);
@@ -493,7 +499,9 @@ public class TelaEstoque extends javax.swing.JDialog {
     }//GEN-LAST:event_jMenuAtualizarMouseClicked
 
     private void jLabelEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditMouseClicked
-        // TODO add your handling code here:
+        TelaAlterarCartucho telaAlterar = new TelaAlterarCartucho(null, rootPaneCheckingEnabled);
+        telaAlterar.setVisible(true);
+        
     }//GEN-LAST:event_jLabelEditMouseClicked
 
     private void jLabelRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRemoveMouseClicked
