@@ -150,7 +150,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void iconEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconEstoqueMouseClicked
         TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
-        telaEstoque.setVisible(true);
+        telaEstoque.setVisible(true);        
     }//GEN-LAST:event_iconEstoqueMouseClicked
 
     private void IconSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IconSairMouseClicked

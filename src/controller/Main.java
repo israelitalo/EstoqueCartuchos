@@ -18,9 +18,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
-        //telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+        
         TelaPrincipal telaPrincipal = new TelaPrincipal();
+        telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
         telaPrincipal.setVisible(true);
         TelaLogin telaLogin = new TelaLogin(null, true);
         telaLogin.setVisible(true);
