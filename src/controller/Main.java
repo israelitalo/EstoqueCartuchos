@@ -10,7 +10,7 @@ import Telas.Icones.TelaPrincipal;
 
 /**
  *
- * @author HJP_TI-CPD2
+ * @author israel
  */
 public class Main {
 

@@ -7,8 +7,12 @@ package Telas.Icones;
 
 import Dao.CartuchoDao;
 import controller.Cartucho;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,7 +27,6 @@ public class TelaEstoque extends javax.swing.JDialog {
     public TelaEstoque(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        zerarCamposIniciais();
         listarCartuchos();
     }
 
@@ -50,14 +53,8 @@ public class TelaEstoque extends javax.swing.JDialog {
         jLabelRemove = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabelMovEstoque = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        txtAddMovEstoque = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        txtRemoveMovEstoque = new javax.swing.JTextField();
-        icone_add_estetica = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabelImprimir = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -67,10 +64,17 @@ public class TelaEstoque extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Controle de estoque");
+        setPreferredSize(new java.awt.Dimension(900, 700));
 
         tabelaCartuchos.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
         tabelaCartuchos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -162,117 +166,74 @@ public class TelaEstoque extends javax.swing.JDialog {
             }
         });
 
+        jLabel10.setText("Imprimir");
+
+        jLabelImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Printer_35183.png"))); // NOI18N
+        jLabelImprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelImprimir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelImprimirMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabelAdd)
+                        .addGap(105, 105, 105)
+                        .addComponent(jLabelEdit)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(62, 62, 62)
-                        .addComponent(jLabelAdd)
-                        .addGap(93, 93, 93)
-                        .addComponent(jLabelEdit)
-                        .addGap(74, 74, 74))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(59, 59, 59)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabelRemove)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabelMovEstoque)
-                        .addGap(89, 89, 89)
-                        .addComponent(jLabelVoltar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(56, 56, 56)
                         .addComponent(jLabel2)
-                        .addGap(74, 74, 74)
-                        .addComponent(jLabel3)))
-                .addGap(50, 50, 50))
+                        .addGap(66, 66, 66))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jLabelRemove)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelMovEstoque)
+                        .addGap(100, 100, 100)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelImprimir)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelVoltar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(52, 52, 52))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelAdd)
                     .addComponent(jLabelEdit)
                     .addComponent(jLabelVoltar)
                     .addComponent(jLabelRemove)
-                    .addComponent(jLabelMovEstoque))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-
-        jLabel5.setText("Inserir itens ao estoque:");
-
-        jLabel7.setText("Saída de Itens do estoque:");
-
-        txtRemoveMovEstoque.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRemoveMovEstoqueActionPerformed(evt);
-            }
-        });
-
-        icone_add_estetica.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/add_pequeno.png"))); // NOI18N
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/remover_pequeno.png"))); // NOI18N
-
-        jLabel9.setText("Lista dos Cartuchos, Toners e Tintas em estoque");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(icone_add_estetica)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(txtRemoveMovEstoque))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addGap(220, 220, 220))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(icone_add_estetica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtAddMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(txtRemoveMovEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel9)
-                .addGap(7, 7, 7))
+                    .addComponent(jLabelMovEstoque)
+                    .addComponent(jLabelImprimir))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -281,11 +242,8 @@ public class TelaEstoque extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -293,9 +251,8 @@ public class TelaEstoque extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addGap(33, 33, 33))
         );
 
         jMenu1.setText("Arquivos");
@@ -329,9 +286,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -369,11 +324,6 @@ public class TelaEstoque extends javax.swing.JDialog {
         
     }
     
-    public void zerarCamposIniciais(){
-        txtAddMovEstoque.setText("0");
-        txtRemoveMovEstoque.setText("0");
-    }
-    
     private void jLabelVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVoltarMouseClicked
         dispose();
     }//GEN-LAST:event_jLabelVoltarMouseClicked
@@ -391,14 +341,17 @@ public class TelaEstoque extends javax.swing.JDialog {
         //não utilizado.
     }//GEN-LAST:event_tabelaCartuchosMouseClicked
 
-    private void limparCampos(){
+    /*private void limparCampos(){
         txtAddMovEstoque.setText("");
         txtRemoveMovEstoque.setText("");
-    }
+    }*/
     
     private void jLabelMovEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMovEstoqueMouseClicked
         
-        int linha = tabelaCartuchos.getSelectedRow();
+        TelaMovimentarEstoque movimentarEstoque = new TelaMovimentarEstoque(null, rootPaneCheckingEnabled);
+        movimentarEstoque.setVisible(true);
+        
+        /*int linha = tabelaCartuchos.getSelectedRow();
         
         if(linha <= -1){
             JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
@@ -486,13 +439,9 @@ public class TelaEstoque extends javax.swing.JDialog {
             {
                 JOptionPane.showMessageDialog(null, "Faça uma movimentação do estoque por vez.");
                 zerarCamposIniciais();
-            }
+            }*/
         
     }//GEN-LAST:event_jLabelMovEstoqueMouseClicked
-
-    private void txtRemoveMovEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRemoveMovEstoqueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRemoveMovEstoqueActionPerformed
 
     private void jMenuAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAtualizarMouseClicked
         listarCartuchos();
@@ -506,28 +455,45 @@ public class TelaEstoque extends javax.swing.JDialog {
 
     private void jLabelRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRemoveMouseClicked
         
-        TelaLogin telaLogin = new TelaLogin(null, rootPaneCheckingEnabled);
-        telaLogin.setVisible(true);
-        
         int linha = tabelaCartuchos.getSelectedRow();
         
         if(linha <= -1){
             JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
         }
+        else
+        {       
+            TelaLogin telaLogin = new TelaLogin(null, rootPaneCheckingEnabled);
+            telaLogin.setVisible(true);
         
-        String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
+            String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
         
-        int idInt = Integer.parseInt(id);
+            int idInt = Integer.parseInt(id);
         
-        Cartucho cartucho = new Cartucho();
+            Cartucho cartucho = new Cartucho();
         
-        CartuchoDao cd = new CartuchoDao();
+            CartuchoDao cd = new CartuchoDao();
         
-        cd.excluir(cartucho, idInt);
+            cd.excluir(cartucho, idInt);
         
-        listarCartuchos();
+            listarCartuchos();
+        }
         
     }//GEN-LAST:event_jLabelRemoveMouseClicked
+
+    private void jLabelImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelImprimirMouseClicked
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        Date data = new Date();
+        
+        MessageFormat header = new MessageFormat("Estoque de cartuchos do HJP em " + sdf.format(data) + ".");
+        try {
+            tabelaCartuchos.print(JTable.PrintMode.FIT_WIDTH, header, null);
+        } catch (java.awt.print.PrinterException e) {
+            System.err.format("Cannot print %s%n", e.getMessage());
+        }
+        
+    }//GEN-LAST:event_jLabelImprimirMouseClicked
 
     /**
      * @param args the command line arguments
@@ -572,18 +538,15 @@ public class TelaEstoque extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel icone_add_estetica;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAdd;
     private javax.swing.JLabel jLabelEdit;
+    private javax.swing.JLabel jLabelImprimir;
     private javax.swing.JLabel jLabelMovEstoque;
     private javax.swing.JLabel jLabelRemove;
     private javax.swing.JLabel jLabelVoltar;
@@ -595,10 +558,7 @@ public class TelaEstoque extends javax.swing.JDialog {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaCartuchos;
-    private javax.swing.JTextField txtAddMovEstoque;
-    private javax.swing.JTextField txtRemoveMovEstoque;
     // End of variables declaration//GEN-END:variables
 }

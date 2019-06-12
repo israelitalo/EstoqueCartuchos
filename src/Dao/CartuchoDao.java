@@ -12,8 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -64,6 +62,7 @@ public class CartuchoDao {
         String sql = "INSERT INTO cartucho (tipo, modelo, impressora, cor, quantidade) VALUES (?,?,?,?,?)";
         
         PreparedStatement stmt = null;
+        
         try{
             stmt = con.prepareStatement(sql);
             stmt.setString(1, cartucho.getTipo());
@@ -74,20 +73,13 @@ public class CartuchoDao {
             
             stmt.executeUpdate();
             
-            ConexaoJdbc.closeConnection(con);//Mesmo com a excessão aparecendo, este encerramento precisa ser feito,
-            //pois, sem ele, o cadastro do cartucho está sendo feito em duplicidade.
-            
             return true;
             
         } catch (SQLException ex) {
             System.err.println("Erro!" + ex);
             return false;
         }
-        /*finally
-        {
-            ConexaoJdbc.closeConnection(con, stmt);
-            System.out.println("Conexão encerrada com o DB!");
-        }*/
+        
     }
     
     public List<Cartucho> selectCartuchoAlterar(){
@@ -115,6 +107,33 @@ public class CartuchoDao {
             }
             ConexaoJdbc.closeConnection(con, stmt, rs);
             return listaCartucho;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    public List<Cartucho> selectCartuchoMovEstoque(){
+        
+        String sql = "SELECT id_cartucho, modelo, cor, quantidade FROM cartucho";
+     
+        List<Cartucho> listarCartucho = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Cartucho cartucho = new Cartucho();
+                cartucho.setIdCartucho(rs.getInt("id_cartucho"));
+                cartucho.setModelo(rs.getString("modelo"));
+                cartucho.setCor(rs.getString("cor"));
+                cartucho.setQuantidade(rs.getInt("quantidade"));
+                listarCartucho.add(cartucho);
+            }
+            ConexaoJdbc.closeConnection(con, stmt);
+            return listarCartucho;
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
