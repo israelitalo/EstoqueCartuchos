@@ -52,6 +52,7 @@ public class CartuchoDao {
             }
 
         } catch (SQLException ex) {
+        
             System.err.println("Erro: " + ex);
             return false;
         }

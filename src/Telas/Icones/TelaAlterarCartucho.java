@@ -7,8 +7,12 @@ package Telas.Icones;
 
 import Dao.CartuchoDao;
 import controller.Cartucho;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,6 +28,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarCartuchos();
+        notificarUsuario();
     }
 
     /**
@@ -194,6 +199,25 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         jComboBoxTipoCartucho.setSelectedItem("Toner");
     }
     
+    //JOptionPane que passa 1,5 segundos na tela, antes de abrir a jenela de alterar.
+    public void notificarUsuario(){
+        
+        JOptionPane notificarUsuario = new JOptionPane("Selecione um item na lista\n para alterá-lo.");//instanciando o JOptionPane
+        final JDialog dialog = notificarUsuario.createDialog(null, "Notificação");//aqui uso um JDialog para manipular
+                                                                    //meu JOptionPane
+        dialog.setModal(true);  
+        //Usando o javax.swing.Timer para poder gerar um evento em um tempo determinado
+        //Veja o construtor da classe Timer para mais explicações
+        Timer timer = new Timer(1500, new ActionListener() {  
+            public void actionPerformed(ActionEvent ev) {  
+                dialog.dispose();  //o evento(no caso fechar o meu JDialog)
+            }  
+        });  
+        timer.start();
+        dialog.setVisible(true);
+        timer.stop();
+    }
+    
     private void tabelaAlterarCartuchoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlterarCartuchoMouseClicked
         
         int linha = tabelaAlterarCartucho.getSelectedRow();
@@ -312,6 +336,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+                
             }
         });
     }

@@ -67,6 +67,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         setPreferredSize(new java.awt.Dimension(900, 700));
 
         tabelaCartuchos.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
+        tabelaCartuchos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tabelaCartuchos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -341,105 +342,10 @@ public class TelaEstoque extends javax.swing.JDialog {
         //não utilizado.
     }//GEN-LAST:event_tabelaCartuchosMouseClicked
 
-    /*private void limparCampos(){
-        txtAddMovEstoque.setText("");
-        txtRemoveMovEstoque.setText("");
-    }*/
-    
     private void jLabelMovEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMovEstoqueMouseClicked
         
         TelaMovimentarEstoque movimentarEstoque = new TelaMovimentarEstoque(null, rootPaneCheckingEnabled);
         movimentarEstoque.setVisible(true);
-        
-        /*int linha = tabelaCartuchos.getSelectedRow();
-        
-        if(linha <= -1){
-            JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
-        }
-        //Pegando id da linha da tabela tabelaCartuchos.
-        String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
-        //Convertendo o String id para int, atribuindo-o à variável idInt.
-        int idInt = Integer.parseInt(id);
-        
-        CartuchoDao cd = new CartuchoDao();
-        
-        //quantidadeDB recebe o valor que o método getEstoque na classe (CartuchoDao) retorna.
-        int quantidadeBD = cd.getEstoque(idInt);
-            
-            if(txtAddMovEstoque.getText() != "0" && txtRemoveMovEstoque.getText().equals("0")){
-                //coletando a quantidade digitada pelo usuário no campo txtAddMovEstoque.
-                int quantidade = Integer.parseInt(txtAddMovEstoque.getText());
-        
-                if(quantidade >= 0 && quantidade <= 6){
-                    Cartucho cartucho = new Cartucho();
-                    //quantidadeBD recebe o valor da soma das variáveis quantidadeDB + quantidade. Método somaQuantidade está na classe Cartucho.
-                    quantidadeBD = cartucho.somaQuantidade(quantidadeBD, quantidade);
-                    //Setando a quantidade a ser alterada, para ser recebida pelo banco de dados.
-                    cartucho.setQuantidade(quantidadeBD);
-                    //Método para receber a quantidadeDB e setá-la no banco de dados, no atributo quantidade, no id_cartucho selecionado.
-                    cd.atualizarQuantidade(cartucho, idInt);
-                    //atualizar a lista de cartuchos na tabela.
-                    listarCartuchos();
-                
-                    if(quantidade > 0){
-                        JOptionPane.showMessageDialog(null, "Quantidade inserida com sucesso!");
-                        zerarCamposIniciais();
-                    }
-                }
-                else if(quantidade > 6){
-                    JOptionPane.showMessageDialog(null, "Você tentou inserir uma quantidade muito alta de cartuchos...\n"
-                    + "Verifique a informação e tente novamente!");
-                    zerarCamposIniciais();
-                }
-                else
-                {
-                JOptionPane.showMessageDialog(null, "Digite um número maior ou igual a 0 e menor que 7\n"
-                    + "no campo de adicionar item ao estoque!");
-                    zerarCamposIniciais();
-                }
-            }
-            else if (txtRemoveMovEstoque.getText() != "0" && txtAddMovEstoque.getText().equals("0")){
-            
-                int diminuirQuantidade = Integer.parseInt(txtRemoveMovEstoque.getText());
-            
-                if(diminuirQuantidade >= 0 && diminuirQuantidade <= 6){
-            
-                    Cartucho cartucho = new Cartucho();
-            
-                    quantidadeBD = cartucho.subtrairQuantidade(quantidadeBD, diminuirQuantidade);
-                
-                    if(quantidadeBD >= 0){
-                        cartucho.setQuantidade(quantidadeBD);
-                
-                        System.out.println(quantidadeBD);
-            
-                        cd.atualizarQuantidade(cartucho, idInt);
-            
-                        listarCartuchos();
-                
-                        if(diminuirQuantidade > 0){
-                            JOptionPane.showMessageDialog(null, "Quantidade subtraída com sucesso!");
-                            zerarCamposIniciais();
-                        }
-                    }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(null, "Operação não realizada. Estoque não possui a quantidade de itens"
-                        + " solicitados.");
-                    }
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Digite um número maior ou igual a 0 e menor que 7\n"
-                    + "no campo de subtrair item do estoque!");
-                    zerarCamposIniciais();
-                }
-            }   
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Faça uma movimentação do estoque por vez.");
-                zerarCamposIniciais();
-            }*/
         
     }//GEN-LAST:event_jLabelMovEstoqueMouseClicked
 

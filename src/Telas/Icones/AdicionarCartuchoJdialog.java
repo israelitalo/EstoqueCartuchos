@@ -21,6 +21,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
     public AdicionarCartuchoJdialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        txtQuantidade.setText("0");
     }
 
     /**
@@ -41,7 +42,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtQuantidade = new javax.swing.JTextField();
         jButtonSalvar = new javax.swing.JButton();
-        jComboBoxTipo = new javax.swing.JComboBox<>();
+        jComboBoxTipo = new javax.swing.JComboBox<String>();
         jLabel2 = new javax.swing.JLabel();
         txtImpressora = new javax.swing.JTextField();
 
@@ -74,7 +75,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
             }
         });
 
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Toner", "Cartucho", "Tinta" }));
+        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Toner", "Cartucho", "Tinta" }));
 
         jLabel2.setText("Impressora:");
 
@@ -164,7 +165,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
         cartucho.setCor(txtCor.getText());
         cartucho.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
         
-        if(txtModelo.getText().equals("") || txtCor.getText().equals("") || txtQuantidade.getText().equals("") || txtImpressora.getText().equals("")){
+        if(txtModelo.getText().equals("") || txtCor.getText().equals("") || txtQuantidade.getText().equals(null) || txtImpressora.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         }
         else
