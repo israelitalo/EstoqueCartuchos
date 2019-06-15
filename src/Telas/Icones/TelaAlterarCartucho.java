@@ -28,7 +28,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarCartuchos();
-        notificarUsuario();
+        //notificarUsuario();
     }
 
     /**
@@ -200,7 +200,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
     }
     
     //JOptionPane que passa 1,5 segundos na tela, antes de abrir a jenela de alterar.
-    public void notificarUsuario(){
+    /*public void notificarUsuario(){
         
         JOptionPane notificarUsuario = new JOptionPane("Selecione um item na lista\n para alterá-lo.");//instanciando o JOptionPane
         final JDialog dialog = notificarUsuario.createDialog(null, "Notificação");//aqui uso um JDialog para manipular
@@ -216,7 +216,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         timer.start();
         dialog.setVisible(true);
         timer.stop();
-    }
+    }*/
     
     private void tabelaAlterarCartuchoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlterarCartuchoMouseClicked
         
