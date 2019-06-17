@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -237,6 +239,30 @@ public class CartuchoDao {
         } catch (SQLException ex) {
             System.err.println("Erro!" + ex);
             return false;
+        }
+    }
+    
+    public void carregarJcomboBox(JComboBox comboBox){
+        
+        String sql = "SELECT impressora.modelo, setor.nome from impressora, setor WHERE impressora.id_setor = setor.id_setor";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                String modelo = (rs.getString("modelo"));
+                String setor = (rs.getString("nome"));
+                comboBox.addItem(modelo + " / " + setor);
+            }
+            ConexaoJdbc.closeConnection(con, stmt);
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(null,
+            "Ocorreu erro ao carregar a Combo Box", "Erro",
+            JOptionPane.ERROR_MESSAGE);
         }
     }
     
