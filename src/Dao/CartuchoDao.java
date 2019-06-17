@@ -244,7 +244,7 @@ public class CartuchoDao {
     
     public void carregarJcomboBox(JComboBox comboBox){
         
-        String sql = "SELECT impressora.modelo, setor.nome from impressora, setor WHERE impressora.id_setor = setor.id_setor";
+        String sql = "SELECT impressora.modelo, setor.nome from impressora, setor WHERE impressora.id_setor = setor.id_setor ORDER BY modelo";
         
         PreparedStatement stmt = null;
         ResultSet rs = null;

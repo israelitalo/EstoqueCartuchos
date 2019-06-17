@@ -6,14 +6,9 @@
 package Telas.Icones;
 
 import Dao.CartuchoDao;
-import Dao.UsuarioDao;
 import controller.Cartucho;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -52,11 +47,11 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtModelo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtCor = new javax.swing.JTextField();
         btnAlterar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaAlterarCartucho = new javax.swing.JTable();
         jComboBoxImpressoras = new javax.swing.JComboBox();
+        jComboBoxCorAlterar = new javax.swing.JComboBox();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -128,6 +123,8 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
 
         jComboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressora / Setor" }));
 
+        jComboBoxCorAlterar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Preto", "Amarelo", "Vermelho", "Azul" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -136,26 +133,31 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
                 .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
+                        .addGap(26, 26, 26)
                         .addComponent(jComboBoxTipoCartucho, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxImpressoras, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxImpressoras, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(407, 431, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                            .addComponent(txtCor)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxCorAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtModelo)
+                                        .addGap(18, 18, 18)))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,14 +168,14 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
                     .addComponent(jComboBoxTipoCartucho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBoxImpressoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxCorAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
@@ -185,9 +187,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +201,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
     public void limparCampos(){
         txtModelo.setText("");
         jComboBoxImpressoras.setSelectedItem("Impressora / Setor");
-        txtCor.setText("");
+        jComboBoxCorAlterar.setSelectedItem("Cor");
         jComboBoxTipoCartucho.setSelectedItem("Toner");
     }
     
@@ -240,7 +240,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         
         txtModelo.setText(modelo);
         jComboBoxImpressoras.setSelectedItem(impressora);
-        txtCor.setText(cor);
+        jComboBoxCorAlterar.setSelectedItem(cor);
         jComboBoxTipoCartucho.setSelectedItem(tipo);
     }//GEN-LAST:event_tabelaAlterarCartuchoMouseClicked
 
@@ -256,7 +256,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         cartucho.setTipo((String) jComboBoxTipoCartucho.getSelectedItem());
         cartucho.setModelo(txtModelo.getText());
         cartucho.setImpressora((String) jComboBoxImpressoras.getSelectedItem());
-        cartucho.setCor(txtCor.getText());
+        cartucho.setCor((String) jComboBoxCorAlterar.getSelectedItem());
         
         CartuchoDao cd = new CartuchoDao();
         
@@ -302,6 +302,11 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         
         tabelaAlterarCartucho.setModel(modelo);
         
+        tabelaAlterarCartucho.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tabelaAlterarCartucho.getColumnModel().getColumn(1).setPreferredWidth(0);
+        tabelaAlterarCartucho.getColumnModel().getColumn(2).setPreferredWidth(60);
+        tabelaAlterarCartucho.getColumnModel().getColumn(3).setPreferredWidth(230);
+        tabelaAlterarCartucho.getColumnModel().getColumn(4).setPreferredWidth(40);
     }
     
     /**
@@ -349,6 +354,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
+    private javax.swing.JComboBox jComboBoxCorAlterar;
     private javax.swing.JComboBox jComboBoxImpressoras;
     private javax.swing.JComboBox jComboBoxTipoCartucho;
     private javax.swing.JLabel jLabel1;
@@ -360,7 +366,6 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tabelaAlterarCartucho;
-    private javax.swing.JTextField txtCor;
     private javax.swing.JTextField txtModelo;
     // End of variables declaration//GEN-END:variables
 }

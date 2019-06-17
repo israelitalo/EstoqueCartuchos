@@ -59,7 +59,6 @@ public class TelaEstoque extends javax.swing.JDialog {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuAtualizar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -259,13 +258,20 @@ public class TelaEstoque extends javax.swing.JDialog {
         jMenu1.setText("Arquivos");
 
         jMenuItem1.setText("Adicionar Cartucho");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Editar Cartucho");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
-
-        jMenuItem3.setText("Remover Cartucho");
-        jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
 
@@ -323,6 +329,13 @@ public class TelaEstoque extends javax.swing.JDialog {
         
         tabelaCartuchos.setModel(modelo);//setanto o modelo criado à tabela.
         
+        //Definindo a largura das colunas da tabela tabelaCartuchos.
+        tabelaCartuchos.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tabelaCartuchos.getColumnModel().getColumn(1).setPreferredWidth(0);
+        tabelaCartuchos.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tabelaCartuchos.getColumnModel().getColumn(3).setPreferredWidth(400);
+        tabelaCartuchos.getColumnModel().getColumn(4).setPreferredWidth(50);
+        tabelaCartuchos.getColumnModel().getColumn(5).setPreferredWidth(0);
     }
     
     private void jLabelVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVoltarMouseClicked
@@ -401,6 +414,16 @@ public class TelaEstoque extends javax.swing.JDialog {
         
     }//GEN-LAST:event_jLabelImprimirMouseClicked
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        AdicionarCartuchoJdialog addCartucho = new AdicionarCartuchoJdialog(null, rootPaneCheckingEnabled);
+        addCartucho.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        TelaAlterarCartucho alterarCartucho = new TelaAlterarCartucho(null, rootPaneCheckingEnabled);
+        alterarCartucho.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -461,7 +484,6 @@ public class TelaEstoque extends javax.swing.JDialog {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
