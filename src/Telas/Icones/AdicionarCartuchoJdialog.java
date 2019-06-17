@@ -194,7 +194,7 @@ public void limparCampos(){
     txtCor.setText("");
     txtModelo.setText("");
     txtImpressora.setText("");
-    txtQuantidade.setText("");
+    txtQuantidade.setText("0");
     jComboBoxTipo.setSelectedItem("Toner");
 }    
     
