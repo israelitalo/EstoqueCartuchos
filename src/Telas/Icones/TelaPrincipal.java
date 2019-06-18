@@ -70,6 +70,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabelImpressoraPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/impressoraPrincipal.png"))); // NOI18N
         jLabelImpressoraPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelImpressoraPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelImpressoraPrincipalMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,6 +166,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
         telaEstoque.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jLabelImpressoraPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelImpressoraPrincipalMouseClicked
+        TelaImpressora telaImpressora = new TelaImpressora(this, rootPaneCheckingEnabled);
+        telaImpressora.setVisible(true);
+    }//GEN-LAST:event_jLabelImpressoraPrincipalMouseClicked
 
     /**
      * @param args the command line arguments

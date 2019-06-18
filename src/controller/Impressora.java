@@ -16,6 +16,8 @@ public class Impressora {
     private String serie;
     private Integer id_fabricante;
     private Integer id_setor; //chave estrangeira no banco de dados.
+    private String fabricante;
+    private String setor;
 
     public Impressora(Integer id_impressora, String modelo, String serie, Integer id_fabricante, Integer id_setor) {
         this.id_impressora = id_impressora;
@@ -52,11 +54,11 @@ public class Impressora {
         this.serie = serie;
     }
 
-    public Integer getFabricante() {
+    public Integer getId_Fabricante() {
         return id_fabricante;
     }
 
-    public void setFabricante(Integer id_fabricante) {
+    public void setId_Fabricante(Integer id_fabricante) {
         this.id_fabricante = id_fabricante;
     }
 
@@ -66,6 +68,27 @@ public class Impressora {
 
     public void setId_setor(Integer id_setor) {
         this.id_setor = id_setor;
+    }
+
+    public String getFabricante() {
+        return fabricante;
+    }
+
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
+    }
+
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
+    }
+    
+    public Integer totalPaginas(Integer quantidadeInicial, Integer quantidadeFinal, Integer quantidadeTotalImpressa){
+        quantidadeTotalImpressa = quantidadeFinal - quantidadeInicial;
+        return quantidadeTotalImpressa;
     }
     
 }
