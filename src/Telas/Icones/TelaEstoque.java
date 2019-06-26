@@ -325,6 +325,7 @@ public class TelaEstoque extends javax.swing.JDialog {
             rowData[5] = listarCartucho.get(i).getQuantidade();
             
             modelo.addRow(rowData);
+            
         }
         
         tabelaCartuchos.setModel(modelo);//setanto o modelo criado à tabela.
@@ -332,9 +333,9 @@ public class TelaEstoque extends javax.swing.JDialog {
         //Definindo a largura das colunas da tabela tabelaCartuchos.
         tabelaCartuchos.getColumnModel().getColumn(0).setPreferredWidth(0);
         tabelaCartuchos.getColumnModel().getColumn(1).setPreferredWidth(0);
-        tabelaCartuchos.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tabelaCartuchos.getColumnModel().getColumn(3).setPreferredWidth(400);
-        tabelaCartuchos.getColumnModel().getColumn(4).setPreferredWidth(50);
+        tabelaCartuchos.getColumnModel().getColumn(2).setPreferredWidth(50);
+        tabelaCartuchos.getColumnModel().getColumn(3).setPreferredWidth(300);
+        tabelaCartuchos.getColumnModel().getColumn(4).setPreferredWidth(0);
         tabelaCartuchos.getColumnModel().getColumn(5).setPreferredWidth(0);
     }
     

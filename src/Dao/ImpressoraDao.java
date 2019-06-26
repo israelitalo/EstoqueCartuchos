@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -55,4 +57,52 @@ public class ImpressoraDao {
             throw new RuntimeException(ex);
         }
     }
+    
+    public void carregarJcomboBoxFabricante(JComboBox comboBox){
+        
+        String sql = "SELECT nome from fabricante";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                String fabricante = rs.getString("nome");
+                comboBox.addItem(fabricante);
+            }
+            ConexaoJdbc.closeConnection(con, stmt);
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null,
+                "Ocorreu erro ao carregar a Combo Box", "Erro",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void carregarJComboBoxSetor(JComboBox comboBox){
+        
+        String sql = "SELECT setor FROM setor";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                String setor = rs.getString("setor");
+                comboBox.addItem(setor);
+            }
+            ConexaoJdbc.closeConnection(con, stmt);
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null,
+                "Ocorreu erro ao carregar a Combo Box", "Erro",
+                JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
 }

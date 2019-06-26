@@ -54,7 +54,7 @@ public class TelaImpressora extends javax.swing.JDialog {
         tabelaImpressora.setModel(modelo);
         
         tabelaImpressora.getColumnModel().getColumn(0).setPreferredWidth(0);
-        tabelaImpressora.getColumnModel().getColumn(1).setPreferredWidth(60);
+        tabelaImpressora.getColumnModel().getColumn(1).setPreferredWidth(150);
         tabelaImpressora.getColumnModel().getColumn(2).setPreferredWidth(50);
         tabelaImpressora.getColumnModel().getColumn(3).setPreferredWidth(0);
         tabelaImpressora.getColumnModel().getColumn(4).setPreferredWidth(60);
