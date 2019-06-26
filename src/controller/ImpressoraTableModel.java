@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class ImpressoraTableModel extends AbstractTableModel {
     
     private List<Impressora> dados = new ArrayList<>(); 
-    private String[] colunas = {"MODELO", "SERIE", "FABRICANTE", "SETOR"};
+    private String[] colunas = {"ID", "MODELO", "SERIE", "FABRICANTE", "SETOR"};
 
     @Override
     public String getColumnName(int column) {
@@ -39,12 +39,14 @@ public class ImpressoraTableModel extends AbstractTableModel {
         switch(coluna){
             
             case 0:
-                return dados.get(linha).getModelo();
+                return dados.get(linha).getId_impressora();
             case 1:
-                return dados.get(linha).getSerie();
+                return dados.get(linha).getModelo();
             case 2:
-                return dados.get(linha).getFabricante();
+                return dados.get(linha).getSerie();
             case 3:
+                return dados.get(linha).getFabricante();
+            case 4:
                 return dados.get(linha).getSetor();
         }
         
@@ -58,16 +60,18 @@ public class ImpressoraTableModel extends AbstractTableModel {
         
         switch(coluna){
             
-            case 0:
+            /*case 0:
+                dados.get(linha).setId_impressora((Integer) valor);*/
+            case 1:
                 dados.get(linha).setModelo((String) valor);
                 break;
-            case 1:
+            case 2:
                 dados.get(linha).setSerie((String) valor);
                 break;
-            case 2:
+            case 3:
                 dados.get(linha).setFabricante((String) valor);
                 break;
-            case 3:
+            case 4:
                 dados.get(linha).setSetor((String) valor);
                 break;
         }
