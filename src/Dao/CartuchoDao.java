@@ -44,7 +44,7 @@ public class CartuchoDao {
             stmt.setString(3, cartucho.getImpressora());
             stmt.setString(4, cartucho.getCor());
             
-            if(cartucho.getModelo().equals("") || cartucho.getImpressora().equals("") || cartucho.getCor().equals("")){
+            if(cartucho.getModelo().equals("") || cartucho.getImpressora().equals("") || cartucho.getCor().equals("Cor")){
               return false;
             }
             else
@@ -244,7 +244,7 @@ public class CartuchoDao {
     
     public void carregarJcomboBox(JComboBox comboBox){
         
-        String sql = "SELECT impressora.modelo, setor.nome from impressora, setor WHERE impressora.id_setor = setor.id_setor ORDER BY modelo";
+        String sql = "SELECT impressora.modelo, setor.setor from impressora, setor WHERE impressora.id_setor = setor.id_setor ORDER BY modelo";
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -254,14 +254,14 @@ public class CartuchoDao {
             rs = stmt.executeQuery();
             while(rs.next()){
                 String modelo = (rs.getString("modelo"));
-                String setor = (rs.getString("nome"));
+                String setor = (rs.getString("setor"));
                 comboBox.addItem(modelo + " / " + setor);
             }
             ConexaoJdbc.closeConnection(con, stmt);
         }
         catch(Exception ex){
             JOptionPane.showMessageDialog(null,
-            "Ocorreu erro ao carregar a Combo Box", "Erro",
+            "Ocorreu erro ao carregar a Combo Box de Impressoras", "Erro",
             JOptionPane.ERROR_MESSAGE);
         }
     }
