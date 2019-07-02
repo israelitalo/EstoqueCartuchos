@@ -77,7 +77,6 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alterar cartucho");
-        setPreferredSize(new java.awt.Dimension(840, 510));
         setSize(new java.awt.Dimension(840, 510));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(840, 510));
@@ -101,6 +100,11 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         });
 
         jComboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressora / Setor" }));
+        jComboBoxImpressoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxImpressorasActionPerformed(evt);
+            }
+        });
 
         jComboBoxCorAlterar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cor", "Preto", "Amarelo", "Vermelho", "Azul" }));
 
@@ -199,23 +203,32 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
 
     public void limparCampos(){
         txtModelo.setText("");
+        txtCartucho.setText("");
+        txtCor.setText("");
         jComboBoxImpressoras.setSelectedItem("Impressora / Setor");
         jComboBoxCorAlterar.setSelectedItem("Cor");
         jComboBoxTipoCartucho.setSelectedItem("Toner");
     }
     
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-              
+        String modeloImpressoraJComboBox = (String) jComboBoxImpressoras.getSelectedItem();
+        Integer idImpressora;
+        
+        CartuchoDao cd = new CartuchoDao();
+        
+        idImpressora = cd.getIdJcomboBoxImpressora(modeloImpressoraJComboBox);
+        
         int idCartuchoInt = Integer.parseInt(this.idCartucho);
         
         Cartucho cartucho = new Cartucho();
         
         cartucho.setTipo((String) jComboBoxTipoCartucho.getSelectedItem());
         cartucho.setModelo(txtModelo.getText());
-        cartucho.setImpressora((String) jComboBoxImpressoras.getSelectedItem());
+        cartucho.setImpressora(idImpressora);
+        //cartucho.setImpressora((String) jComboBoxImpressoras.getSelectedItem());
         cartucho.setCor((String) jComboBoxCorAlterar.getSelectedItem());
         
-        CartuchoDao cd = new CartuchoDao();
+        //CartuchoDao cd = new CartuchoDao();
         
         if(cd.editar(cartucho, idCartuchoInt) == true){
             cd.editar(cartucho, idCartuchoInt);
@@ -245,6 +258,10 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         
         btnProcurar.requestFocus();
     }//GEN-LAST:event_btnProcurarActionPerformed
+
+    private void jComboBoxImpressorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxImpressorasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxImpressorasActionPerformed
     
     /**
      * @param args the command line arguments

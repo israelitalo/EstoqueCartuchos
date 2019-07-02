@@ -44,7 +44,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtQuantidade = new javax.swing.JTextField();
         jButtonSalvar = new javax.swing.JButton();
-        jComboBoxTipo = new javax.swing.JComboBox<String>();
+        jComboBoxTipo = new javax.swing.JComboBox<>();
         jComboBoxImpressora = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jComboBoxCor = new javax.swing.JComboBox();
@@ -78,10 +78,15 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
             }
         });
 
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Toner", "Cartucho", "Tinta" }));
+        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Toner", "Cartucho", "Tinta" }));
 
         jComboBoxImpressora.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressora / Setor" }));
         jComboBoxImpressora.setName("Lista de Impressoras"); // NOI18N
+        jComboBoxImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBoxImpressoraMouseClicked(evt);
+            }
+        });
         jComboBoxImpressora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxImpressoraActionPerformed(evt);
@@ -134,7 +139,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jComboBoxCor, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,11 +191,22 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonSalvarMouseClicked
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        String modeloImpressoraJComboBox = (String) jComboBoxImpressora.getSelectedItem();
+        Integer idImpressora;
+                
+        CartuchoDao cd = new CartuchoDao();
+        
+        idImpressora = cd.getIdJcomboBoxImpressora(modeloImpressoraJComboBox);
+        
+        System.out.println(idImpressora);
+        
         Cartucho cartucho = new Cartucho();
         
         cartucho.setTipo((String) jComboBoxTipo.getSelectedItem());
         cartucho.setModelo(txtModelo.getText());
-        cartucho.setImpressora((String) jComboBoxImpressora.getSelectedItem());
+        
+        cartucho.setImpressora(idImpressora);
+        //cartucho.setImpressora((String) jComboBoxImpressora.getSelectedItem()); Comentado por ter mudado idImpressora para Integer, na classe controller Cartucho.
         //cartucho.setImpressora(txtImpressora.getText()); Mudando para JComboBox, linha acima.
         cartucho.setCor((String) jComboBoxCor.getSelectedItem());
         cartucho.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
@@ -200,7 +216,7 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
         }
         else
         {
-            CartuchoDao cd = new CartuchoDao();
+            //CartuchoDao cd = new CartuchoDao();
             
             if(cd.salvar(cartucho) == true){
                 JOptionPane.showMessageDialog(null, "Item salvo com sucesso!");
@@ -215,13 +231,16 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jComboBoxImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxImpressoraActionPerformed
-        /*CartuchoDao cd = new CartuchoDao();
-        cd.carregarJcomboBox(jComboBoxImpressora);*/
+        
     }//GEN-LAST:event_jComboBoxImpressoraActionPerformed
 
     private void jLabel2ComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel2ComponentHidden
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel2ComponentHidden
+
+    private void jComboBoxImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxImpressoraMouseClicked
+        
+    }//GEN-LAST:event_jComboBoxImpressoraMouseClicked
 
 public void limparCampos(){
     jComboBoxCor.setSelectedItem("Cor");

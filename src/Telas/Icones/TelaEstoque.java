@@ -320,7 +320,7 @@ public class TelaEstoque extends javax.swing.JDialog {
             rowData[0] = listarCartucho.get(i).getIdCartucho();
             rowData[1] = listarCartucho.get(i).getTipo();
             rowData[2] = listarCartucho.get(i).getModelo();
-            rowData[3] = listarCartucho.get(i).getImpressora();
+            rowData[3] = listarCartucho.get(i).getModeloImpressora();
             rowData[4] = listarCartucho.get(i).getCor();
             rowData[5] = listarCartucho.get(i).getQuantidade();
             
@@ -381,10 +381,7 @@ public class TelaEstoque extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
         }
         else
-        {       
-            TelaLogin telaLogin = new TelaLogin(null, rootPaneCheckingEnabled);
-            telaLogin.setVisible(true);
-        
+        {        
             String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
         
             int idInt = Integer.parseInt(id);
@@ -393,8 +390,16 @@ public class TelaEstoque extends javax.swing.JDialog {
         
             CartuchoDao cd = new CartuchoDao();
         
-            cd.excluir(cartucho, idInt);
-        
+            int teste = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o item selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+            
+            if(teste == JOptionPane.YES_OPTION){
+                cd.excluir(cartucho, idInt);
+                JOptionPane.showMessageDialog(null, "Operação realizada.", "Exclusão confirmada", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if (teste == JOptionPane.NO_OPTION)
+            {
+                JOptionPane.showMessageDialog(null, "Operação não realizada.", "Exclusão cancelada", JOptionPane.INFORMATION_MESSAGE);
+            }
             listarCartuchos();
         }
         

@@ -69,7 +69,7 @@ public class CartuchoTableModel extends AbstractTableModel {
                 dados.get(linha).setModelo((String) valor);
                 break;
             case 3:
-                dados.get(linha).setImpressora((String) valor);
+                dados.get(linha).setModeloImpressora((String) valor);
                 break;
             case 4:    
                 dados.get(linha).setCor((String) valor);

@@ -106,7 +106,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
             rowData[0] = listaCartucho.get(i).getIdCartucho();
             rowData[1] = listaCartucho.get(i).getTipo();
             rowData[2] = listaCartucho.get(i).getModelo();
-            rowData[3] = listaCartucho.get(i).getImpressora();
+            rowData[3] = listaCartucho.get(i).getModeloImpressora();
             rowData[4] = listaCartucho.get(i).getCor();
             
             modelo.addRow(rowData);

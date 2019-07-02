@@ -168,7 +168,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jLabelImpressoraPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelImpressoraPrincipalMouseClicked
-        TelaImpressora2 telaImpressora = new TelaImpressora2(this, rootPaneCheckingEnabled);
+        TelaImpressora telaImpressora = new TelaImpressora(this, rootPaneCheckingEnabled);
         telaImpressora.setVisible(true);
     }//GEN-LAST:event_jLabelImpressoraPrincipalMouseClicked
 

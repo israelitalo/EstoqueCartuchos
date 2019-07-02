@@ -14,25 +14,43 @@ public class Cartucho {
    private Integer idCartucho;
    private String tipo;
    private String modelo;
-   private String impressora;
+   private Integer idImpressora;
    private String cor;
    private Integer quantidade;
+   private String modeloImpressora;//para utilização da String nas listas de Arrays.
 
-    public Cartucho(Integer idCartucho, String tipo, String modelo, String impressora, String cor, Integer quantidade) {
+    public Cartucho(Integer idCartucho, String tipo, String modelo, Integer idImpressora, String cor, Integer quantidade) {
         this.idCartucho = idCartucho;
         this.tipo = tipo;
         this.modelo = modelo;
-        this.impressora = impressora;
+        this.idImpressora = idImpressora;
         this.cor = cor;
         this.quantidade = quantidade;
     }
 
-    public Cartucho(String tipo, String modelo, String impressora, String cor, Integer quantidade) {
+    public Cartucho(Integer idCartucho, String tipo, String modelo, String modeloImpressora, String cor, Integer quantidade) {
+    this.idCartucho = idCartucho;
+    this.tipo = tipo;
+    this.modelo = modelo;
+    this.modeloImpressora = modeloImpressora;
+    this.cor = cor;
+    this.quantidade = quantidade;
+    }
+    
+    public Cartucho(String tipo, String modelo, Integer idImpressora, String cor, Integer quantidade) {
         this.tipo = tipo;
         this.modelo = modelo;
-        this.impressora = impressora;
+        this.idImpressora = idImpressora;
         this.cor = cor;
         this.quantidade = quantidade;
+    }
+    
+    public Cartucho(String tipo, String modelo, String modeloImpressora, String cor, Integer quantidade) {
+    this.tipo = tipo;
+    this.modelo = modelo;
+    this.modeloImpressora = modeloImpressora;
+    this.cor = cor;
+    this.quantidade = quantidade;
     }
     
    public Cartucho(){
@@ -62,12 +80,20 @@ public class Cartucho {
         this.modelo = modelo;
     }
 
-    public String getImpressora() {
-        return impressora;
+    public Integer getImpressora() {
+        return idImpressora;
     }
 
-    public void setImpressora(String impressora) {
-        this.impressora = impressora;
+    public void setImpressora(Integer idImpressora) {
+        this.idImpressora = idImpressora;
+    }
+    
+    public String getModeloImpressora(){
+        return modeloImpressora;
+    }
+    
+    public void setModeloImpressora(String modeloImpressora){
+        this.modeloImpressora = modeloImpressora;
     }
     
     public String getCor() {

@@ -33,7 +33,7 @@ public class CartuchoDao {
     
     public boolean editar (Cartucho cartucho, Integer intId){
         
-        String sql = "UPDATE cartucho SET tipo=?, modelo=?, impressora=?, cor=? WHERE id_cartucho = '" + intId + "'";
+        String sql = "UPDATE cartucho SET tipo=?, modelo=?, id_impressora=?, cor=? WHERE id_cartucho = '" + intId + "'";
         
         PreparedStatement stmt = null;
         
@@ -41,7 +41,7 @@ public class CartuchoDao {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, cartucho.getTipo());
             stmt.setString(2, cartucho.getModelo());
-            stmt.setString(3, cartucho.getImpressora());
+            stmt.setInt(3, cartucho.getImpressora());//foi mudado para int.
             stmt.setString(4, cartucho.getCor());
             
             if(cartucho.getModelo().equals("") || cartucho.getImpressora().equals("") || cartucho.getCor().equals("Cor")){
@@ -62,7 +62,7 @@ public class CartuchoDao {
     
     public boolean salvar (Cartucho cartucho){
         
-        String sql = "INSERT INTO cartucho (tipo, modelo, impressora, cor, quantidade) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO cartucho (tipo, modelo, id_impressora, cor, quantidade) VALUES (?,?,?,?,?)";
         
         PreparedStatement stmt = null;
         
@@ -70,7 +70,7 @@ public class CartuchoDao {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, cartucho.getTipo());
             stmt.setString(2, cartucho.getModelo());
-            stmt.setString(3, cartucho.getImpressora());
+            stmt.setInt(3, cartucho.getImpressora());
             stmt.setString(4, cartucho.getCor());
             stmt.setInt(5, cartucho.getQuantidade());
             
@@ -87,7 +87,7 @@ public class CartuchoDao {
     
     public List<Cartucho> selectCartuchoAlterar(){
         
-        String sql = "SELECT id_cartucho, tipo, modelo, impressora, cor FROM cartucho";
+        String sql = "SELECT c.id_cartucho, c.tipo, c.modelo, i.modelo, c.cor FROM cartucho c, impressora i WHERE c.id_impressora = i.id_impressora";
         
         List<Cartucho> listaCartucho = new ArrayList<>();
         
@@ -103,7 +103,7 @@ public class CartuchoDao {
                 cartucho.setIdCartucho(rs.getInt("id_cartucho"));
                 cartucho.setTipo(rs.getString("tipo"));
                 cartucho.setModelo(rs.getString("modelo"));
-                cartucho.setImpressora(rs.getString("impressora"));
+                cartucho.setModeloImpressora(rs.getString("i.modelo"));
                 cartucho.setCor(rs.getString("cor"));
                 
                 listaCartucho.add(cartucho);
@@ -143,8 +143,8 @@ public class CartuchoDao {
     }
     
     public List<Cartucho> selectCartucho (){
-        
-        String sql = "SELECT * FROM cartucho";
+        //01/07/2019 funcionando, com consulta com chave estrangeira (FOREIGN KEY).
+        String sql = "SELECT c.id_cartucho, c.tipo, c.modelo, i.modelo, c.cor, c.quantidade FROM cartucho c, impressora i WHERE c.id_impressora = i.id_impressora";
         
         List<Cartucho> cartuchos = new ArrayList<Cartucho>();
         
@@ -159,9 +159,9 @@ public class CartuchoDao {
                 cartucho.setIdCartucho(rs.getInt("id_cartucho"));
                 cartucho.setTipo(rs.getString("tipo"));
                 cartucho.setModelo(rs.getString("modelo"));
-                cartucho.setImpressora(rs.getString("impressora"));
+                cartucho.setModeloImpressora(rs.getString("i.modelo"));//mudou para getInt
                 cartucho.setCor(rs.getString("cor"));
-                cartucho.setQuantidade(rs.getInt("quantidade"));//Talvez não funcione dessa forma, pois a quantidade é um int.
+                cartucho.setQuantidade(rs.getInt("quantidade"));
                 
                 cartuchos.add(cartucho);
             }
@@ -244,7 +244,7 @@ public class CartuchoDao {
     
     public void carregarJcomboBox(JComboBox comboBox){
         
-        String sql = "SELECT impressora.modelo, setor.setor from impressora, setor WHERE impressora.id_setor = setor.id_setor ORDER BY modelo";
+        String sql = "SELECT impressora.modelo FROM impressora ORDER BY modelo";
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -254,8 +254,7 @@ public class CartuchoDao {
             rs = stmt.executeQuery();
             while(rs.next()){
                 String modelo = (rs.getString("modelo"));
-                String setor = (rs.getString("setor"));
-                comboBox.addItem(modelo + " / " + setor);
+                comboBox.addItem(modelo);
             }
             ConexaoJdbc.closeConnection(con, stmt);
         }
@@ -264,6 +263,28 @@ public class CartuchoDao {
             "Ocorreu erro ao carregar a Combo Box de Impressoras", "Erro",
             JOptionPane.ERROR_MESSAGE);
         }
+        
+    }
+    
+    public Integer getIdJcomboBoxImpressora(String modelo){
+        
+        String sql = "SELECT id_impressora FROM impressora WHERE impressora.modelo = '" + modelo + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int idImpressora = rs.getInt("id_impressora");
+                return idImpressora;
+            }
+            ConexaoJdbc.closeConnection(con, stmt);
+        } catch (SQLException ex) {
+            System.err.println("Erro!" + ex);
+        }
+        return null;
     }
     
 }
