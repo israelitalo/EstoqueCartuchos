@@ -15,8 +15,35 @@ import javax.swing.table.AbstractTableModel;
  */
 public class CartuchoTableModel extends AbstractTableModel {
 
-    private List<Cartucho> dados = new ArrayList<>();
+    private List<Cartucho> lista = new ArrayList<>();
     private String[] colunas = {"CÓDIGO", "TIPO", "MODELO", "IMPRESSORA", "COR"};
+    //teste
+    private ArrayList dados = null;
+    
+    //teste
+    public CartuchoTableModel(ArrayList dados, String[] colunas){
+        setLinhas(dados);
+        setColunas(colunas);
+    }
+    //teste
+    public CartuchoTableModel(){
+    }
+    //teste
+    public ArrayList getLinhas(){
+        return dados;
+    }
+    //teste
+    public void setLinhas(ArrayList dados){
+        this.dados = dados;
+    }
+    //teste
+    public String[] getColunas(){
+        return colunas;
+    }
+    //teste
+    public void setColunas(String[] colunas){
+        colunas = this.colunas;
+    }
     
     @Override
     public String getColumnName(int column){
@@ -34,23 +61,24 @@ public class CartuchoTableModel extends AbstractTableModel {
     }
 
     @Override
-    public Object getValueAt(int linha, int coluna) {
-        
-        switch(coluna){
+    public Object getValueAt(int linhas, int colunas) {
+        Object[] linha = (Object[])getLinhas().get(linhas);//teste
+        //não teste
+        switch(colunas){
             
             case 0:
-                return dados.get(linha).getIdCartucho();
+                return lista.get(linhas).getIdCartucho();
             case 1:
-                return dados.get(linha).getTipo();
+                return lista.get(linhas).getTipo();
             case 2:
-                return dados.get(linha).getModelo();
+                return lista.get(linhas).getModelo();
             case 3:
-                return dados.get(linha).getImpressora();
+                return lista.get(linhas).getImpressora();
             case 4:    
-                return dados.get(linha).getCor();
-        }        
+                return lista.get(linhas).getCor();
+        }  
         
-        return null;
+        return linha[colunas];
         
     }
     
@@ -60,19 +88,19 @@ public class CartuchoTableModel extends AbstractTableModel {
         switch(coluna){
             
             case 0:
-                dados.get(linha).setIdCartucho((Integer) valor);
+                lista.get(linha).setIdCartucho((Integer) valor);
                 break;
             case 1:
-                dados.get(linha).setTipo((String) valor);
+                lista.get(linha).setTipo((String) valor);
                 break;
             case 2:
-                dados.get(linha).setModelo((String) valor);
+                lista.get(linha).setModelo((String) valor);
                 break;
             case 3:
-                dados.get(linha).setModeloImpressora((String) valor);
+                lista.get(linha).setModeloImpressora((String) valor);
                 break;
             case 4:    
-                dados.get(linha).setCor((String) valor);
+                lista.get(linha).setCor((String) valor);
                 break;
         }
         
@@ -89,6 +117,10 @@ public class CartuchoTableModel extends AbstractTableModel {
     public void removeRow(int linha){
         this.dados.remove(linha);
         this.fireTableRowsDeleted(linha, linha);
+    }
+    
+    public void atualizarAdd(){
+        this.fireTableDataChanged();
     }
     
 }

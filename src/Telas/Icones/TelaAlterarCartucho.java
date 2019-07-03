@@ -17,8 +17,9 @@ import javax.swing.JOptionPane;
 public class TelaAlterarCartucho extends javax.swing.JDialog {
 
     private TelaTableAlterarCartucho tabelaAlterarCartuchoTeste;
+    private TelaEstoque telaEstoque;
     
-    CartuchoTableModel tableModel = new CartuchoTableModel();
+    //CartuchoTableModel tableModel = new CartuchoTableModel();
     
     private String idCartucho;//Necessesário para receber o id da tabela da janela TelaTableAlterarCartucho.
     
@@ -33,6 +34,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
         cd.carregarJcomboBox(jComboBoxImpressoras);
         //notificarUsuario();
         this.tabelaAlterarCartuchoTeste = new TelaTableAlterarCartucho(parent, rootPaneCheckingEnabled);
+        //this.telaEstoque = new TelaEstoque(parent, modal);
     }
 
     /**
@@ -235,6 +237,7 @@ public class TelaAlterarCartucho extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Item alterado com sucesso!");
             tabelaAlterarCartuchoTeste.listarCartuchos();
             limparCampos();
+            
         }
         else
         {

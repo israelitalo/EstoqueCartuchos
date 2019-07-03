@@ -7,8 +7,10 @@ package Telas.Icones;
 
 import Dao.CartuchoDao;
 import controller.Cartucho;
+import controller.CartuchoTableModel;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,12 +26,15 @@ public class TelaEstoque extends javax.swing.JDialog {
     /**
      * Creates new form TelaEstoque
      */
+    
     public TelaEstoque(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         listarCartuchos();
+        //CartuchoTableModel modelCartucho = new CartuchoTableModel();
+        //tabelaCartuchos.setModel(modelCartucho);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -299,36 +304,29 @@ public class TelaEstoque extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     public void listarCartuchos (){
+        
         CartuchoDao cd = new CartuchoDao();
         
         List<Cartucho> listarCartucho = cd.selectCartucho();
+           
+        DefaultTableModel modelo = (DefaultTableModel) tabelaCartuchos.getModel();
         
-        DefaultTableModel modelo = new DefaultTableModel();//instanciando modelo da tabela.
+        modelo.setNumRows(0);
         
-        modelo.addColumn("CÓDIGO");
-        modelo.addColumn("TIPO");
-        modelo.addColumn("MODELO");
-        modelo.addColumn("IMPRESSORA");
-        modelo.addColumn("COR");
-        modelo.addColumn("QUANTIDADE");
-        
-        Object rowData[] = new Object[6]; //6 pois é a quantidade de colunas usadas na tabela tabelaCartucho.
-        
-        for(int i = 0; i<listarCartucho.size(); i++){
-            rowData[0] = listarCartucho.get(i).getIdCartucho();
-            rowData[1] = listarCartucho.get(i).getTipo();
-            rowData[2] = listarCartucho.get(i).getModelo();
-            rowData[3] = listarCartucho.get(i).getModeloImpressora();
-            rowData[4] = listarCartucho.get(i).getCor();
-            rowData[5] = listarCartucho.get(i).getQuantidade();
-            
-            modelo.addRow(rowData);
-            
+        for (Cartucho c : cd.selectCartucho()) {
+
+            modelo.addRow(new Object[]{
+                c.getIdCartucho(),
+                c.getTipo(),
+                c.getModelo(),
+                c.getModeloImpressora(),
+                c.getCor(),
+                c.getQuantidade()
+            });
+
         }
-        
-        tabelaCartuchos.setModel(modelo);//setanto o modelo criado à tabela.
         
         //Definindo a largura das colunas da tabela tabelaCartuchos.
         tabelaCartuchos.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -349,7 +347,6 @@ public class TelaEstoque extends javax.swing.JDialog {
         
         //TelaCadastroProduto addCartucho = new TelaCadastroProduto();
         addCartucho.setVisible(true);
-        //dispose();
     }//GEN-LAST:event_jLabelAddMouseClicked
 
     private void tabelaCartuchosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCartuchosMouseClicked
@@ -370,7 +367,6 @@ public class TelaEstoque extends javax.swing.JDialog {
     private void jLabelEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditMouseClicked
         TelaAlterarCartucho telaAlterar = new TelaAlterarCartucho(null, rootPaneCheckingEnabled);
         telaAlterar.setVisible(true);
-        
     }//GEN-LAST:event_jLabelEditMouseClicked
 
     private void jLabelRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRemoveMouseClicked

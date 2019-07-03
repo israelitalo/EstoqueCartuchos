@@ -89,27 +89,22 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         
         CartuchoDao cd = new CartuchoDao();
         
-        List <Cartucho> listaCartucho = cd.selectCartuchoAlterar();
+        List<Cartucho> listarCartucho = cd.selectCartucho();
+           
+        DefaultTableModel modelo = (DefaultTableModel) jTableAlterarCartucho.getModel();
         
-        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setNumRows(0);
         
-        modelo.addColumn("CODIGO");
-        modelo.addColumn("TIPO");
-        modelo.addColumn("MODELO");
-        modelo.addColumn("IMPRESSORA");
-        modelo.addColumn("COR");
-        
-        Object rowData[] = new Object[5];
-        
-        for(int i = 0; i<listaCartucho.size(); i++){
-            
-            rowData[0] = listaCartucho.get(i).getIdCartucho();
-            rowData[1] = listaCartucho.get(i).getTipo();
-            rowData[2] = listaCartucho.get(i).getModelo();
-            rowData[3] = listaCartucho.get(i).getModeloImpressora();
-            rowData[4] = listaCartucho.get(i).getCor();
-            
-            modelo.addRow(rowData);
+        for (Cartucho c : cd.selectCartucho()) {
+
+            modelo.addRow(new Object[]{
+                c.getIdCartucho(),
+                c.getTipo(),
+                c.getModelo(),
+                c.getModeloImpressora(),
+                c.getCor()
+            });
+
         }
         
         jTableAlterarCartucho.setModel(modelo);

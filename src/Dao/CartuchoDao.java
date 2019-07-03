@@ -165,7 +165,7 @@ public class CartuchoDao {
                 
                 cartuchos.add(cartucho);
             }
-            ConexaoJdbc.closeConnection(con, stmt, rs);
+            //ConexaoJdbc.closeConnection(con, stmt);
             System.out.println("Conexão completamente encerrada!");
             return cartuchos;
             
