@@ -129,6 +129,38 @@ public class ImpressoraDao {
         }
     }
     
+    public List<Impressora>listaImpressoraLike (String busca){
+        
+        String sql = "SELECT i.id_impressora, i.modelo, i.serie, f.nome, s.setor FROM impressora i INNER JOIN fabricante f ON i.id_fabricante = f.id_fabricante INNER JOIN setor s ON i.id_setor = s.id_setor WHERE i.modelo LIKE '%" + busca + "%' OR i.serie LIKE '%" + busca + "%' OR f.nome LIKE '%" + busca + "%' OR s.setor LIKE '%" + busca + "%' ORDER BY modelo;";
+        
+        List<Impressora> listaImpressoraLike = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Impressora impressora = new Impressora();
+                impressora.setId_impressora(rs.getInt("id_impressora"));
+                impressora.setModelo(rs.getString("modelo"));
+                impressora.setSerie(rs.getString("serie"));
+                impressora.setFabricante(rs.getString("nome"));
+                impressora.setSetor(rs.getString("setor"));
+                listaImpressoraLike.add(impressora);
+            }
+            
+            return listaImpressoraLike;
+            
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+        }
+        
+        return null;
+        
+    }
+    
     public void carregarJcomboBoxFabricante(JComboBox comboBox){
         
         String sql = "SELECT nome from fabricante";

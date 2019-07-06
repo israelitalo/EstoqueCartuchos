@@ -22,6 +22,16 @@ public class TelaImpressora2 extends javax.swing.JDialog {
      * Creates new form TelaImpressora2
      */
     
+    private String busca;
+    
+    public String getBusca(){
+        return this.busca;
+    }
+    
+    public void setBusca(String busca){
+        this.busca = busca;
+    }
+    
     ImpressoraTableModel tableModel = new ImpressoraTableModel();
     
     public TelaImpressora2(java.awt.Frame parent, boolean modal) {
@@ -29,8 +39,10 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         initComponents();
         JComboBoxFabricante();
         JComboBoxSetor();
+        jrbTodos.setSelected(true);
         //jTableImpressora.setModel(tableModel);//É nessa linha que os nomes das colunas são resgatadas do modelo, para a tabela.
-        listarImpressora();
+        //listarImpressora();
+
     }
 
     /**
@@ -57,6 +69,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         jComboBoxSetor = new javax.swing.JComboBox<>();
         txtBusca = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jrbTodos = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 700));
@@ -125,8 +138,23 @@ public class TelaImpressora2 extends javax.swing.JDialog {
 
         jComboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
 
+        txtBusca.setToolTipText("Este campo tem a prioridade de busca");
+        txtBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscaActionPerformed(evt);
+            }
+        });
+
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
         btnBuscar.setPreferredSize(new java.awt.Dimension(65, 41));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jrbTodos.setText("Buscar todos");
+        jrbTodos.setToolTipText("Marque para consultar todas as impressoras");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,6 +183,9 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jrbTodos)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2))
@@ -164,7 +195,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(txtBusca)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,7 +217,9 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                     .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
+                .addGap(33, 33, 33)
+                .addComponent(jrbTodos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnAlterar)
@@ -362,6 +395,39 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         
     }
     
+    public void listarImpressoraLike(String busca){
+        
+        busca = this.busca;
+        
+        ImpressoraDao impDao = new ImpressoraDao();
+        
+        List<Impressora> listaImpressoras = impDao.listaImpressoraLike(busca);
+        
+        DefaultTableModel model = (DefaultTableModel) jTableImpressora.getModel();
+        
+        model.setNumRows(0);
+        
+        for(Impressora impressora: impDao.listaImpressoraLike(busca)){
+            
+            model.addRow(new Object[]{
+                
+                impressora.getId_impressora(),
+                impressora.getModelo(),
+                impressora.getSerie(),
+                impressora.getFabricante(),
+                impressora.getSetor()
+            });
+            
+        jTableImpressora.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTableImpressora.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTableImpressora.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTableImpressora.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTableImpressora.getColumnModel().getColumn(4).setPreferredWidth(150);
+        
+        }
+        
+    }
+    
     public void limparCampos(){
         txtModelo.setText("");
         txtSerie.setText("");
@@ -372,6 +438,26 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     private void jComboBoxFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFabricanteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxFabricanteActionPerformed
+
+    private void txtBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscaActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+        //Não conseguir desabilitar o select * from impressora, quando o jrbTodos estar como false.
+        
+        this.busca = this.txtBusca.getText();
+        
+        if(this.busca != null){
+            listarImpressoraLike(busca);   
+        }
+        else
+        {
+            listarImpressora();   
+        }
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void JComboBoxFabricante(){
         ImpressoraDao impDao = new ImpressoraDao();
@@ -438,6 +524,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelModelo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableImpressora;
+    private javax.swing.JRadioButton jrbTodos;
     private javax.swing.JTextField txtBusca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtSerie;
