@@ -45,7 +45,7 @@ public class CartuchoDao {
             stmt.setString(4, cartucho.getCor());
             
             if(cartucho.getModelo().equals("") || cartucho.getImpressora().equals("") || cartucho.getCor().equals("Cor")){
-              return false;
+                return false;
             }
             else
             {
@@ -54,7 +54,6 @@ public class CartuchoDao {
             }
 
         } catch (SQLException ex) {
-        
             System.err.println("Erro: " + ex);
             return false;
         }

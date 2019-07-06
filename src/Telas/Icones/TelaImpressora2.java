@@ -8,7 +8,9 @@ package Telas.Icones;
 import Dao.ImpressoraDao;
 import controller.Impressora;
 import controller.ImpressoraTableModel;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,9 +29,8 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         initComponents();
         JComboBoxFabricante();
         JComboBoxSetor();
-        
-        jTableImpressora.setModel(tableModel);
-        
+        //jTableImpressora.setModel(tableModel);//É nessa linha que os nomes das colunas são resgatadas do modelo, para a tabela.
+        listarImpressora();
     }
 
     /**
@@ -54,22 +55,31 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jComboBoxFabricante = new javax.swing.JComboBox<>();
         jComboBoxSetor = new javax.swing.JComboBox<>();
+        txtBusca = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 700));
         setResizable(false);
 
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(900, 700));
+
         jTableImpressora.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "MODELO", "SERIE", "FABRICANTE", "SETOR"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTableImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableImpressoraMouseClicked(evt);
@@ -106,6 +116,18 @@ public class TelaImpressora2 extends javax.swing.JDialog {
 
         jLabel3.setText("Setor");
 
+        jComboBoxFabricante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fabricante" }));
+        jComboBoxFabricante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFabricanteActionPerformed(evt);
+            }
+        });
+
+        jComboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
+        btnBuscar.setPreferredSize(new java.awt.Dimension(65, 41));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,9 +135,9 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelModelo)
@@ -123,23 +145,30 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                                 .addGap(22, 22, 22)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
-                                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtSerie)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jComboBoxSetor, 0, 183, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxSetor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBusca)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -161,9 +190,11 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnAlterar)
-                    .addComponent(btnExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir)
+                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -172,36 +203,111 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        ImpressoraDao impDao = new ImpressoraDao();
+        
+        String fabricante = jComboBoxFabricante.getSelectedItem().toString();
+        
+        Integer idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
+        
+        String setor = jComboBoxSetor.getSelectedItem().toString();
+        
+        Integer idSetor = impDao.getIdSetorJComboBox(setor);
         
         Impressora impressora = new Impressora();
+        
         impressora.setModelo(txtModelo.getText());
         impressora.setSerie(txtSerie.getText());
-        impressora.setFabricante((String) jComboBoxFabricante.getSelectedItem());
-        impressora.setSetor((String) jComboBoxSetor.getSelectedItem());
-        
+        impressora.setId_fabricante(idFabricante);
+        impressora.setId_setor(idSetor);
+
+        if(txtModelo.getText().equals("") || txtSerie.getText().equals("") || jComboBoxFabricante.getSelectedItem().equals("Fabricante") || jComboBoxSetor.getSelectedItem().equals("Setor")){
+            JOptionPane.showMessageDialog(null, "Operação não realizada!");
+            listarImpressora();
+        }
+        else
+        {
+            if(impDao.salvar(impressora) == true){
+                JOptionPane.showMessageDialog(null, "Impressora salva com sucesso!");
+                listarImpressora();
+            }
+
+        }
+            
         tableModel.addRow(impressora);
+        
+        limparCampos();
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-              
-        if(jTableImpressora.getSelectedRow() != -1){
-            tableModel.removeRow(jTableImpressora.getSelectedRow());
+        
+        int linha = jTableImpressora.getSelectedRow();
+        
+        String idString = jTableImpressora.getModel().getValueAt(linha, 0).toString();
+        
+        int idInt = Integer.parseInt(idString);
+        
+        if(linha != -1){
+            
+            int teste = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o item selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+
+            if(teste == JOptionPane.YES_OPTION){
+                ImpressoraDao impDao = new ImpressoraDao();
+                if(impDao.excluir(idInt) == true){
+                impDao.excluir(idInt);
+                JOptionPane.showMessageDialog(null, "Operação realizada.", "Exclusão confirmada", JOptionPane.INFORMATION_MESSAGE);
+                listarImpressora();
+                }
+            }
+            else if (teste == JOptionPane.NO_OPTION)
+            {
+                JOptionPane.showMessageDialog(null, "Operação não realizada.", "Exclusão cancelada", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
         else
         {
             JOptionPane.showMessageDialog(null, "Selecione um item para excluí-lo!");
         }
-        
+
     }//GEN-LAST:event_btnExcluirActionPerformed
         
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         
         int linha = jTableImpressora.getSelectedRow();
+        
         if(linha != -1){
-            jTableImpressora.setValueAt(txtModelo.getText(), linha, 0);
-            jTableImpressora.setValueAt(txtSerie.getText(), linha, 1);
-            jTableImpressora.setValueAt(jComboBoxFabricante.getSelectedItem(), linha, 2);
-            jTableImpressora.setValueAt(jComboBoxSetor.getSelectedItem(), linha, 3);
+            
+            int idImpressora = getIdLinha();
+            
+            Impressora impressora = new Impressora();
+            ImpressoraDao impDao = new ImpressoraDao();
+            
+            String fabricante = (String)jComboBoxFabricante.getSelectedItem();
+            String setor = (String)jComboBoxSetor.getSelectedItem();
+            
+            int idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
+            int idSetor = impDao.getIdSetorJComboBox(setor);
+            
+            impressora.setModelo(txtModelo.getText());
+            impressora.setSerie(txtSerie.getText());
+            impressora.setId_fabricante(idFabricante);
+            impressora.setId_setor(idSetor);
+            
+            if(impDao.editar(impressora, idImpressora) == true){
+                impDao.editar(impressora, idImpressora);
+                JOptionPane.showMessageDialog(null, "Impressora alterada com sucesso!");
+                listarImpressora();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Operação não realizada!");
+                listarImpressora();
+            }
+            /*jTableImpressora.setValueAt(txtModelo.getText(), linha, 1);
+            jTableImpressora.setValueAt(txtSerie.getText(), linha, 2);
+            jTableImpressora.setValueAt(jComboBoxFabricante.getSelectedItem(), linha, 3);
+            jTableImpressora.setValueAt(jComboBoxSetor.getSelectedItem(), linha, 4);*/
         }
         else
         {
@@ -213,11 +319,59 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     private void jTableImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableImpressoraMouseClicked
         int linha = jTableImpressora.getSelectedRow();
         
-        txtModelo.setText(jTableImpressora.getValueAt(linha, 0).toString());
-        txtSerie.setText(jTableImpressora.getValueAt(linha, 1).toString());
-        jComboBoxFabricante.setSelectedItem(jTableImpressora.getValueAt(linha, 2).toString());
-        jComboBoxSetor.setSelectedItem(jTableImpressora.getValueAt(linha, 3).toString());
+        txtModelo.setText(jTableImpressora.getValueAt(linha, 1).toString());
+        txtSerie.setText(jTableImpressora.getValueAt(linha, 2).toString());
+        jComboBoxFabricante.setSelectedItem(jTableImpressora.getValueAt(linha, 3).toString());
+        jComboBoxSetor.setSelectedItem(jTableImpressora.getValueAt(linha, 4).toString());
     }//GEN-LAST:event_jTableImpressoraMouseClicked
+ 
+    //Método para adquirir o id da impressora correspondente à linha a qual o usuário clicar.
+    public Integer getIdLinha(){
+        int linha = jTableImpressora.getSelectedRow();
+        String idLinha = jTableImpressora.getModel().getValueAt(linha, 0).toString();
+        int idLinhaInt = Integer.parseInt(idLinha);
+        return idLinhaInt;
+    }
+    
+    public void listarImpressora(){
+        ImpressoraDao impDao = new ImpressoraDao();
+        
+        List<Impressora> listaImpressoras = impDao.selectImpressora();
+        
+        DefaultTableModel model = (DefaultTableModel) jTableImpressora.getModel();
+        
+        model.setNumRows(0);
+        
+        for(Impressora impressora: impDao.selectImpressora()){
+            
+            model.addRow(new Object[]{
+                impressora.getId_impressora(),
+                impressora.getModelo(),
+                impressora.getSerie(),
+                impressora.getFabricante(),
+                impressora.getSetor()
+            });
+            
+        jTableImpressora.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTableImpressora.getColumnModel().getColumn(1).setPreferredWidth(250);
+        jTableImpressora.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTableImpressora.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTableImpressora.getColumnModel().getColumn(4).setPreferredWidth(150);
+        
+        }
+        
+    }
+    
+    public void limparCampos(){
+        txtModelo.setText("");
+        txtSerie.setText("");
+        jComboBoxFabricante.setSelectedItem("Fabricante");
+        jComboBoxSetor.setSelectedItem("Setor");
+    }
+    
+    private void jComboBoxFabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFabricanteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxFabricanteActionPerformed
 
     public void JComboBoxFabricante(){
         ImpressoraDao impDao = new ImpressoraDao();
@@ -273,6 +427,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> jComboBoxFabricante;
@@ -283,6 +438,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelModelo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableImpressora;
+    private javax.swing.JTextField txtBusca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtSerie;
     // End of variables declaration//GEN-END:variables

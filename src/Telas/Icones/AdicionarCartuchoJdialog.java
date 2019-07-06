@@ -198,8 +198,6 @@ public class AdicionarCartuchoJdialog extends javax.swing.JDialog {
         
         idImpressora = cd.getIdJcomboBoxImpressora(modeloImpressoraJComboBox);
         
-        System.out.println(idImpressora);
-        
         Cartucho cartucho = new Cartucho();
         
         cartucho.setTipo((String) jComboBoxTipo.getSelectedItem());
