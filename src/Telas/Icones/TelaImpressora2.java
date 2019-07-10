@@ -79,8 +79,8 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBoxFabricante = new javax.swing.JComboBox<>();
-        jComboBoxSetor = new javax.swing.JComboBox<>();
+        jComboBoxFabricante = new javax.swing.JComboBox<String>();
+        jComboBoxSetor = new javax.swing.JComboBox<String>();
         txtBusca = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jrbTodos = new javax.swing.JRadioButton();
@@ -143,14 +143,14 @@ public class TelaImpressora2 extends javax.swing.JDialog {
 
         jLabel3.setText("Setor");
 
-        jComboBoxFabricante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fabricante" }));
+        jComboBoxFabricante.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fabricante" }));
         jComboBoxFabricante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxFabricanteActionPerformed(evt);
             }
         });
 
-        jComboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
+        jComboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Setor" }));
 
         txtBusca.setToolTipText("Este campo tem a prioridade de busca");
         txtBusca.addActionListener(new java.awt.event.ActionListener() {

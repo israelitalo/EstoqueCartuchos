@@ -19,26 +19,23 @@ public class ControlePaginas {
     
     private Integer idControle;
     private Integer idImpressora;
-    private Date dataInicial;
-    private Date datafinal;
+    private Date data;
     private Integer paginaInicial;
     private Integer paginaFinal;
     private Integer paginaTotal;
 
-    public ControlePaginas(Integer idControle, Integer idImpressora, Date dataInicial, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
+    public ControlePaginas(Integer idControle, Integer idImpressora, Date data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
         this.idControle = idControle;
         this.idImpressora = idImpressora;
-        this.dataInicial = dataInicial;
-        this.datafinal = datafinal;
+        this.data = data;
         this.paginaInicial = paginaInicial;
         this.paginaFinal = paginaFinal;
         this.paginaTotal = paginaTotal;
     }
 
-    public ControlePaginas(Integer idImpressora, Date dataInicial, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
+    public ControlePaginas(Integer idImpressora, Date data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
         this.idImpressora = idImpressora;
-        this.dataInicial = dataInicial;
-        this.datafinal = datafinal;
+        this.data = data;
         this.paginaInicial = paginaInicial;
         this.paginaFinal = paginaFinal;
         this.paginaTotal = paginaTotal;
@@ -71,20 +68,12 @@ public class ControlePaginas {
         this.idImpressora = idImpressora;
     }
 
-    public Date getDataInicial() {
-        return dataInicial;
+    public Date getData() {
+        return data;
     }
 
-    public void setDataInicial(Date dataInicial) {
-        this.dataInicial = dataInicial;
-    }
-
-    public Date getDatafinal() {
-        return datafinal;
-    }
-
-    public void setDatafinal(Date datafinal) {
-        this.datafinal = datafinal;
+    public void setData(Date data) {
+        this.data = data;
     }
 
     public Integer getPaginaInicial() {
