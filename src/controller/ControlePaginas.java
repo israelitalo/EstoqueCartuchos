@@ -19,12 +19,12 @@ public class ControlePaginas {
     
     private Integer idControle;
     private Integer idImpressora;
-    private Date data;
+    private String data;
     private Integer paginaInicial;
     private Integer paginaFinal;
     private Integer paginaTotal;
 
-    public ControlePaginas(Integer idControle, Integer idImpressora, Date data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
+    public ControlePaginas(Integer idControle, Integer idImpressora, String data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
         this.idControle = idControle;
         this.idImpressora = idImpressora;
         this.data = data;
@@ -33,7 +33,7 @@ public class ControlePaginas {
         this.paginaTotal = paginaTotal;
     }
 
-    public ControlePaginas(Integer idImpressora, Date data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
+    public ControlePaginas(Integer idImpressora, String data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
         this.idImpressora = idImpressora;
         this.data = data;
         this.paginaInicial = paginaInicial;
@@ -68,11 +68,11 @@ public class ControlePaginas {
         this.idImpressora = idImpressora;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

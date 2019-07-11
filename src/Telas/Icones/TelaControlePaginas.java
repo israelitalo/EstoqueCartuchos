@@ -7,7 +7,6 @@ package Telas.Icones;
 
 import Dao.ControlePaginasDao;
 import controller.ControlePaginas;
-import java.util.Date;
 
 /**
  *
@@ -44,10 +43,10 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         txtQtdFinal = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
-        txtQdtTotal = new javax.swing.JSpinner();
         btnSalvar = new javax.swing.JButton();
         btnSimular = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        txtQtdTotal = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,6 +74,11 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jLabel5.setText("Páginas Impressas:");
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnSimular.setText("Simular");
         btnSimular.addActionListener(new java.awt.event.ActionListener() {
@@ -84,6 +88,13 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         });
 
         jLabel6.setText("dd/mm/aaaa");
+
+        txtQtdTotal.setEditor(new javax.swing.JSpinner.NumberEditor(txtQtdTotal, ""));
+        txtQtdTotal.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                txtQtdTotalStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -109,20 +120,18 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtQtdFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtQdtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtQtdTotal))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtData)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel6)))))
+                            .addComponent(jLabel6)
+                            .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(91, 91, 91))
         );
         jPanel2Layout.setVerticalGroup(
@@ -143,7 +152,7 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(txtQtdFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(txtQdtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtQtdTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(52, 52, 52)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
@@ -169,7 +178,13 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private int qtdTotalGlobal;
+    
+    public Integer getQtdTotalGlobal(){
+        return this.qtdTotalGlobal;
+    }
+    
     private void btnSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularActionPerformed
         
         int qtdInidial = (int) txtQtdInicial.getValue();
@@ -177,10 +192,10 @@ public class TelaControlePaginas extends javax.swing.JDialog {
        
         ControlePaginas cp = new ControlePaginas();
         
-        int qtdTotal = cp.calcularPaginas(qtdInidial, qtdFinal);
-       
-        txtQdtTotal.setValue(qtdTotal);
+        qtdTotalGlobal = cp.calcularPaginas(qtdInidial, qtdFinal);
         
+        txtQtdTotal.setValue(qtdTotalGlobal);
+                
         String data = txtData.getText();
         
         //10/07/2019
@@ -193,7 +208,64 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         
         System.out.println(ano + "-" + mes + "-" + dia);
         
+        //Pegando ID do ComboBox
+        
+        ControlePaginasDao cpd = new ControlePaginasDao();
+        
+        String idImpressoraString = jComboBoxImpressora.getSelectedItem().toString();
+        
+        int idImpressora = cpd.getIdJcomboBoxImpressora(idImpressoraString);
+        
+        
+        
     }//GEN-LAST:event_btnSimularActionPerformed
+
+    private void txtQtdTotalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtQtdTotalStateChanged
+        txtQtdTotal.setValue(qtdTotalGlobal);
+    }//GEN-LAST:event_txtQtdTotalStateChanged
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        
+        int qtdInicial = (int) txtQtdInicial.getValue();
+        int qtdFinal = (int) txtQtdFinal.getValue();
+       
+        ControlePaginas cp = new ControlePaginas();
+        
+        qtdTotalGlobal = cp.calcularPaginas(qtdInicial, qtdFinal);
+        
+        txtQtdTotal.setValue(qtdTotalGlobal);
+                
+        String data = txtData.getText();
+        
+        //Convertendo a data para o modelo do banco de dados: yyyy-mm-dd.
+        
+        String dia = data.substring(0, 2);
+        
+        String mes = data.substring(3, 5);
+        
+        String ano = data.substring(6, 10);
+        
+        data = ano + "-" + mes + "-" + dia;
+        
+        System.out.println(ano + "-" + mes + "-" + dia);
+        
+        //Pegando ID do ComboBox
+        
+        ControlePaginasDao cpd = new ControlePaginasDao();
+        
+        String idImpressoraString = jComboBoxImpressora.getSelectedItem().toString();
+        
+        int idImpressora = cpd.getIdJcomboBoxImpressora(idImpressoraString);
+        
+        cp.setIdImpressora(idImpressora);
+        cp.setData(data);
+        cp.setPaginaInicial(qtdInicial);
+        cp.setPaginaFinal(qtdFinal);
+        cp.setPaginaTotal(getQtdTotalGlobal());
+        
+        cpd.salvar(cp);
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     public void carregarComboBoxImpressora(){
         ControlePaginasDao cpd = new ControlePaginasDao();
@@ -257,8 +329,8 @@ public class TelaControlePaginas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtData;
-    private javax.swing.JSpinner txtQdtTotal;
     private javax.swing.JSpinner txtQtdFinal;
     private javax.swing.JSpinner txtQtdInicial;
+    private javax.swing.JSpinner txtQtdTotal;
     // End of variables declaration//GEN-END:variables
 }
