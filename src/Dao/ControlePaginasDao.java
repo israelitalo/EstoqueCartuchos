@@ -10,8 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -100,4 +100,56 @@ public class ControlePaginasDao {
         }
     }
     
+    public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){
+        
+        String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_inicial, c.pagina_final, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data > '" + dataInicial + "' AND data < '" + dataFinal + "' ORDER BY data";
+        
+        List<ControlePaginas> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                ControlePaginas cp = new ControlePaginas();
+                cp.setIdControle(rs.getInt("id_controle"));
+                cp.setImpressora(rs.getString("i.modelo"));
+                String data = rs.getString("data");//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
+                data = dataToJava(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
+                cp.setData(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
+                cp.setPaginaInicial(rs.getInt("pagina_inicial"));
+                cp.setPaginaFinal(rs.getInt("pagina_final"));
+                cp.setPaginaTotal(rs.getInt("pagina_total"));
+                lista.add(cp);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return null;
+    }
+    
+        public String dataToSql(String data){
+        
+        String dia = data.substring(0,2);
+        String mes = data.substring(3,5);
+        String ano = data.substring(6,10);
+        
+        data = ano + "-" + mes + "-" + dia;
+        
+        return data;
+    }
+    
+    public String dataToJava(String data){
+        // 2019-11-05
+        String ano = data.substring(0,4);
+        String mes = data.substring(5,7);
+        String dia = data.substring(8,10);
+        
+        data = dia + "/" + mes + "/" + ano;
+        
+        return data;
+    }
 }

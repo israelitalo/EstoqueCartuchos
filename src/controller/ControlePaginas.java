@@ -23,6 +23,7 @@ public class ControlePaginas {
     private Integer paginaInicial;
     private Integer paginaFinal;
     private Integer paginaTotal;
+    private String impressora;
 
     public ControlePaginas(Integer idControle, Integer idImpressora, String data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
         this.idControle = idControle;
@@ -40,10 +41,35 @@ public class ControlePaginas {
         this.paginaFinal = paginaFinal;
         this.paginaTotal = paginaTotal;
     }
+
+    public ControlePaginas(Integer idControle, String data, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal, String impressora) {
+        this.idControle = idControle;
+        this.data = data;
+        this.paginaInicial = paginaInicial;
+        this.paginaFinal = paginaFinal;
+        this.paginaTotal = paginaTotal;
+        this.impressora = impressora;
+    }
     
     public ControlePaginas(){
     }
 
+    public String getImpressora() {
+        return impressora;
+    }
+
+    public void setImpressora(String impressora) {
+        this.impressora = impressora;
+    }
+    
+    public Integer getIdControle() {
+        return idControle;
+    }
+
+    public void setIdControle(Integer idControle) {
+        this.idControle = idControle;
+    }    
+    
     public static SimpleDateFormat getSdf() {
         return sdf;
     }
