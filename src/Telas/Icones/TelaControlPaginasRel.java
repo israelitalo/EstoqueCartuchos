@@ -46,7 +46,8 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator3 = new javax.swing.JSeparator();
-        comboBoxImpressoras = new javax.swing.JComboBox<>();
+        comboBoxImpressoras = new javax.swing.JComboBox<String>();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 700));
@@ -81,11 +82,11 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "IMPRESSORA", "DATA", "PAG. INICIAL", "PAG. FINAL", "PAG. TOTAL"
+                "ID", "IMPRESSORA", "DATA", "PAG. TOTAL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -96,7 +97,9 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Impressoras" }));
+        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressoras" }));
+
+        jLabel3.setText("Impressoras:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,8 +109,10 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(comboBoxImpressoras, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboBoxImpressoras, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
@@ -132,7 +137,9 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxImpressoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(comboBoxImpressoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,8 +211,8 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 cp.getIdControle(),
                 cp.getImpressora(),
                 cp.getData(),
-                cp.getPaginaInicial(),
-                cp.getPaginaFinal(),
+                /*cp.getPaginaInicial(),
+                cp.getPaginaFinal(),*/
                 cp.getPaginaTotal()
             });
         }
@@ -285,6 +292,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

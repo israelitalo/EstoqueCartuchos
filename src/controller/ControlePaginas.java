@@ -50,6 +50,21 @@ public class ControlePaginas {
         this.paginaTotal = paginaTotal;
         this.impressora = impressora;
     }
+
+    public ControlePaginas(Integer idControle, Integer idImpressora, String data, Integer paginaTotal, String impressora) {
+        this.idControle = idControle;
+        this.idImpressora = idImpressora;
+        this.data = data;
+        this.paginaTotal = paginaTotal;
+        this.impressora = impressora;
+    }
+
+    public ControlePaginas(Integer idControle, Integer idImpressora, String data, Integer paginaTotal) {
+        this.idControle = idControle;
+        this.idImpressora = idImpressora;
+        this.data = data;
+        this.paginaTotal = paginaTotal;
+    }
     
     public ControlePaginas(){
     }

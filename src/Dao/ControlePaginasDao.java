@@ -76,7 +76,8 @@ public class ControlePaginasDao {
     
     public boolean salvar(ControlePaginas cp){
         
-        String sql = "INSERT INTO controlepaginas (id_impressora, data, pagina_inicial, pagina_final, pagina_total) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO controlepaginas (id_impressora, data, pagina_total) VALUES (?, ?, ?,)";// novo select
+                     //"INSERT INTO controlepaginas (id_impressora, data, pagina_inicial, pagina_final, pagina_total) VALUES (?, ?, ?, ?, ?)" // select antigo
         
         PreparedStatement stmt = null;
         
@@ -85,9 +86,9 @@ public class ControlePaginasDao {
             
             stmt.setInt(1, cp.getIdImpressora());
             stmt.setString(2, cp.getData());
-            stmt.setInt(3, cp.getPaginaInicial());
-            stmt.setInt(4, cp.getPaginaFinal());
-            stmt.setInt(5, cp.getPaginaTotal());
+            /*stmt.setInt(3, cp.getPaginaInicial());
+            stmt.setInt(4, cp.getPaginaFinal());*/
+            stmt.setInt(3, cp.getPaginaTotal());
             stmt.executeUpdate();
             
             ConexaoJdbc.closeConnection(con, stmt);
@@ -102,8 +103,8 @@ public class ControlePaginasDao {
     
     public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){
         
-        String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_inicial, c.pagina_final, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data > '" + dataInicial + "' AND data < '" + dataFinal + "' ORDER BY data";
-        
+        String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
+                    //"SELECT c.id_controle, i.modelo, c.data, c.pagina_inicial, c.pagina_final, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data" // select antigo.
         List<ControlePaginas> lista = new ArrayList<>();
         
         PreparedStatement stmt = null;
@@ -119,8 +120,8 @@ public class ControlePaginasDao {
                 String data = rs.getString("data");//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
                 data = dataToJava(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
                 cp.setData(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
-                cp.setPaginaInicial(rs.getInt("pagina_inicial"));
-                cp.setPaginaFinal(rs.getInt("pagina_final"));
+                /*cp.setPaginaInicial(rs.getInt("pagina_inicial"));
+                cp.setPaginaFinal(rs.getInt("pagina_final"));*/
                 cp.setPaginaTotal(rs.getInt("pagina_total"));
                 lista.add(cp);
             }
