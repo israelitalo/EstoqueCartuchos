@@ -136,7 +136,7 @@ public class ControlePaginasDao {
     
     public boolean salvar(ControlePaginas cp){
         
-        String sql = "INSERT INTO controlepaginas (id_impressora, data, pagina_total) VALUES (?, ?, ?,)";// novo select
+        String sql = "INSERT INTO controlepaginas (id_impressora, data, pagina_total) VALUES (?, ?, ?)";// novo select
                      //"INSERT INTO controlepaginas (id_impressora, data, pagina_inicial, pagina_final, pagina_total) VALUES (?, ?, ?, ?, ?)" // select antigo
         
         PreparedStatement stmt = null;
@@ -159,6 +159,28 @@ public class ControlePaginasDao {
             System.err.println("Erro: " + ex);
             return false;
         }
+    }
+    //Código está pegando, apenas, o primeiro pagina_total do SELECT.
+    public Integer getPagImpressasPeriodo(Integer idImpressora, String dataInicial, String dataFinal){
+        
+        String sql = "SELECT pagina_total FROM controlepaginas WHERE id_impressora = '" + idImpressora + "' AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+                while(rs.next()){
+                int pagInicial = rs.getInt("pagina_total");
+                int pagFinal = rs.getInt("pagina_total");
+                int pagTotal = pagInicial + pagFinal;
+                return pagTotal;
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){

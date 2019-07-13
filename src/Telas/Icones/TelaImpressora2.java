@@ -84,6 +84,8 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         txtBusca = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jrbTodos = new javax.swing.JRadioButton();
+        RelatorioImpressoras = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 700));
@@ -175,6 +177,16 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         jrbTodos.setText("Buscar todos");
         jrbTodos.setToolTipText("Marque para consultar todas as impressoras");
 
+        RelatorioImpressoras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/relatorio.png"))); // NOI18N
+        RelatorioImpressoras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        RelatorioImpressoras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RelatorioImpressorasMouseClicked(evt);
+            }
+        });
+
+        jLabel4.setText("Páginas impressas");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -219,11 +231,23 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(5, 5, 5)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(RelatorioImpressoras))
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(95, 95, 95)
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RelatorioImpressoras)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelModelo)
                     .addComponent(jLabel1)
@@ -246,8 +270,8 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                         .addComponent(btnExcluir)
                         .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
@@ -482,6 +506,12 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxSetorActionPerformed
 
+    private void RelatorioImpressorasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RelatorioImpressorasMouseClicked
+        TelaControlePaginas controlePaginas = new TelaControlePaginas(null, rootPaneCheckingEnabled);
+        controlePaginas.setVisible(true);
+        
+    }//GEN-LAST:event_RelatorioImpressorasMouseClicked
+
     public void JComboBoxFabricante(){
         ImpressoraDao impDao = new ImpressoraDao();
         impDao.carregarJcomboBoxFabricante(jComboBoxFabricante);
@@ -535,6 +565,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel RelatorioImpressoras;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnExcluir;
@@ -544,6 +575,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelModelo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableImpressora;

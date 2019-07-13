@@ -141,9 +141,13 @@ public class ControlePaginas {
         this.paginaTotal = paginaTotal;
     }
     
-    public Integer calcularPaginas(Integer paginaInicial, Integer paginaFinal){
+    public Integer diminuirPaginas(Integer paginaInicial, Integer paginaFinal){
         this.paginaTotal = paginaFinal - paginaInicial;
         return this.paginaTotal;
     }
     
+    public Integer somarPaginas(Integer paginaInicial, Integer paginaFinal){
+        this.paginaTotal = paginaFinal + paginaInicial;
+        return this.paginaTotal;
+    }
 }
