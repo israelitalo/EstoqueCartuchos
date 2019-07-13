@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -44,13 +46,47 @@ public class ControlePaginasDao {
                 String modelo = rs.getString("modelo");
                 comboBox.addItem(modelo);
             }
-            ConexaoJdbc.closeConnection(con, stmt);
+            //ConexaoJdbc.closeConnection(con, stmt);
         } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null,
                 "Ocorreu erro ao carregar a Combo Box", "Erro",
                 JOptionPane.ERROR_MESSAGE);
             }
         
+    }
+    
+    public String getLastDateOfImpressora(Integer idImpressora){
+        
+        String sql = "SELECT data FROM controlepaginas WHERE id_impressora = '" + idImpressora + "' ORDER BY data DESC LIMIT 1";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareCall(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                
+                String ultimaData = rs.getString("data");
+                
+                if(ultimaData != null){
+                    ultimaData = dataToJava(ultimaData);
+                    return ultimaData;
+                }
+                else
+                {
+                    String semRegistro = "Não há registros.";
+                    return semRegistro;
+                }    
+                
+            }
+            //ConexaoJdbc.closeConnection(con, stmt);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String semRegistro = "Não há registros.";
+        return semRegistro;
     }
     
     public Integer getIdJcomboBoxImpressora(String impressora){
@@ -67,11 +103,35 @@ public class ControlePaginasDao {
                 int idImpressora = rs.getInt("id_impressora");
                 return idImpressora;
             }
-            ConexaoJdbc.closeConnection(con, stmt);
+            //ConexaoJdbc.closeConnection(con, stmt);
         } catch (SQLException ex) {
             System.err.println("Erro:" + ex);;
         }
         return null;
+    }
+    
+    public Integer getQtdPaginas(Integer idImpressora, String data){
+        
+        String sql = "SELECT pagina_total FROM controlepaginas WHERE id_impressora = '" + idImpressora + "' AND data = '" + data + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int paginaTotal = rs.getInt("pagina_total");
+                return paginaTotal;
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        int paginaTotal = 0;
+        return paginaTotal;
     }
     
     public boolean salvar(ControlePaginas cp){
