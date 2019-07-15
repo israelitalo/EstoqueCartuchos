@@ -161,7 +161,7 @@ public class ControlePaginasDao {
         }
     }
     //Código está pegando, apenas, o primeiro pagina_total do SELECT.
-    public Integer getPagImpressasPeriodo(Integer idImpressora, String dataInicial, String dataFinal){
+    /*public Integer getPagImpressasPeriodo(Integer idImpressora, String dataInicial, String dataFinal){
         
         String sql = "SELECT pagina_total FROM controlepaginas WHERE id_impressora = '" + idImpressora + "' AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "'";
         
@@ -181,7 +181,7 @@ public class ControlePaginasDao {
             Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
+    }*/
     
     public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){
         

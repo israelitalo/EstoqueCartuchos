@@ -109,6 +109,14 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("TOTAL DE PÁGINAS IMPRESSAS NO PERÍODO:");
 
+        txtPagImpressas.setEditable(false);
+        txtPagImpressas.setOpaque(false);
+        txtPagImpressas.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtPagImpressasCaretUpdate(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -204,18 +212,22 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         
         //codificar aqui para calcular o soma das impressões.
         
-        int totalImpressoes = cpd.getPagImpressasPeriodo(idImpressora, dataInicial, dataFinal);
+        /*int totalImpressoes = cpd.getPagImpressasPeriodo(idImpressora, dataInicial, dataFinal);
         
         //Convertendo int para String.
         String totalImpressoesString = Integer.toString(totalImpressoes);
         
-        System.out.println(totalImpressoes);
-        
-        txtPagImpressas.setText(totalImpressoesString);
+        txtPagImpressas.setText(totalImpressoesString);*/
         
         listarRelatorio(idImpressora, dataInicial, dataFinal);
         
+        txtPagImpressas.setText(Integer.toString(getPagImpressas()));
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtPagImpressasCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtPagImpressasCaretUpdate
+        //
+    }//GEN-LAST:event_txtPagImpressasCaretUpdate
 
     public void listarRelatorio(Integer idImpressora, String dataInicial, String dataFinal){
         
@@ -243,12 +255,28 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 cp.getIdControle(),
                 cp.getImpressora(),
                 cp.getData(),
-                /*cp.getPaginaInicial(),
-                cp.getPaginaFinal(),*/
                 cp.getPaginaTotal()
             });
         }
 
+        int linhas = jTable1.getRowCount();
+        int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
+        int soma = 0;
+        for(int i = 0; i < linhas; i++){
+            vetor [i] = (Integer) jTable1.getModel().getValueAt(i, 3);
+            soma += vetor[i];
+        }
+        setPagImpressas(soma);
+    }
+    
+    private int pagImpressas = 0;
+    
+    public void setPagImpressas(int pagImpressas){
+        this.pagImpressas = pagImpressas;
+    }
+    
+    public int getPagImpressas(){
+        return pagImpressas;
     }
     
     public void carregarComboBoxImpressora(){

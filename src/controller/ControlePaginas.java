@@ -148,6 +148,7 @@ public class ControlePaginas {
     
     public Integer somarPaginas(Integer paginaInicial, Integer paginaFinal){
         this.paginaTotal = paginaFinal + paginaInicial;
+        this.paginaTotal = this.paginaTotal - paginaInicial;
         return this.paginaTotal;
     }
 }

@@ -245,6 +245,13 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPagImpressas">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="txtPagImpressasCaretUpdate"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
