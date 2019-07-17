@@ -160,28 +160,6 @@ public class ControlePaginasDao {
             return false;
         }
     }
-    //Código está pegando, apenas, o primeiro pagina_total do SELECT.
-    /*public Integer getPagImpressasPeriodo(Integer idImpressora, String dataInicial, String dataFinal){
-        
-        String sql = "SELECT pagina_total FROM controlepaginas WHERE id_impressora = '" + idImpressora + "' AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "'";
-        
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        
-        try{
-            stmt = con.prepareStatement(sql);
-            rs = stmt.executeQuery();
-                while(rs.next()){
-                int pagInicial = rs.getInt("pagina_total");
-                int pagFinal = rs.getInt("pagina_total");
-                int pagTotal = pagInicial + pagFinal;
-                return pagTotal;
-                }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }*/
     
     public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){
         
@@ -202,8 +180,6 @@ public class ControlePaginasDao {
                 String data = rs.getString("data");//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
                 data = dataToJava(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
                 cp.setData(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
-                /*cp.setPaginaInicial(rs.getInt("pagina_inicial"));
-                cp.setPaginaFinal(rs.getInt("pagina_final"));*/
                 cp.setPaginaTotal(rs.getInt("pagina_total"));
                 lista.add(cp);
             }

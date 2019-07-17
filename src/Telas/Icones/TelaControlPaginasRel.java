@@ -46,7 +46,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator3 = new javax.swing.JSeparator();
-        comboBoxImpressoras = new javax.swing.JComboBox<>();
+        comboBoxImpressoras = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtPagImpressas = new javax.swing.JTextField();
@@ -102,7 +102,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Impressoras" }));
+        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressoras" }));
 
         jLabel3.setText("Impressoras:");
 
@@ -209,15 +209,6 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         
         dataInicial = dataToSql(dataInicial);
         dataFinal = dataToSql(dataFinal);
-        
-        //codificar aqui para calcular o soma das impressões.
-        
-        /*int totalImpressoes = cpd.getPagImpressasPeriodo(idImpressora, dataInicial, dataFinal);
-        
-        //Convertendo int para String.
-        String totalImpressoesString = Integer.toString(totalImpressoes);
-        
-        txtPagImpressas.setText(totalImpressoesString);*/
         
         listarRelatorio(idImpressora, dataInicial, dataFinal);
         
