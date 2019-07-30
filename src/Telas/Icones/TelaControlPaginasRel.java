@@ -8,6 +8,7 @@ package Telas.Icones;
 import Dao.ControlePaginasDao;
 import controller.ControlePaginas;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,10 +47,11 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator3 = new javax.swing.JSeparator();
-        comboBoxImpressoras = new javax.swing.JComboBox<String>();
+        comboBoxImpressoras = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtPagImpressas = new javax.swing.JTextField();
+        btnAdcRel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatórios de páginas impressas");
@@ -102,7 +104,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressoras" }));
+        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Impressoras" }));
 
         jLabel3.setText("Impressoras:");
 
@@ -114,6 +116,13 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         txtPagImpressas.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtPagImpressasCaretUpdate(evt);
+            }
+        });
+
+        btnAdcRel.setText("Adicionar impressora ao relatório");
+        btnAdcRel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdcRelActionPerformed(evt);
             }
         });
 
@@ -146,12 +155,14 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(50, 50, 50))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPagImpressas))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAdcRel, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtPagImpressas))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -179,7 +190,9 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtPagImpressas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnAdcRel)
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -219,6 +232,36 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     private void txtPagImpressasCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtPagImpressasCaretUpdate
         //
     }//GEN-LAST:event_txtPagImpressasCaretUpdate
+
+    private void btnAdcRelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdcRelActionPerformed
+        String impressora = (String) comboBoxImpressoras.getSelectedItem();
+                             //Convertendo datas para  formato do SQL
+        String dataInicial = dataToSql(txtDataInicial.getText());
+                           //Convertendo datas para  formato do SQL
+        String dataFinal = dataToSql(txtDataFinal.getText());
+        String paginasTotal = txtPagImpressas.getText();
+        
+        //Converter paginasTotal para int
+        int paginasTotalInt = Integer.parseInt(paginasTotal);
+        
+        //metodo para adicionar informações à tabela de relatório.
+        ControlePaginas cp = new ControlePaginas();
+        ControlePaginasDao cpd = new ControlePaginasDao();
+        
+        cp.setImpressora(impressora);
+        cp.setDataInicial(dataInicial);
+        cp.setDataFinal(dataFinal);
+        cp.setPaginaTotal(paginasTotalInt);
+        
+        if(cpd.relatorioFinal(cp) == true){
+            JOptionPane.showMessageDialog(null, "Impressora incluída com sucesso ao relatório.");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Impressora já inclída no relatório.");
+        }
+        
+    }//GEN-LAST:event_btnAdcRelActionPerformed
 
     public void listarRelatorio(Integer idImpressora, String dataInicial, String dataFinal){
         
@@ -339,6 +382,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdcRel;
     private javax.swing.JComboBox<String> comboBoxImpressoras;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

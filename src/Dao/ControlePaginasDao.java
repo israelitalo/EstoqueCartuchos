@@ -161,10 +161,35 @@ public class ControlePaginasDao {
         }
     }
     
+    public boolean relatorioFinal(ControlePaginas cp){
+        
+        String sql = "INSERT INTO relatorioperiodo (impressora, data_inicial, data_final, pagina_total) VALUES (?, ?, ?, ?)";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            
+            stmt.setString(1, cp.getImpressora());
+            stmt.setString(2, cp.getDataInicial());
+            stmt.setString(3, cp.getDataFinal());
+            stmt.setInt(4, cp.getPaginaTotal());
+            
+            stmt.executeUpdate();
+            
+            ConexaoJdbc.closeConnection(con, stmt);
+            
+            return true;
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+            return false;
+        }
+    }
+    
     public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){
         
         String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
-                    //"SELECT c.id_controle, i.modelo, c.data, c.pagina_inicial, c.pagina_final, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data" // select antigo.
+
         List<ControlePaginas> lista = new ArrayList<>();
         
         PreparedStatement stmt = null;

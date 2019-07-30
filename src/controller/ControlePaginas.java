@@ -20,6 +20,8 @@ public class ControlePaginas {
     private Integer idControle;
     private Integer idImpressora;
     private String data;
+    private String dataInicial;
+    private String dataFinal;    
     private Integer paginaInicial;
     private Integer paginaFinal;
     private Integer paginaTotal;
@@ -31,6 +33,21 @@ public class ControlePaginas {
         this.data = data;
         this.paginaInicial = paginaInicial;
         this.paginaFinal = paginaFinal;
+        this.paginaTotal = paginaTotal;
+    }
+    //Sobrecarga de construtor para tabela de relatório final.
+    public ControlePaginas(Integer idControle, String impressora, String dataInicial, String dataFinal, Integer paginaTotal){
+        this.idControle = idControle;
+        this.impressora = impressora;
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataFinal;
+        this.paginaTotal = paginaTotal;
+    }
+        //Sobrecarga de construtor para tabela de relatório final.
+        public ControlePaginas( String impressora, String dataInicial, String dataFinal, Integer paginaTotal){
+        this.impressora = impressora;
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataFinal;
         this.paginaTotal = paginaTotal;
     }
 
@@ -137,6 +154,22 @@ public class ControlePaginas {
         return paginaTotal;
     }
 
+    public String getDataInicial() {
+        return dataInicial;
+    }
+
+    public void setDataInicial(String dataInicial) {
+        this.dataInicial = dataInicial;
+    }
+
+    public String getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(String dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+    
     public void setPaginaTotal(Integer paginaTotal) {
         this.paginaTotal = paginaTotal;
     }
