@@ -186,6 +186,51 @@ public class ControlePaginasDao {
         }
     }
     
+    public List<ControlePaginas> listarRelatorioFinal(){
+        String sql = "SELECT * FROM relatorioperiodo";
+        
+        List<ControlePaginas> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                ControlePaginas cp = new ControlePaginas();
+                cp.setIdControle(rs.getInt("id_controle"));
+                cp.setImpressora(rs.getString("impressora"));
+                    String dataInicial = rs.getString("data_inicial");
+                    String dataFinal = rs.getString("data_final");
+                    dataToJava(dataInicial);
+                    dataToJava(dataFinal);
+                cp.setDataInicial(dataInicial);
+                cp.setDataFinal(dataFinal);
+                cp.setPaginaTotal(rs.getInt("pagina_total"));
+                lista.add(cp);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            System.err.println(ex);
+            return null;
+        }
+    }
+    
+    public void deletarRelatorioFinal(){
+        String sql = "DELETE FROM relatorioperiodo";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            ConexaoJdbc.closeConnection(con, stmt);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){
         
         String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
