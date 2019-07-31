@@ -201,10 +201,10 @@ public class ControlePaginasDao {
                 ControlePaginas cp = new ControlePaginas();
                 cp.setIdControle(rs.getInt("id_controle"));
                 cp.setImpressora(rs.getString("impressora"));
-                    String dataInicial = rs.getString("data_inicial");
-                    String dataFinal = rs.getString("data_final");
-                    dataToJava(dataInicial);
-                    dataToJava(dataFinal);
+                    String dataInicial = dataToJava(rs.getString("data_inicial"));
+                    String dataFinal = dataToJava(rs.getString("data_final"));
+                    /*dataToJava(dataInicial);
+                    dataToJava(dataFinal);*/
                 cp.setDataInicial(dataInicial);
                 cp.setDataFinal(dataFinal);
                 cp.setPaginaTotal(rs.getInt("pagina_total"));

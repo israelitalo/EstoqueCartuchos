@@ -49,7 +49,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator3 = new javax.swing.JSeparator();
-        comboBoxImpressoras = new javax.swing.JComboBox<>();
+        comboBoxImpressoras = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtPagImpressas = new javax.swing.JTextField();
@@ -107,7 +107,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Impressoras" }));
+        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressoras" }));
 
         jLabel3.setText("Impressoras:");
 
@@ -280,7 +280,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         TelaRelatorioPeriodoTable relatorioFinal = new TelaRelatorioPeriodoTable(null, rootPaneCheckingEnabled);
         
-        MessageFormat header = new MessageFormat("Controle de impressões de " + txtDataInicial.getText() + "a " + txtDataFinal.getText());
+        MessageFormat header = new MessageFormat("Controle de impressões de " + txtDataInicial.getText() + " a " + txtDataFinal.getText());
         try {
             relatorioFinal.tableRelatorio.print(JTable.PrintMode.FIT_WIDTH, header, null);
             ControlePaginasDao cpd = new ControlePaginasDao();

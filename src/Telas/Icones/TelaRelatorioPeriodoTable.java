@@ -96,9 +96,9 @@ public class TelaRelatorioPeriodoTable extends javax.swing.JDialog {
         }
         
         tableRelatorio.getColumnModel().getColumn(0).setPreferredWidth(0);
-        tableRelatorio.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tableRelatorio.getColumnModel().getColumn(2).setPreferredWidth(150);
-        tableRelatorio.getColumnModel().getColumn(3).setPreferredWidth(150);
+        tableRelatorio.getColumnModel().getColumn(1).setPreferredWidth(250);
+        tableRelatorio.getColumnModel().getColumn(2).setPreferredWidth(125);
+        tableRelatorio.getColumnModel().getColumn(3).setPreferredWidth(125);
         tableRelatorio.getColumnModel().getColumn(4).setPreferredWidth(150);
     }
     
