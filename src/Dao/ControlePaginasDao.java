@@ -203,8 +203,6 @@ public class ControlePaginasDao {
                 cp.setImpressora(rs.getString("impressora"));
                     String dataInicial = dataToJava(rs.getString("data_inicial"));
                     String dataFinal = dataToJava(rs.getString("data_final"));
-                    /*dataToJava(dataInicial);
-                    dataToJava(dataFinal);*/
                 cp.setDataInicial(dataInicial);
                 cp.setDataFinal(dataFinal);
                 cp.setPaginaTotal(rs.getInt("pagina_total"));
@@ -256,6 +254,45 @@ public class ControlePaginasDao {
             return lista;
         } catch (SQLException ex) {
             System.err.println(ex);
+        }
+        return null;
+    }
+    
+    public Integer getIdSetor(String impressora){
+        String sql = "SELECT i.id_setor FROM impressora i WHERE i.modelo = '" + impressora + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Integer idSetor = rs.getInt("i.id_setor");
+                return idSetor;
+            }
+            
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+        }
+        return null;
+    }
+    
+    public String getSetor(Integer idSetor){
+        String sql = "SELECT s.setor FROM setor s WHERE s.id_setor = '" + idSetor + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                String setor = rs.getString("s.setor");
+                return setor;
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
         }
         return null;
     }

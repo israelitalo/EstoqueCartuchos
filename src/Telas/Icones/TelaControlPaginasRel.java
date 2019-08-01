@@ -49,7 +49,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator3 = new javax.swing.JSeparator();
-        comboBoxImpressoras = new javax.swing.JComboBox<String>();
+        comboBoxImpressoras = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtPagImpressas = new javax.swing.JTextField();
@@ -107,7 +107,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressoras" }));
+        comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Impressoras" }));
 
         jLabel3.setText("Impressoras:");
 
