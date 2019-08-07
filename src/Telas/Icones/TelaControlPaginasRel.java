@@ -58,7 +58,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatórios de páginas impressas");
-        setPreferredSize(new java.awt.Dimension(900, 700));
+        setPreferredSize(new java.awt.Dimension(958, 745));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(900, 700));
 
@@ -326,7 +326,21 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         int soma = 0;
         for(int i = 0; i < linhas; i++){
             vetor [i] = (Integer) jTable1.getModel().getValueAt(i, 3);
-            soma += vetor[i];
+            
+            // >>Teste<< Código para selecionar a última linha da tabela.
+            jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
+            
+            int linhaSelecionada = jTable1.getSelectedRow();
+            
+            int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
+            
+            soma = valorUltimaLinha - vetor[0];
+            
+            //Condição caso só haja 1 linha.
+            if(soma == 0){
+                soma = vetor[0];
+            }
+            
         }
         setPagImpressas(soma);
     }
