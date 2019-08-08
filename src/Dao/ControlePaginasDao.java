@@ -30,6 +30,26 @@ public class ControlePaginasDao {
         System.out.println("ControlePaginasDao conectado com sucesso!");
     }
     
+    //Retornar todas as impressoras num vetor String[].
+    public void todasImpressoras(String[] vetorImpressora){
+        String sql = "SELECT i.modelo FROM impressora i";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            int i = 0;
+            while(rs.next()){
+                String impressora = rs.getString("modelo");
+                vetorImpressora[i] = impressora;
+                i++;
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+        }
+    }
+    
     public void carregarComboBoxImpressora(JComboBox comboBox){
         
         String sql = "SELECT modelo FROM impressora";
@@ -230,6 +250,36 @@ public class ControlePaginasDao {
     }
     
     public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){
+        
+        String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
+
+        List<ControlePaginas> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                ControlePaginas cp = new ControlePaginas();
+                cp.setIdControle(rs.getInt("id_controle"));
+                cp.setImpressora(rs.getString("i.modelo"));
+                String data = rs.getString("data");//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
+                data = dataToJava(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
+                cp.setData(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
+                cp.setPaginaTotal(rs.getInt("pagina_total"));
+                lista.add(cp);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return null;
+    }
+    
+    //teste
+    public List<ControlePaginas> listarSoma(Integer idImpressora, String dataInicial, String dataFinal){
         
         String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
 

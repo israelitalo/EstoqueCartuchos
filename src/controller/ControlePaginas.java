@@ -26,6 +26,7 @@ public class ControlePaginas {
     private Integer paginaFinal;
     private Integer paginaTotal;
     private String impressora;
+    private Integer soma;
 
     public ControlePaginas(Integer idControle, Integer idImpressora, String data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
         this.idControle = idControle;
@@ -35,6 +36,14 @@ public class ControlePaginas {
         this.paginaFinal = paginaFinal;
         this.paginaTotal = paginaTotal;
     }
+
+    public ControlePaginas(Integer idControle, String data, String impressora, Integer soma) {
+        this.idControle = idControle;
+        this.data = data;
+        this.impressora = impressora;
+        this.soma = soma;
+    }
+    
     //Sobrecarga de construtor para tabela de relatório final.
     public ControlePaginas(Integer idControle, String impressora, String dataInicial, String dataFinal, Integer paginaTotal){
         this.idControle = idControle;
@@ -86,6 +95,14 @@ public class ControlePaginas {
     public ControlePaginas(){
     }
 
+    public Integer getSoma() {
+        return soma;
+    }
+
+    public void setSoma(Integer soma) {
+        this.soma = soma;
+    }
+    
     public String getImpressora() {
         return impressora;
     }
