@@ -202,6 +202,10 @@ public class ControlePaginasDao {
         }
     }
     
+    
+    
+    
+    //Método para inserir itens à tabela relatorioperiodo, quando o botão radio Buscar Todos, na tela TelaControlPaginasRel estiver desmarcado e o usuário clicar no botão Adc. Impressora ao Relatório.
     public boolean relatorioFinal(ControlePaginas cp){
         
         String sql = "INSERT INTO relatorioperiodo (impressora, data_inicial, data_final, pagina_total) VALUES (?, ?, ?, ?)";
@@ -227,6 +231,7 @@ public class ControlePaginasDao {
         }
     }
     
+    //Método usado na tela que contém a tabela dos dados da tabela relatorioperiodo.
     public List<ControlePaginas> listarRelatorioFinal(){
         String sql = "SELECT * FROM relatorioperiodo";
         
