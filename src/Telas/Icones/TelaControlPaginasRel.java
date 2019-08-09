@@ -9,6 +9,8 @@ import Dao.ControlePaginasDao;
 import controller.ControlePaginas;
 import java.awt.Dimension;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -252,12 +254,19 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     private void btnAdcRelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdcRelActionPerformed
         //Tentando inserir todos os dados de uma única vez, para impressão do relatório de forma otimizada.
         String[] vetorImpressoras = vetorImpressoras();
+        
+        int[] vetorSoma = new int[vetorImpressoras.length];
+        
         //Convertendo datas para  formato do SQL
         String dataInicial = dataToSql(txtDataInicial.getText());
         //Convertendo datas para  formato do SQL
         String dataFinal = dataToSql(txtDataFinal.getText());
         String paginasTotal = txtPagImpressas.getText();// Rever esta linha!!!! Linha para adicioanr informação à tabela.
-        
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = new Date();
+        String dataAtual = dataToSql(sdf.format(data));
+        System.out.println(dataAtual);
         //pegando id das impressoras, através do vetorImpressoras;
         ControlePaginasDao cpd = new ControlePaginasDao();
         
@@ -271,39 +280,78 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             
             model.setNumRows(0);
              
-                for(ControlePaginas cp: cpd.listar(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]), dataInicial, dataFinal)){
-                    model.addRow(new Object[]{
-                    cp.getIdControle(),
-                    cp.getImpressora(),
-                    cp.getData(),
-                    cp.getPaginaTotal()
-                    });
-                }
-
-            int linhas = jTable1.getRowCount();
-            int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
-            int soma = 0;
+            for(ControlePaginas cp: cpd.listar(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]), dataInicial, dataFinal)){
+                model.addRow(new Object[]{
+                cp.getIdControle(),
+                cp.getImpressora(),
+                cp.getData(),
+                cp.getPaginaTotal()
+                });
+                
+                int linhas = jTable1.getRowCount();
+                int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
+                int soma = 0;
+                
                 for(int j=0; j < linhas; j++){
-                    vetor [j] = (Integer) jTable1.getModel().getValueAt(j, 3);
-            
-                    // >>Teste<< Código para selecionar a última linha da tabela.
-                    jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
-            
-                    int linhaSelecionada = jTable1.getSelectedRow();
-            
-                    int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
-            
-                    soma = valorUltimaLinha - vetor[0];
-            
-                    //Condição caso só haja 1 linha.
-                    if(soma == 0){
-                        soma = vetor[0];
-                    }
-            
+                vetor [j] = (Integer) jTable1.getModel().getValueAt(j, 3);
+
+                // >>Teste<< Código para selecionar a última linha da tabela.
+                jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
+
+                int linhaSelecionada = jTable1.getSelectedRow();
+
+                int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
+
+                soma = valorUltimaLinha - vetor[0];
+                
+                //Condição caso só haja 1 linha.
+                if(soma == 0){
+                   soma = vetor[0];
+                   //vetorSoma[i] = vetor[0];
                 }
-            setPagImpressas(soma);
-            System.out.println("Impressora [" + vetorImpressoras[i] +  "], ID [" + cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]) + "]: " + soma);
-            txtPagImpressas.setText(Integer.toString(getPagImpressas()));
+                
+                //vetorSoma[i] = soma;
+                
+                setPagImpressas(soma);
+                
+                //Atualiza algumas somas, só aparece 07 de 13 impressoras, caso use o contador j. Se usar o contador 1, não atualiza as somas, mas aparecem todas as impressoras e o sistema não compila.
+                for(i = 0; i<vetorImpressoras.length;i++){
+                    ControlePaginas cpTeste = new ControlePaginas();
+                    cpTeste.setImpressora(vetorImpressoras[i]);
+                    cpTeste.setData(dataAtual);
+                    cpTeste.setSoma(soma);
+                    cpd.salvarRelatorioVetores(cpTeste);
+                    System.out.println("salvando objeto " + i);
+                }
+               
+                //O While nessa posição puxa todas as impressoras, mas não atualiza a soma após a segunda linha.
+                /*while(i<vetorImpressoras.length){
+                    ControlePaginas cpTeste = new ControlePaginas();
+                    cpTeste.setImpressora(vetorImpressoras[i]);
+                    cpTeste.setData(dataAtual);
+                    cpTeste.setSoma(soma);
+                    cpd.salvarRelatorioVetores(cpTeste);
+                    i++;
+                }/*
+                
+                //Tentando salvar sem laços. Aqui não salva todas as impressoras.
+                    /*ControlePaginas cpTeste = new ControlePaginas();
+                    cpTeste.setImpressora(vetorImpressoras[i]);
+                    cpTeste.setData(dataAtual);
+                    cpTeste.setSoma(soma);
+                    cpd.salvarRelatorioVetores(cpTeste);
+                    System.out.println("salvando objeto " + i);*/
+                
+                System.out.println("Impressora [" + vetorImpressoras[i] +  "], ID [" + cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]) + "]: " + soma);
+                txtPagImpressas.setText(Integer.toString(getPagImpressas()));
+            }
+        }
+
+            
+            
+            
+            
+
         }
         
         //Código funcionando, para adicionar itens na tabela relatorioperiodo, mas só adiciona uma impressora por vez, manualmente.
