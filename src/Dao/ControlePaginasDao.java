@@ -180,7 +180,7 @@ public class ControlePaginasDao {
             return false;
         }
     }
-    
+    //Método para salvar itens na tabela recebervetores, quando o botao radio Buscar Todos, na tela TelaControlPaginasRel, estiver selecionado.
     public boolean salvarRelatorioVetores(ControlePaginas cp){
         
         String sql = "INSERT INTO recebervetores (impressora, datarelatorio, soma) VALUES (?, ?, ?)";
@@ -202,8 +202,60 @@ public class ControlePaginasDao {
         }
     }
     
+    //Método para listar itens da tabela recebervetores, na tabela da tela TelaControlPaginasRel, quando o botão radio Buscar Todos estiver selecionado.
+    public List<ControlePaginas> listarRelatorioVetores(){
+        String sql = "SELECT * FROM recebervetores";
+        
+        List<ControlePaginas> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                ControlePaginas cp = new ControlePaginas();
+                cp.setIdReceberVetores(rs.getInt("id"));
+                cp.setImpressora(rs.getString("impressora"));
+                String data = dataToJava(rs.getString("datarelatorio"));
+                cp.setData(data);
+                cp.setSoma(rs.getInt("soma"));
+                lista.add(cp);
+            }
+            
+            return lista;
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+        }
+        return null;
+    }
+        //teste
+        public void zerarIdTabelaReceberVetores(){
+            String sql = "ALTER TABLE recebervetores AUTO_INCREMENT = 0 ";
+            PreparedStatement stmt = null;
+            try{
+                stmt = con.prepareStatement(sql);
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                System.err.println("Erro: " + ex);
+            }
+        }
     
-    
+        public void deletarRelatorioVetores(){
+        String sql = "DELETE FROM recebervetores";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            //ConexaoJdbc.closeConnection(con, stmt);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     //Método para inserir itens à tabela relatorioperiodo, quando o botão radio Buscar Todos, na tela TelaControlPaginasRel estiver desmarcado e o usuário clicar no botão Adc. Impressora ao Relatório.
     public boolean relatorioFinal(ControlePaginas cp){

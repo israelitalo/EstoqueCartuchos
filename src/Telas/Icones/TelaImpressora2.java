@@ -34,8 +34,6 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         this.busca = busca;
     }
     
-    
-    
     private Date data = new Date();
 
     public Date getData() {

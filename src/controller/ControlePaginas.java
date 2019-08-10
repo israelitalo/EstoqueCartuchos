@@ -27,6 +27,7 @@ public class ControlePaginas {
     private Integer paginaTotal;
     private String impressora;
     private Integer soma;
+    private Integer idReceberVetores;
 
     public ControlePaginas(Integer idControle, Integer idImpressora, String data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
         this.idControle = idControle;
@@ -37,6 +38,13 @@ public class ControlePaginas {
         this.paginaTotal = paginaTotal;
     }
 
+    public ControlePaginas(String data, String impressora, Integer soma, Integer idReceberVetores) {
+        this.data = data;
+        this.impressora = impressora;
+        this.soma = soma;
+        this.idReceberVetores = idReceberVetores;
+    }
+    
     public ControlePaginas(Integer idControle, String data, String impressora, Integer soma) {
         this.idControle = idControle;
         this.data = data;
@@ -185,6 +193,14 @@ public class ControlePaginas {
 
     public void setDataFinal(String dataFinal) {
         this.dataFinal = dataFinal;
+    }
+
+    public Integer getIdReceberVetores() {
+        return idReceberVetores;
+    }
+
+    public void setIdReceberVetores(Integer idReceberVetores) {
+        this.idReceberVetores = idReceberVetores;
     }
     
     public void setPaginaTotal(Integer paginaTotal) {

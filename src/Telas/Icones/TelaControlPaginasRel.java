@@ -7,7 +7,6 @@ package Telas.Icones;
 
 import Dao.ControlePaginasDao;
 import controller.ControlePaginas;
-import java.awt.Dimension;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,8 +28,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         carregarComboBoxImpressora();
-        
-        
+        cleanTabelaVetoresErelatorioPeriodo();
     }
 
     /**
@@ -92,6 +90,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             }
         });
 
+        jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -108,11 +107,18 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         jScrollPane1.setViewportView(jTable1);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         comboBoxImpressoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Impressoras" }));
+        comboBoxImpressoras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        comboBoxImpressoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxImpressorasActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Impressoras:");
 
@@ -120,6 +126,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         jLabel4.setText("TOTAL DE PÁGINAS IMPRESSAS NO PERÍODO:");
 
         txtPagImpressas.setEditable(false);
+        txtPagImpressas.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txtPagImpressas.setOpaque(false);
         txtPagImpressas.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -128,6 +135,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         });
 
         btnAdcRel.setText("Adc. Impressora ao Relatório");
+        btnAdcRel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdcRel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdcRelActionPerformed(evt);
@@ -135,6 +143,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         });
 
         btnImprimirRel.setText("Imprimir Relatório");
+        btnImprimirRel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnImprimirRel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirRelActionPerformed(evt);
@@ -142,6 +151,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         });
 
         radioBuscarTodos.setText("Buscar todos");
+        radioBuscarTodos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -212,7 +222,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 .addComponent(btnAdcRel)
                 .addGap(18, 18, 18)
                 .addComponent(btnImprimirRel)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -230,7 +240,14 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void cleanTabelaVetoresErelatorioPeriodo(){
+        ControlePaginasDao cpd = new ControlePaginasDao();
+        cpd.zerarIdTabelaReceberVetores();//Para o id da tabela recebervetores sempre iniciar em 1.
+        cpd.deletarRelatorioVetores();//limpando a planilha de receber relatório.
+        cpd.deletarRelatorioFinal();
+    }
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
+        
         //Quando o radio Buscar todos não está selecionado
         if(radioBuscarTodos.isSelected() == false){
             ControlePaginasDao cpd = new ControlePaginasDao();
@@ -246,11 +263,15 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             dataFinal = dataToSql(dataFinal);
         
             listarRelatorio(idImpressora, dataInicial, dataFinal);
-        
+            
             txtPagImpressas.setText(Integer.toString(getPagImpressas()));
         }
         //Quando o radio Buscar todos está selecionado
         if(radioBuscarTodos.isSelected() == true){
+            
+            ControlePaginasDao cpd = new ControlePaginasDao();
+            cpd.zerarIdTabelaReceberVetores();//Para o id da tabela recebervetores sempre iniciar em 1.
+            cpd.deletarRelatorioVetores();//limpando a planilha de receber relatório.
             
             //Tentando inserir todos os dados de uma única vez, para impressão do relatório de forma otimizada.
             String[] vetorImpressoras = vetorImpressoras();
@@ -264,7 +285,6 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             Date data = new Date();
             String dataAtual = dataToSql(sdf.format(data));
             //pegando id das impressoras, através do vetorImpressoras;
-            ControlePaginasDao cpd = new ControlePaginasDao();
         
             for(int i = 0; i<vetorImpressoras.length;i++){
                 cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]);
@@ -295,9 +315,9 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             
                     // >>Teste<< Código para selecionar a última linha da tabela.
                     jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
-            
+
                     int linhaSelecionada = jTable1.getSelectedRow();
-            
+                                
                     int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
             
                     this.soma = valorUltimaLinha - vetor[0];
@@ -325,10 +345,49 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
             model.removeRow(jTable1.getSelectedRow());
+            
+            listarVetores();
         }
         
     }//GEN-LAST:event_btnBuscaActionPerformed
 
+    public void listarVetores(){
+        
+        int qtdPaginas = 0;
+        
+        ControlePaginasDao cpd = new ControlePaginasDao();
+        List<ControlePaginas> lista = cpd.listarRelatorioVetores();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        model.setNumRows(0);
+        
+        for(ControlePaginas cp: cpd.listarRelatorioVetores()){
+            model.addRow(new Object[]{
+                cp.getIdReceberVetores(),
+                cp.getImpressora(),
+                cp.getData(),
+                cp.getSoma()
+            });
+        }
+        
+        int linhas = jTable1.getRowCount();
+        int vetor[] = new int[linhas];
+        
+        for(int i=0;i<vetor.length;i++){
+            //Selecionar a primeira linha da tabela.
+            jTable1.changeSelection(i, jTable1.getRowCount(), false, false);
+            
+            int linhaSelecionada = jTable1.getSelectedRow();
+            
+            vetor[i] = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
+            
+            qtdPaginas += vetor[i];
+            
+        }
+        System.out.println(qtdPaginas);
+        txtPagImpressas.setText(Integer.toString(qtdPaginas));
+    }
+    
     private void txtPagImpressasCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtPagImpressasCaretUpdate
         //
     }//GEN-LAST:event_txtPagImpressasCaretUpdate
@@ -336,126 +395,74 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     int soma = 0;
     
     private void btnAdcRelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdcRelActionPerformed
-        //Tentando inserir todos os dados de uma única vez, para impressão do relatório de forma otimizada.
-        String[] vetorImpressoras = vetorImpressoras();
-        //Convertendo datas para  formato do SQL
-        String dataInicial = dataToSql(txtDataInicial.getText());
-        //Convertendo datas para  formato do SQL
-        String dataFinal = dataToSql(txtDataFinal.getText());
-        String paginasTotal = txtPagImpressas.getText();// Rever esta linha!!!! Linha para adicioanr informação à tabela.
+        
+        if(radioBuscarTodos.isSelected() == false){
+            //Código funcionando, para adicionar itens na tabela relatorioperiodo, mas só adiciona uma impressora por vez, manualmente.
+            String impressora = (String) comboBoxImpressoras.getSelectedItem();
+                                 //Convertendo datas para  formato do SQL
+            String dataInicial = dataToSql(txtDataInicial.getText());
+                               //Convertendo datas para  formato do SQL
+            String dataFinal = dataToSql(txtDataFinal.getText());
+            String paginasTotal = txtPagImpressas.getText();
+        
+            //Converter paginasTotal para int
+            int paginasTotalInt = Integer.parseInt(paginasTotal);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date data = new Date();
-        String dataAtual = dataToSql(sdf.format(data));
-        System.out.println(dataAtual);
-        //pegando id das impressoras, através do vetorImpressoras;
-        ControlePaginasDao cpd = new ControlePaginasDao();
+            //metodo para adicionar informações à tabela de relatório.
+            ControlePaginas cp = new ControlePaginas();
+            ControlePaginasDao cpd = new ControlePaginasDao();
         
-        for(int i = 0; i<vetorImpressoras.length;i++){
-            cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]);
-            //System.out.println(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]));
-            
-            List<ControlePaginas>lista = cpd.listar(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]), dataInicial, dataFinal);
-            
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            
-            model.setNumRows(0);
-             
-            for(ControlePaginas cp: cpd.listar(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]), dataInicial, dataFinal)){
-                model.addRow(new Object[]{
-                cp.getIdControle(),
-                cp.getImpressora(),
-                cp.getData(),
-                cp.getPaginaTotal()
-                });
-            }    
-            
-                int linhas = jTable1.getRowCount();
-                int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
-                
-                
-                for(int j=0; j < vetor.length; j++){
-                    System.out.println("Coletando linha da tabela.");
-                    vetor [j] = (Integer) jTable1.getModel().getValueAt(j, 3);
-            
-                    // >>Teste<< Código para selecionar a última linha da tabela.
-                    jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
-            
-                    int linhaSelecionada = jTable1.getSelectedRow();
-            
-                    int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
-            
-                    this.soma = valorUltimaLinha - vetor[0];
-            
-                    //Condição caso só haja 1 linha.
-                    if(this.soma == 0){
-                        this.soma = vetor[0];
-                    }
-            
-                }
-                    //Criando objeto para armazenar impressoras[i] para lançar no banco de dados.
-                    ControlePaginas cp = new ControlePaginas();
-                    cp.setImpressora(vetorImpressoras[i]);
-                    cp.setData(dataAtual);
-                    cp.setSoma(soma);
-                    if(cpd.salvarRelatorioVetores(cp) == true){
-                        
-                        System.out.println(" Objeto " + cp.getImpressora() + " salvo com sucesso!");
-                    }
-            setPagImpressas(soma);
-            soma = 0;
-            
-            //txtPagImpressas.setText(Integer.toString(getPagImpressas()));
+            cp.setImpressora(impressora);
+            cp.setDataInicial(dataInicial);
+            cp.setDataFinal(dataFinal);
+            cp.setPaginaTotal(paginasTotalInt);
+        
+            if(cpd.relatorioFinal(cp) == true){
+                JOptionPane.showMessageDialog(null, "Impressora incluída com sucesso ao relatório.");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Impressora já inclída no relatório.");
+            }
         }
         
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
-        model.removeRow(jTable1.getSelectedRow());
-        
-        
-        //Código funcionando, para adicionar itens na tabela relatorioperiodo, mas só adiciona uma impressora por vez, manualmente.
-        /*String impressora = (String) comboBoxImpressoras.getSelectedItem();
-                             //Convertendo datas para  formato do SQL
-        String dataInicial = dataToSql(txtDataInicial.getText());
-                           //Convertendo datas para  formato do SQL
-        String dataFinal = dataToSql(txtDataFinal.getText());
-        String paginasTotal = txtPagImpressas.getText();
-        
-        //Converter paginasTotal para int
-        int paginasTotalInt = Integer.parseInt(paginasTotal);
-        
-        //metodo para adicionar informações à tabela de relatório.
-        ControlePaginas cp = new ControlePaginas();
-        ControlePaginasDao cpd = new ControlePaginasDao();
-        
-        cp.setImpressora(impressora);
-        cp.setDataInicial(dataInicial);
-        cp.setDataFinal(dataFinal);
-        cp.setPaginaTotal(paginasTotalInt);
-        
-        if(cpd.relatorioFinal(cp) == true){
-            JOptionPane.showMessageDialog(null, "Impressora incluída com sucesso ao relatório.");
+        if(radioBuscarTodos.isSelected() == true){
+            JOptionPane.showMessageDialog(null, "Para adicionar apenas uma impressora ao relatório, \n" + "desmerque a opção Buscar todos.");
         }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Impressora já inclída no relatório.");
-        }*/
-        
     }//GEN-LAST:event_btnAdcRelActionPerformed
 
     private void btnImprimirRelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirRelActionPerformed
-        TelaRelatorioPeriodoTable relatorioFinal = new TelaRelatorioPeriodoTable(null, rootPaneCheckingEnabled);
         
-        MessageFormat header = new MessageFormat("Controle de impressões de " + txtDataInicial.getText() + " a " + txtDataFinal.getText());
-        try {
-            relatorioFinal.tableRelatorio.print(JTable.PrintMode.FIT_WIDTH, header, null);
-            ControlePaginasDao cpd = new ControlePaginasDao();
-            cpd.deletarRelatorioFinal();
-        } catch (java.awt.print.PrinterException e) {
-            System.err.format("Cannot print %s%n", e.getMessage());
+        if(radioBuscarTodos.isSelected() == false){
+            TelaRelatorioPeriodoTable relatorioFinal = new TelaRelatorioPeriodoTable(null, rootPaneCheckingEnabled);
+        
+            MessageFormat header = new MessageFormat("Controle de impressões de " + txtDataInicial.getText() + " a " + txtDataFinal.getText());
+            try {
+                relatorioFinal.tableRelatorio.print(JTable.PrintMode.FIT_WIDTH, header, null);
+                ControlePaginasDao cpd = new ControlePaginasDao();
+                cpd.deletarRelatorioFinal();
+            }catch (java.awt.print.PrinterException e) {
+                System.err.format("Cannot print %s%n", e.getMessage());
+            }
         }
-
+        
+        if(radioBuscarTodos.isSelected() == true){
+            MessageFormat header = new MessageFormat("Controle de impressões de " + txtDataInicial.getText() + " a " + txtDataFinal.getText());
+            try {
+                jTable1.print(JTable.PrintMode.FIT_WIDTH, header, null);
+                ControlePaginasDao cpd = new ControlePaginasDao();
+                cpd.deletarRelatorioVetores();
+                cpd.zerarIdTabelaReceberVetores();
+            }catch (java.awt.print.PrinterException e) {
+                System.err.format("Cannot print %s%n", e.getMessage());
+            }
+        }
+        
     }//GEN-LAST:event_btnImprimirRelActionPerformed
+
+    private void comboBoxImpressorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxImpressorasActionPerformed
+       //
+    }//GEN-LAST:event_comboBoxImpressorasActionPerformed
               
     public void listarRelatorio(Integer idImpressora, String dataInicial, String dataFinal){
         
@@ -488,9 +495,11 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         }
 
         int linhas = jTable1.getRowCount();
-        int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
-        //int soma = 0;
-        for(int i = 0; i < linhas; i++){
+        
+        if(linhas>0){
+            int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
+            //int soma = 0;
+            for(int i = 0; i < linhas; i++){
             vetor [i] = (Integer) jTable1.getModel().getValueAt(i, 3);
             
             // >>Teste<< Código para selecionar a última linha da tabela.
@@ -502,13 +511,18 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             
             this.soma = valorUltimaLinha - vetor[0];
             
-            //Condição caso só haja 1 linha.
-            if(this.soma == 0){
-                this.soma = vetor[0];
+                //Condição caso só haja 1 linha.
+                if(this.soma == 0){
+                    this.soma = vetor[0];
+                }
             }
-            
+            setPagImpressas(soma);
         }
-        setPagImpressas(soma);
+        else
+        {
+            setPagImpressas(0);
+        }
+        
     }
     
     public String[] vetorImpressoras(){
