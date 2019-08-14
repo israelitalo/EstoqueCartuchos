@@ -55,7 +55,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jComboBoxData = new javax.swing.JComboBox<>();
         jLabelData = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -65,7 +64,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         btnCalcular = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         comboBoxSetor = new javax.swing.JComboBox<>();
         txtDataRelatorio = new javax.swing.JFormattedTextField();
@@ -132,14 +130,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
 
         jButton2.setText("Excluir");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/folhas.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-        });
-
         jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Último registro" }));
 
         jLabelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -153,14 +143,13 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             }
         });
 
+        btnCalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/calculator.png"))); // NOI18N
         btnCalcular.setText("Calcular Pág.");
         btnCalcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCalcularActionPerformed(evt);
             }
         });
-
-        jLabel3.setText("Relatórios");
 
         jLabel8.setText("Setor:");
 
@@ -215,8 +204,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtQtdTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(32, 32, 32)
@@ -229,13 +216,9 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(116, 116, 116)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(74, 74, 74)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,7 +234,7 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                         .addGap(29, 29, 29)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+                        .addGap(149, 149, 149)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBoxImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
@@ -259,11 +242,11 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                             .addComponent(jComboBoxData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
                             .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(289, 289, 289)
+                .addGap(41, 41, 41)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtQtdTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(255, 255, 255)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -447,12 +430,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         txtQtdTotal.setValue(getQtdToDB());
     }//GEN-LAST:event_txtQtdTotalStateChanged
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        TelaControlPaginasRel relatorios = new TelaControlPaginasRel(null, rootPaneCheckingEnabled);
-        relatorios.setVisible(true);
-        
-    }//GEN-LAST:event_jLabel2MouseClicked
-
     public void carregarComboBoxImpressora(){
         ControlePaginasDao cpd = new ControlePaginasDao();
         cpd.carregarComboBoxImpressora(jComboBoxImpressora);
@@ -509,8 +486,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxData;
     private javax.swing.JComboBox jComboBoxImpressora;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

@@ -84,10 +84,11 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         jrbTodos = new javax.swing.JRadioButton();
         RelatorioImpressoras = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        labelRelatorios = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Controle de impressoras");
-        setPreferredSize(new java.awt.Dimension(956, 745));
         setResizable(false);
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(900, 700));
@@ -186,6 +187,16 @@ public class TelaImpressora2 extends javax.swing.JDialog {
 
         jLabel4.setText("Páginas impressas");
 
+        jLabel5.setText("Relatório Pág. impressas");
+
+        labelRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/folhas.png"))); // NOI18N
+        labelRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelRelatoriosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,7 +223,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(17, 17, 17))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelModelo)
                             .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -235,20 +246,28 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel4))
+                        .addComponent(jLabel4)
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel5))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(RelatorioImpressoras)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(RelatorioImpressoras)
+                        .addGap(120, 120, 120)
+                        .addComponent(labelRelatorios)))
+                .addContainerGap(652, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
-                .addComponent(RelatorioImpressoras)
-                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelRelatorios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RelatorioImpressoras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelModelo)
                     .addComponent(jLabel1)
@@ -270,9 +289,9 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                         .addComponent(btnAlterar)
                         .addComponent(btnExcluir)
                         .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 69, Short.MAX_VALUE))
+                .addGap(0, 64, Short.MAX_VALUE))
         );
 
         pack();
@@ -510,6 +529,11 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         
     }//GEN-LAST:event_RelatorioImpressorasMouseClicked
 
+    private void labelRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRelatoriosMouseClicked
+            TelaControlPaginasRel telaRel = new TelaControlPaginasRel(null, rootPaneCheckingEnabled);
+            telaRel.setVisible(true);
+    }//GEN-LAST:event_labelRelatoriosMouseClicked
+
     public void JComboBoxFabricante(){
         ImpressoraDao impDao = new ImpressoraDao();
         impDao.carregarJcomboBoxFabricante(jComboBoxFabricante);
@@ -574,10 +598,12 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelModelo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableImpressora;
     private javax.swing.JRadioButton jrbTodos;
+    private javax.swing.JLabel labelRelatorios;
     private javax.swing.JTextField txtBusca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtSerie;

@@ -247,7 +247,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         cpd.deletarRelatorioFinal();
     }
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
-        
+
         //Quando o radio Buscar todos não está selecionado
         if(radioBuscarTodos.isSelected() == false){
             ControlePaginasDao cpd = new ControlePaginasDao();
@@ -461,7 +461,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     }//GEN-LAST:event_btnImprimirRelActionPerformed
 
     private void comboBoxImpressorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxImpressorasActionPerformed
-       //
+      //
     }//GEN-LAST:event_comboBoxImpressorasActionPerformed
               
     public void listarRelatorio(Integer idImpressora, String dataInicial, String dataFinal){
