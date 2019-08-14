@@ -255,16 +255,27 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             String impressora = (String) comboBoxImpressoras.getSelectedItem();
         
             int idImpressora = cpd.getIdJcomboBoxImpressora(impressora);
-        
+            
+            
             String dataInicial = txtDataInicial.getText();
             String dataFinal = txtDataFinal.getText();
-        
-            dataInicial = dataToSql(dataInicial);
-            dataFinal = dataToSql(dataFinal);
-        
-            listarRelatorio(idImpressora, dataInicial, dataFinal);
-            
-            txtPagImpressas.setText(Integer.toString(getPagImpressas()));
+            //Caso os campos das datas sejam = "    -  -  ", deve-se, aqui, tratar tal excesao.
+                
+                //Verificação abaixo não funciona. É gerada uma Exceção no conolse, apenas.
+                if(dataInicial != "  /  /    " && dataFinal != "  /  /    "){
+                    dataInicial = dataToSql(dataInicial);
+                    dataFinal = dataToSql(dataFinal);
+
+                listarRelatorio(idImpressora, dataInicial, dataFinal);
+
+                txtPagImpressas.setText(Integer.toString(getPagImpressas()));
+
+                }
+                else{
+                    System.out.println("erro.");
+
+                }
+
         }
         //Quando o radio Buscar todos está selecionado
         if(radioBuscarTodos.isSelected() == true){
@@ -555,6 +566,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     }
     
     public String dataToSql(String data){
+        // 05-10-2019
         
         String dia = data.substring(0,2);
         String mes = data.substring(3,5);
@@ -566,7 +578,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     }
     
     public String dataToJava(String data){
-        // 2019-11-05
+        // 2019-10-05
         String ano = data.substring(0,4);
         String mes = data.substring(5,7);
         String dia = data.substring(8,10);
