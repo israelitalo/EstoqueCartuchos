@@ -279,7 +279,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         }
         //Quando o radio Buscar todos está selecionado
         if(radioBuscarTodos.isSelected() == true){
-            
+            System.out.println("Radio ok!");
             ControlePaginasDao cpd = new ControlePaginasDao();
             cpd.zerarIdTabelaReceberVetores();//Para o id da tabela recebervetores sempre iniciar em 1.
             cpd.deletarRelatorioVetores();//limpando a planilha de receber relatório.
@@ -355,7 +355,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
-            model.removeRow(jTable1.getSelectedRow());
+            //model.removeRow(jTable1.getSelectedRow()); Nao descomentar essa linha!!!!!
             
             listarVetores();
         }
