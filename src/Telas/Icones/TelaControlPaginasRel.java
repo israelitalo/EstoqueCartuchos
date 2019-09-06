@@ -29,6 +29,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         initComponents();
         carregarComboBoxImpressora();
         cleanTabelaVetoresErelatorioPeriodo();
+        System.out.println(txtDataInicial.getText() + ".");
     }
 
     /**
@@ -262,7 +263,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             //Caso os campos das datas sejam = "    -  -  ", deve-se, aqui, tratar tal excesao.
                 
                 //Verificação abaixo não funciona. É gerada uma Exceção no conolse, apenas.
-                if(dataInicial != "  /  /    " && dataFinal != "  /  /    "){
+                if((dataInicial != "  /  /    ") || (dataFinal != "  /  /    ")){
                     dataInicial = dataToSql(dataInicial);
                     dataFinal = dataToSql(dataFinal);
 

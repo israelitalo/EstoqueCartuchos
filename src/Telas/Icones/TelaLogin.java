@@ -154,6 +154,25 @@ public class TelaLogin extends javax.swing.JDialog {
         txtLogin.setText("");
         txtSenha.setText("");
     }
+    //teste
+    private String loginGlobal = "teste";
+    private Integer atualizarLoginEmTelaPrincipal = 0;
+
+    public String getLoginGlobal() {
+        return loginGlobal;
+    }
+
+    public void setLoginGlobal(String loginGlobal) {
+        this.loginGlobal = loginGlobal;
+    }
+
+    public Integer getAtualizarLoginEmTelaPrincipal() {
+        return atualizarLoginEmTelaPrincipal;
+    }
+
+    public void setAtualizarLoginEmTelaPrincipal(Integer atualizarLoginEmTelaPrincipal) {
+        this.atualizarLoginEmTelaPrincipal = atualizarLoginEmTelaPrincipal;
+    }
     
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
                 
@@ -165,6 +184,12 @@ public class TelaLogin extends javax.swing.JDialog {
         {
             String login = txtLogin.getText();
             String senha = txtSenha.getText();
+            //teste
+            setLoginGlobal(login);
+            
+            setAtualizarLoginEmTelaPrincipal(2);
+            
+            System.out.println("Login: " + getLoginGlobal() + ", Teste login " + getAtualizarLoginEmTelaPrincipal());
             
             UsuarioDao ud = new UsuarioDao();
             

@@ -11,13 +11,25 @@ package Telas.Icones;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
   
+    private TelaLogin loginGlobal;
+    private TelaLogin atualizarLoginEmTelaPrincipal;
+    private String login;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
-        
         initComponents();
-        
+        this.loginGlobal = new TelaLogin(this, rootPaneCheckingEnabled);
+        loginGlobal.getLoginGlobal();
     }
 
     /**
