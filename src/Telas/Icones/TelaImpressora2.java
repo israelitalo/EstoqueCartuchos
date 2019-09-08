@@ -6,9 +6,9 @@
 package Telas.Icones;
 
 import Dao.ImpressoraDao;
+import Dao.UsuarioDao;
 import controller.Impressora;
 import controller.ImpressoraTableModel;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -52,9 +52,9 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         JComboBoxFabricante();
         JComboBoxSetor();
         jrbTodos.setSelected(true);
+        receberUsuarioLogado();
         //jTableImpressora.setModel(tableModel);//É nessa linha que os nomes das colunas são resgatadas do modelo, para a tabela.
         //listarImpressora();
-
     }
 
     /**
@@ -298,6 +298,21 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void receberUsuarioLogado(){
+        UsuarioDao ud = new UsuarioDao();
+        String usuario = ud.getUsuarioLogado();
+        int idUsuarioLogado = ud.getIdUsuarioLogado(usuario);
+        String adm = ud.verSeUsuarioEadm(idUsuarioLogado);
+        
+        if(adm.equals("nao")){
+            RelatorioImpressoras.setEnabled(false);   
+            labelRelatorios.setEnabled(false);
+            btnSalvar.setEnabled(false);   
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        } 
+    }
+    
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         ImpressoraDao impDao = new ImpressoraDao();
         
@@ -413,12 +428,22 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void jTableImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableImpressoraMouseClicked
-        int linha = jTableImpressora.getSelectedRow();
+            UsuarioDao ud = new UsuarioDao();
+            String usuario = ud.getUsuarioLogado();
+            int idUsuarioLogado = ud.getIdUsuarioLogado(usuario);
+            String adm = ud.verSeUsuarioEadm(idUsuarioLogado);
+            
+            if(adm.equals("sim")){
+                int linha = jTableImpressora.getSelectedRow();
         
-        txtModelo.setText(jTableImpressora.getValueAt(linha, 1).toString());
-        txtSerie.setText(jTableImpressora.getValueAt(linha, 2).toString());
-        jComboBoxFabricante.setSelectedItem(jTableImpressora.getValueAt(linha, 3).toString());
-        jComboBoxSetor.setSelectedItem(jTableImpressora.getValueAt(linha, 4).toString());
+                txtModelo.setText(jTableImpressora.getValueAt(linha, 1).toString());
+                txtSerie.setText(jTableImpressora.getValueAt(linha, 2).toString());
+                jComboBoxFabricante.setSelectedItem(jTableImpressora.getValueAt(linha, 3).toString());
+                jComboBoxSetor.setSelectedItem(jTableImpressora.getValueAt(linha, 4).toString());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+            }
     }//GEN-LAST:event_jTableImpressoraMouseClicked
  
     //Método para adquirir o id da impressora correspondente à linha a qual o usuário clicar.
@@ -524,14 +549,23 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBoxSetorActionPerformed
 
     private void RelatorioImpressorasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RelatorioImpressorasMouseClicked
-        TelaControlePaginas controlePaginas = new TelaControlePaginas(null, rootPaneCheckingEnabled);
-        controlePaginas.setVisible(true);
-        
+        if(RelatorioImpressoras.isEnabled()){
+            TelaControlePaginas controlePaginas = new TelaControlePaginas(null, rootPaneCheckingEnabled);
+            controlePaginas.setVisible(true);
+        }        
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
     }//GEN-LAST:event_RelatorioImpressorasMouseClicked
 
     private void labelRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRelatoriosMouseClicked
+        if(labelRelatorios.isEnabled()){
             TelaControlPaginasRel telaRel = new TelaControlPaginasRel(null, rootPaneCheckingEnabled);
             telaRel.setVisible(true);
+        }     
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
     }//GEN-LAST:event_labelRelatoriosMouseClicked
 
     public void JComboBoxFabricante(){

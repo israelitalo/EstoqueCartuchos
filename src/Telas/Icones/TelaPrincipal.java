@@ -6,6 +6,7 @@
 package Telas.Icones;
 
 import Dao.UsuarioDao;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -194,11 +195,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String usuario;
         usuario = ud.getUsuarioLogado();
         txtUsuario.setText(usuario);
+        int idUsuarioLogado = ud.getIdUsuarioLogado(usuario);
+        String adm = ud.verSeUsuarioEadm(idUsuarioLogado);
+        String ativo = ud.usuarioAtivoOuInativo(idUsuarioLogado);
     }
     
     private void iconEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconEstoqueMouseClicked
-        TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
-        telaEstoque.setVisible(true);        
+    TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
+    telaEstoque.setVisible(true);      
     }//GEN-LAST:event_iconEstoqueMouseClicked
 
     private void IconSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IconSairMouseClicked
@@ -211,8 +215,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jLabelImpressoraPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelImpressoraPrincipalMouseClicked
-        TelaImpressora2 telaImpressora = new TelaImpressora2(this, rootPaneCheckingEnabled);
-        telaImpressora.setVisible(true);
+        if(jLabelImpressoraPrincipal.isEnabled()){
+            TelaImpressora2 telaImpressora = new TelaImpressora2(this, rootPaneCheckingEnabled);
+            telaImpressora.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
+       
     }//GEN-LAST:event_jLabelImpressoraPrincipalMouseClicked
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

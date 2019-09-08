@@ -83,6 +83,29 @@ public class UsuarioDao {
         }
     }
     
+    //método para pegar id do usuario logado.
+    public Integer getIdUsuarioLogado(String usuario){
+        
+        String sql = "SELECT usuario.id_usuario FROM usuario WHERE usuario.login = '" + usuario +  "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int idUsuarioLogado = rs.getInt("id_usuario");
+                return idUsuarioLogado;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
+    }
+    
+    //Verificação de login.
     public boolean login(String login, String senha){
         
         String sql = "SELECT * FROM usuario WHERE login = '" + login + "' AND senha = '" + senha + "'";
@@ -95,6 +118,8 @@ public class UsuarioDao {
             rs.next();
             String loginBD = rs.getString("login");
             String senhaBD = rs.getString("senha");
+            
+            
             
             //ConexaoJdbc.closeConnection(con, stmt, rs);
             
@@ -115,4 +140,47 @@ public class UsuarioDao {
         }*/
     }
     
+    //Método para verificar na tabela controledeusuario se o usuario tem acesso de adm ou nao.
+    public String verSeUsuarioEadm(Integer id){
+        
+        String sql = "SELECT c.adm FROM controledeusuario c WHERE c.idusuario = '" + id + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                String adm = rs.getString("adm");
+                return adm;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
+    }
+    
+    //Método para verificar se o usuario está ativo ou inativo, para poder liberar o login
+    public String usuarioAtivoOuInativo(Integer id){
+        
+        String sql = "SELECT c.ativo FROM controledeusuario c WHERE c.idusuario = '" + id + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                String ativo = rs.getString("ativo");
+                return ativo;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
+    }
 }

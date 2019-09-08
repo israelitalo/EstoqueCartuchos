@@ -6,6 +6,7 @@
 package Telas.Icones;
 
 import Dao.CartuchoDao;
+import Dao.UsuarioDao;
 import controller.Cartucho;
 import controller.CartuchoTableModel;
 import java.text.MessageFormat;
@@ -31,6 +32,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarCartuchos();
+        receberUsuarioLogado();
         //CartuchoTableModel modelCartucho = new CartuchoTableModel();
         //tabelaCartuchos.setModel(modelCartucho);
     }
@@ -305,6 +307,23 @@ public class TelaEstoque extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
+    public void receberUsuarioLogado(){
+        UsuarioDao ud = new UsuarioDao();
+        String usuario = ud.getUsuarioLogado();
+        int idUsuarioLogado = ud.getIdUsuarioLogado(usuario);
+        String adm = ud.verSeUsuarioEadm(idUsuarioLogado);
+        
+        if(adm.equals("nao")){
+            jLabelAdd.setEnabled(false);   
+            jLabelEdit.setEnabled(false);
+            jLabelRemove.setEnabled(false);   
+            jLabelMovEstoque.setEnabled(false);
+            jLabelImprimir.setEnabled(false);
+            jMenuItem1.setEnabled(false);
+            jMenuItem2.setEnabled(false);
+        } 
+    }
+    
     public void listarCartuchos (){
         
         CartuchoDao cd = new CartuchoDao();
@@ -342,11 +361,12 @@ public class TelaEstoque extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabelVoltarMouseClicked
 
     private void jLabelAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddMouseClicked
-        //AdicionarCartuchoJdialog addCartucho = new AdicionarCartuchoJdialog(new javax.swing.JFrame(), true);//Tentativa 1. Funcional!
-        AdicionarCartuchoJdialog addCartucho = new AdicionarCartuchoJdialog(null, rootPaneCheckingEnabled);//Tentativa 2.
-        
-        //TelaCadastroProduto addCartucho = new TelaCadastroProduto();
-        addCartucho.setVisible(true);
+        if(jLabelAdd.isEnabled()){
+            AdicionarCartuchoJdialog addCartucho = new AdicionarCartuchoJdialog(null, rootPaneCheckingEnabled);
+            addCartucho.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
     }//GEN-LAST:event_jLabelAddMouseClicked
 
     private void tabelaCartuchosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCartuchosMouseClicked
@@ -354,10 +374,13 @@ public class TelaEstoque extends javax.swing.JDialog {
     }//GEN-LAST:event_tabelaCartuchosMouseClicked
 
     private void jLabelMovEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMovEstoqueMouseClicked
-        
-        TelaMovimentarEstoque movimentarEstoque = new TelaMovimentarEstoque(null, rootPaneCheckingEnabled);
-        movimentarEstoque.setVisible(true);
-        
+        if(jLabelMovEstoque.isEnabled()){
+            TelaMovimentarEstoque movimentarEstoque = new TelaMovimentarEstoque(null, rootPaneCheckingEnabled);
+            movimentarEstoque.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }  
     }//GEN-LAST:event_jLabelMovEstoqueMouseClicked
 
     private void jMenuAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAtualizarMouseClicked
@@ -365,55 +388,68 @@ public class TelaEstoque extends javax.swing.JDialog {
     }//GEN-LAST:event_jMenuAtualizarMouseClicked
 
     private void jLabelEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditMouseClicked
-        TelaAlterarCartucho telaAlterar = new TelaAlterarCartucho(null, rootPaneCheckingEnabled);
-        telaAlterar.setVisible(true);
+        if(jLabelEdit.isEnabled()){
+            TelaAlterarCartucho telaAlterar = new TelaAlterarCartucho(null, rootPaneCheckingEnabled);
+            telaAlterar.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }  
     }//GEN-LAST:event_jLabelEditMouseClicked
 
     private void jLabelRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRemoveMouseClicked
-        
-        int linha = tabelaCartuchos.getSelectedRow();
-        
-        if(linha <= -1){
-            JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
-        }
-        else
-        {        
-            String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
-        
-            int idInt = Integer.parseInt(id);
-        
-            Cartucho cartucho = new Cartucho();
-        
-            CartuchoDao cd = new CartuchoDao();
-        
-            int teste = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o item selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+        if(jLabelRemove.isEnabled()){
             
-            if(teste == JOptionPane.YES_OPTION){
-                cd.excluir(cartucho, idInt);
-                JOptionPane.showMessageDialog(null, "Operação realizada.", "Exclusão confirmada", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if (teste == JOptionPane.NO_OPTION)
-            {
-                JOptionPane.showMessageDialog(null, "Operação não realizada.", "Exclusão cancelada", JOptionPane.INFORMATION_MESSAGE);
-            }
-            listarCartuchos();
-        }
+            int linha = tabelaCartuchos.getSelectedRow();
         
+            if(linha <= -1){
+                JOptionPane.showMessageDialog(null, "Selecione um item na tabela abaixo para prosseguir!");
+            }
+            else
+            {        
+                String id = tabelaCartuchos.getModel().getValueAt(linha, 0).toString();
+
+                int idInt = Integer.parseInt(id);
+
+                Cartucho cartucho = new Cartucho();
+
+                CartuchoDao cd = new CartuchoDao();
+
+                int teste = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o item selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+
+                if(teste == JOptionPane.YES_OPTION){
+                    cd.excluir(cartucho, idInt);
+                    JOptionPane.showMessageDialog(null, "Operação realizada.", "Exclusão confirmada", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else if (teste == JOptionPane.NO_OPTION)
+                {
+                    JOptionPane.showMessageDialog(null, "Operação não realizada.", "Exclusão cancelada", JOptionPane.INFORMATION_MESSAGE);
+                }
+                listarCartuchos();
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
     }//GEN-LAST:event_jLabelRemoveMouseClicked
 
     private void jLabelImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelImprimirMouseClicked
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        if(jLabelImprimir.isEnabled()){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                   
+            Date data = new Date();
         
-        Date data = new Date();
-        
-        MessageFormat header = new MessageFormat("Estoque de cartuchos do HJP em " + sdf.format(data) + ".");
-        try {
-            tabelaCartuchos.print(JTable.PrintMode.FIT_WIDTH, header, null);
-        } catch (java.awt.print.PrinterException e) {
-            System.err.format("Cannot print %s%n", e.getMessage());
+            MessageFormat header = new MessageFormat("Estoque de cartuchos do HJP em " + sdf.format(data) + ".");
+            try {
+                tabelaCartuchos.print(JTable.PrintMode.FIT_WIDTH, header, null);
+            } catch (java.awt.print.PrinterException e) {
+                System.err.format("Cannot print %s%n", e.getMessage());
+            }   
         }
-        
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
     }//GEN-LAST:event_jLabelImprimirMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

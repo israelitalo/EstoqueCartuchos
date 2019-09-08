@@ -177,9 +177,17 @@ public class TelaLogin extends javax.swing.JDialog {
             
             UsuarioDao ud = new UsuarioDao();
             
+            //testando validacao de usuario ativo ou inativo.
+            int idUsuarioLogado = ud.getIdUsuarioLogado(usuario.getLogin());
+            String ativo = ud.usuarioAtivoOuInativo(idUsuarioLogado);
+            
             boolean testeConexao = ud.login(login, senha);
             
-            if(testeConexao == true){
+            if(ativo.equals("nao")){
+                JOptionPane.showMessageDialog(null, "Usuário inativo. Contate à administração.");
+                limparCampos();
+            }
+            else if(testeConexao == true && ativo.equals("sim")){
                 //método para inserir usuário logado à tabela usuariologado.
                 ud.setUsuarioLogado(usuario);
                 TelaPrincipal telaPrincipal = new TelaPrincipal();
@@ -216,9 +224,17 @@ public class TelaLogin extends javax.swing.JDialog {
             
                 UsuarioDao ud = new UsuarioDao();
             
+                //testando validacao de usuario ativo ou inativo.
+                int idUsuarioLogado = ud.getIdUsuarioLogado(usuario.getLogin());
+                String ativo = ud.usuarioAtivoOuInativo(idUsuarioLogado);
+            
                 boolean testeConexao = ud.login(login, senha);
             
-                if(testeConexao == true){
+                if(ativo.equals("nao")){
+                    JOptionPane.showMessageDialog(null, "Usuário inativo. Contate à administração.");
+                    limparCampos();
+                }
+                else if(testeConexao == true && ativo.equals("sim")){
                     //método para inserir usuário logado à tabela usuariologado.
                     ud.setUsuarioLogado(usuario);
                     TelaPrincipal telaPrincipal = new TelaPrincipal();
@@ -255,11 +271,19 @@ public class TelaLogin extends javax.swing.JDialog {
             
                 UsuarioDao ud = new UsuarioDao();
             
+                //testando validacao de usuario ativo ou inativo.
+                int idUsuarioLogado = ud.getIdUsuarioLogado(usuario.getLogin());
+                String ativo = ud.usuarioAtivoOuInativo(idUsuarioLogado);
+
                 boolean testeConexao = ud.login(login, senha);
             
-                if(testeConexao == true){
+                if(ativo.equals("nao")){
+                    JOptionPane.showMessageDialog(null, "Usuário inativo. Contate à administração.");
+                    limparCampos();
+                }
+                else if(testeConexao == true && ativo.equals("sim")){
                     //método para inserir usuário logado à tabela usuariologado.
-                     ud.setUsuarioLogado(usuario);
+                    ud.setUsuarioLogado(usuario);
                     TelaPrincipal telaPrincipal = new TelaPrincipal();
                     telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
                     telaPrincipal.setVisible(true);
