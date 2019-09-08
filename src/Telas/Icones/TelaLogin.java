@@ -6,6 +6,7 @@
 package Telas.Icones;
 
 import Dao.UsuarioDao;
+import controller.Usuario;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -21,6 +22,7 @@ public class TelaLogin extends javax.swing.JDialog {
     public TelaLogin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        limparUsuarioLogado();
     }
 
     /**
@@ -146,6 +148,11 @@ public class TelaLogin extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void limparUsuarioLogado(){
+        UsuarioDao ud = new UsuarioDao();
+        ud.limparTabelaUsuarioLogado();
+    }
+    
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSairActionPerformed
@@ -153,25 +160,6 @@ public class TelaLogin extends javax.swing.JDialog {
     public void limparCampos (){
         txtLogin.setText("");
         txtSenha.setText("");
-    }
-    //teste
-    private String loginGlobal = "teste";
-    private Integer atualizarLoginEmTelaPrincipal = 0;
-
-    public String getLoginGlobal() {
-        return loginGlobal;
-    }
-
-    public void setLoginGlobal(String loginGlobal) {
-        this.loginGlobal = loginGlobal;
-    }
-
-    public Integer getAtualizarLoginEmTelaPrincipal() {
-        return atualizarLoginEmTelaPrincipal;
-    }
-
-    public void setAtualizarLoginEmTelaPrincipal(Integer atualizarLoginEmTelaPrincipal) {
-        this.atualizarLoginEmTelaPrincipal = atualizarLoginEmTelaPrincipal;
     }
     
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -184,18 +172,19 @@ public class TelaLogin extends javax.swing.JDialog {
         {
             String login = txtLogin.getText();
             String senha = txtSenha.getText();
-            //teste
-            setLoginGlobal(login);
             
-            setAtualizarLoginEmTelaPrincipal(2);
-            
-            System.out.println("Login: " + getLoginGlobal() + ", Teste login " + getAtualizarLoginEmTelaPrincipal());
+            Usuario usuario = new Usuario(login, senha);
             
             UsuarioDao ud = new UsuarioDao();
             
             boolean testeConexao = ud.login(login, senha);
             
             if(testeConexao == true){
+                //método para inserir usuário logado à tabela usuariologado.
+                ud.setUsuarioLogado(usuario);
+                TelaPrincipal telaPrincipal = new TelaPrincipal();
+                telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+                telaPrincipal.setVisible(true);
                 dispose();
             }
             else
@@ -222,13 +211,20 @@ public class TelaLogin extends javax.swing.JDialog {
             {
                 String login = txtLogin.getText();
                 String senha = txtSenha.getText();
+                
+                Usuario usuario = new Usuario(login, senha);
             
                 UsuarioDao ud = new UsuarioDao();
             
                 boolean testeConexao = ud.login(login, senha);
             
                 if(testeConexao == true){
-                dispose();
+                    //método para inserir usuário logado à tabela usuariologado.
+                    ud.setUsuarioLogado(usuario);
+                    TelaPrincipal telaPrincipal = new TelaPrincipal();
+                    telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+                    telaPrincipal.setVisible(true);
+                    dispose();
                 }
                 else
                 {
@@ -254,13 +250,20 @@ public class TelaLogin extends javax.swing.JDialog {
             {
                 String login = txtLogin.getText();
                 String senha = txtSenha.getText();
+                
+                Usuario usuario = new Usuario(login, senha);
             
                 UsuarioDao ud = new UsuarioDao();
             
                 boolean testeConexao = ud.login(login, senha);
             
                 if(testeConexao == true){
-                dispose();
+                    //método para inserir usuário logado à tabela usuariologado.
+                     ud.setUsuarioLogado(usuario);
+                    TelaPrincipal telaPrincipal = new TelaPrincipal();
+                    telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+                    telaPrincipal.setVisible(true);
+                    dispose();
                 }
                 else
                 {

@@ -5,6 +5,7 @@
  */
 package Dao;
 
+import controller.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +26,63 @@ public class UsuarioDao {
         System.out.println("Conexão UsuarioDao iniciada.");   
     }
     
+    //método para inserir usuário logado.
+    public boolean setUsuarioLogado(Usuario usuario){
+        
+        String sql = "INSERT INTO usuariologado(usuariologado) VALUES (?)";
+        
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, usuario.getLogin());
+            stmt.executeUpdate();
+            ConexaoJdbc.closeConnection(con, stmt);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    //método para coletar o usuário logado.
+    public String getUsuarioLogado(){
+        
+        String sql = "SELECT u.usuariologado FROM usuariologado u";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            if(rs.getString("usuariologado") != null){
+                String usuario = rs.getString("usuariologado");
+                return usuario;
+            }
+            else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public boolean limparTabelaUsuarioLogado(){
+        
+        String sql = "DELETE FROM usuariologado";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     public boolean login(String login, String senha){
         
         String sql = "SELECT * FROM usuario WHERE login = '" + login + "' AND senha = '" + senha + "'";
@@ -38,7 +96,7 @@ public class UsuarioDao {
             String loginBD = rs.getString("login");
             String senhaBD = rs.getString("senha");
             
-            ConexaoJdbc.closeConnection(con, stmt, rs);
+            //ConexaoJdbc.closeConnection(con, stmt, rs);
             
             if(loginBD.equals(login) && senhaBD.equals(senha)){
                 return true;

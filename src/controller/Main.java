@@ -19,9 +19,9 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        TelaPrincipal telaPrincipal = new TelaPrincipal();
+        /*TelaPrincipal telaPrincipal = new TelaPrincipal();
         telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
-        telaPrincipal.setVisible(true);
+        telaPrincipal.setVisible(true);*/
         TelaLogin telaLogin = new TelaLogin(null, true);
         telaLogin.setVisible(true);
     }
