@@ -132,7 +132,7 @@ public class ControlePaginasDao {
     
     public Integer getQtdPaginas(Integer idImpressora, String data){
         
-        String sql = "SELECT pagina_total FROM controlepaginas WHERE id_impressora = '" + idImpressora + "' AND data = '" + data + "'";
+        String sql = "SELECT pagina_total FROM controlepaginas WHERE id_impressora = '" + idImpressora + "' AND data = '" + data + "' ORDER BY pagina_total DESC LIMIT 1";
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -283,6 +283,35 @@ public class ControlePaginasDao {
         }
     }
     
+    //Método para lançar a tabela controlepaginas à tabela da TelaControlePaginas.
+    public List<ControlePaginas> listarControlePaginas(Integer idImpressora){
+        
+        String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora +  "' and i.id_impressora = '" + idImpressora + "'";
+        
+        List<ControlePaginas> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                ControlePaginas cp = new ControlePaginas();
+                cp.setIdControle(rs.getInt("id_controle"));
+                cp.setImpressora(rs.getString("i.modelo"));
+                    String data = dataToJava(rs.getString("data"));
+                cp.setData(data);
+                cp.setPaginaTotal(rs.getInt("pagina_total"));
+                lista.add(cp);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     //Método usado na tela que contém a tabela dos dados da tabela relatorioperiodo.
     public List<ControlePaginas> listarRelatorioFinal(){
         String sql = "SELECT * FROM relatorioperiodo";
@@ -356,10 +385,10 @@ public class ControlePaginasDao {
         return null;
     }
     
-    //teste para o relatório final.
+    //teste para o relatório final.Relatório de páginas impressas por período.
     public List<ControlePaginas> listarSoma(Integer idImpressora, String dataInicial, String dataFinal){
         
-        String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
+        String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
 
         List<ControlePaginas> lista = new ArrayList<>();
         

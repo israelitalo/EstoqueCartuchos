@@ -9,7 +9,9 @@ import Dao.ControlePaginasDao;
 import controller.ControlePaginas;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -57,22 +59,22 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         jComboBoxData = new javax.swing.JComboBox<>();
         jLabelData = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtQtdTotal = new javax.swing.JSpinner();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
-        btnCalcular = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         comboBoxSetor = new javax.swing.JComboBox<>();
         txtDataRelatorio = new javax.swing.JFormattedTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Controle de páginas impressas");
-        setSize(new java.awt.Dimension(900, 700));
+        setPreferredSize(new java.awt.Dimension(958, 745));
+        setSize(new java.awt.Dimension(958, 745));
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(900, 700));
+        jPanel2.setPreferredSize(new java.awt.Dimension(958, 745));
 
         jComboBoxImpressora.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Impressora" }));
         jComboBoxImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -135,22 +137,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jLabelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelData.setText("  /  /    ");
 
-        jLabel6.setText("Pág. impressas após última verificação:");
-
-        txtQtdTotal.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                txtQtdTotalStateChanged(evt);
-            }
-        });
-
-        btnCalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/calculator.png"))); // NOI18N
-        btnCalcular.setText("Calcular Pág.");
-        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcularActionPerformed(evt);
-            }
-        });
-
         jLabel8.setText("Setor:");
 
         comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
@@ -161,14 +147,34 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "CÓDIGO", "IMPRESSORA", "DATA", "TOTAL DE PAG. IMPRESSAS"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelData, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,13 +185,11 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDataRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtQtdAtual, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1)
-                    .addComponent(jSeparator2)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtQtdAtual, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                        .addGap(218, 218, 218))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,74 +201,62 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboBoxSetor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jSeparator4)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtQtdTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtQtdFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabelData, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtQtdAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDataRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel7)
-                            .addComponent(jComboBoxData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(41, 41, 41)
+                .addContainerGap()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtQtdTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(255, 255, 255)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBoxData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtQtdFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelData, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQtdAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDataRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
         );
 
         pack();
@@ -309,6 +301,8 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         return data;
     }
     
+    
+    
     private void txtQtdAtualStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtQtdAtualStateChanged
         
     }//GEN-LAST:event_txtQtdAtualStateChanged
@@ -333,7 +327,11 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         
         if(cpd.salvar(cp) == true){
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            limparCampos();
         }
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -349,11 +347,58 @@ public class TelaControlePaginas extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jComboBoxImpressoraComponentShown
 
+    public void listarControlePagians(){
+        ControlePaginasDao cpd = new ControlePaginasDao();
+        
+        String impressora = (String)jComboBoxImpressora.getSelectedItem();
+        
+        if(impressora != "Impressora"){
+            int idImpressora = cpd.getIdJcomboBoxImpressora(impressora);
+        
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+            model.setNumRows(0);
+
+            //Lista de controle de paginas.
+            List<ControlePaginas> lista = cpd.listarControlePaginas(idImpressora);
+
+            model.setNumRows(0);
+
+            for(ControlePaginas cp: cpd.listarControlePaginas(idImpressora)){
+
+                model.addRow(new Object[]{
+                cp.getIdControle(),
+                cp.getImpressora(),
+                cp.getData(),
+                cp.getPaginaTotal()
+                });
+            }
+        }
+    }
+    
+    public void limparCampos(){
+        qtdTotalGlobal = 0;
+        txtQtdFinal.setValue(getQtdTotalGlobal());
+        jComboBoxData.removeAllItems();
+        jComboBoxData.addItem("Último registro");
+        jComboBoxData.setSelectedItem("Último registro");
+        jLabelData.setText("  /  /    ");
+        jComboBoxImpressora.addItem("Impressora");
+        jComboBoxImpressora.setSelectedItem("Impressora");
+        comboBoxSetor.removeAllItems();
+        comboBoxSetor.addItem("Setor");
+        comboBoxSetor.setSelectedItem("Setor");
+        txtQtdAtual.setValue(0);
+        txtDataRelatorio.setText("");
+    }
+    
     private void jComboBoxImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxImpressoraActionPerformed
         ControlePaginasDao cpd = new ControlePaginasDao();
         
         String impressora = (String)jComboBoxImpressora.getSelectedItem();
         
+        listarControlePagians();
+                
         if(impressora != "Impressora"){
             
             jComboBoxImpressora.removeItem("Impressora");
@@ -361,6 +406,15 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             int idImpressora = cpd.getIdJcomboBoxImpressora(impressora);
             
             String ultimaData = cpd.getLastDateOfImpressora(idImpressora);
+            
+            int idSetor = cpd.getIdSetor(impressora);
+            
+            String setor = cpd.getSetor(idSetor);
+
+            if(setor != null){
+                comboBoxSetor.removeAllItems();
+                comboBoxSetor.addItem(setor);
+            }
             
             if(ultimaData != "Não há registros."){
                 jComboBoxData.removeAllItems();
@@ -378,57 +432,19 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 qtdTotalGlobal = qtdFinal;
         
                 txtQtdFinal.setValue(getQtdTotalGlobal());
-                
             }
             else
             {
                 JOptionPane.showMessageDialog(null, "Não há histórico de datas para esta impressora!");
-                qtdTotalGlobal = 0;
-                txtQtdFinal.setValue(getQtdTotalGlobal());
-                jComboBoxData.removeAllItems();
-                jComboBoxData.addItem("Último registro");
-                jComboBoxData.setSelectedItem("Último registro");
-                jLabelData.setText("  /  /    ");
+                limparCampos();
             }
         }
-        
-        int idSetor = cpd.getIdSetor(impressora);
-            
-        String setor = cpd.getSetor(idSetor);
-            
-        if(setor != null){
-            comboBoxSetor.removeAllItems();
-            comboBoxSetor.addItem(setor);
-        }
-        
+         
     }//GEN-LAST:event_jComboBoxImpressoraActionPerformed
 
     private void txtQtdFinalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtQtdFinalStateChanged
         txtQtdFinal.setValue(getQtdTotalGlobal());
     }//GEN-LAST:event_txtQtdFinalStateChanged
-
-    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        
-        if((int) txtQtdAtual.getValue() > (int) txtQtdFinal.getValue()){
-            
-            int qtdAtual = (int) txtQtdAtual.getValue();
-                
-            ControlePaginas cp = new ControlePaginas();
-                
-            setQtdToDB(cp.diminuirPaginas(getQtdTotalGlobal(), qtdAtual));
-        
-            txtQtdTotal.setValue(getQtdToDB());
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "A quantidade em " + txtDataRelatorio.getText() + " deve ser maior que a quantidade anterior!");
-        }
-        
-    }//GEN-LAST:event_btnCalcularActionPerformed
-
-    private void txtQtdTotalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtQtdTotalStateChanged
-        txtQtdTotal.setValue(getQtdToDB());
-    }//GEN-LAST:event_txtQtdTotalStateChanged
 
     public void carregarComboBoxImpressora(){
         ControlePaginasDao cpd = new ControlePaginasDao();
@@ -478,7 +494,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboBoxSetor;
     private javax.swing.JButton jButton1;
@@ -488,18 +503,18 @@ public class TelaControlePaginas extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelData;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable jTable1;
     private javax.swing.JFormattedTextField txtDataRelatorio;
     private javax.swing.JSpinner txtQtdAtual;
     private javax.swing.JSpinner txtQtdFinal;
-    private javax.swing.JSpinner txtQtdTotal;
     // End of variables declaration//GEN-END:variables
 }
