@@ -57,14 +57,14 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jComboBoxData = new javax.swing.JComboBox<>();
+        jComboBoxData = new javax.swing.JComboBox<String>();
         jLabelData = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        comboBoxSetor = new javax.swing.JComboBox<>();
+        comboBoxSetor = new javax.swing.JComboBox<String>();
         txtDataRelatorio = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -132,14 +132,14 @@ public class TelaControlePaginas extends javax.swing.JDialog {
 
         jButton2.setText("Excluir");
 
-        jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Último registro" }));
+        jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Último registro" }));
 
         jLabelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelData.setText("  /  /    ");
 
         jLabel8.setText("Setor:");
 
-        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
+        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Setor" }));
 
         try {
             txtDataRelatorio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -237,7 +237,7 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 .addGap(39, 39, 39)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)

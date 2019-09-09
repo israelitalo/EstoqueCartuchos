@@ -119,8 +119,6 @@ public class UsuarioDao {
             String loginBD = rs.getString("login");
             String senhaBD = rs.getString("senha");
             
-            
-            
             //ConexaoJdbc.closeConnection(con, stmt, rs);
             
             if(loginBD.equals(login) && senhaBD.equals(senha)){
