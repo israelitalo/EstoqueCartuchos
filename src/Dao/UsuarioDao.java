@@ -181,4 +181,45 @@ public class UsuarioDao {
         }
         return null;
     }
+    
+    public boolean salvarUsuario(Usuario usuario){
+        
+        String sql = "INSERT INTO usuario (nome, login, senha) VALUES (?, ?, ?)";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getLogin());
+            stmt.setString(3, usuario.getSenha());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public Integer getIdUsuario(String login){
+        
+        String sql = "SELECT id_usuario FROM usuario WHERE login = '" + login + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int idUsuario = rs.getInt("id_usuario");
+                return idUsuario;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
+    }
+    
 }

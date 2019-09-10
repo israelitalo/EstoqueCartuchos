@@ -79,4 +79,24 @@ public class ControleUsuarioDao {
         return null;
     }
     
+    public boolean salvar(ControleDeUsuario cdu){
+        
+        String sql = "INSERT INTO controledeusuario (idusuario, adm, ativo) VALUES (?, ?, ?)";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, cdu.getIdUsuario());
+            stmt.setString(2, cdu.getAdm());
+            stmt.setString(3, cdu.getAtivo());
+            stmt.executeUpdate();
+            //ConexaoJdbc.closeConnection(con, stmt);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleUsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
 }
