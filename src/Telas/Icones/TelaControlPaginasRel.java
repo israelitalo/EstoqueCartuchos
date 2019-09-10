@@ -248,66 +248,69 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         cpd.deletarRelatorioFinal();
     }
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
+    cleanTabelaVetoresErelatorioPeriodo();
+        
+    //Quando o radio Buscar todos não está selecionado
+    if(radioBuscarTodos.isSelected() == false){
+        ControlePaginasDao cpd = new ControlePaginasDao();
 
-        //Quando o radio Buscar todos não está selecionado
-        if(radioBuscarTodos.isSelected() == false){
-            ControlePaginasDao cpd = new ControlePaginasDao();
-        
-            String impressora = (String) comboBoxImpressoras.getSelectedItem();
-        
-            int idImpressora = cpd.getIdJcomboBoxImpressora(impressora);
-            
-            
-            String dataInicial = txtDataInicial.getText();
-            String dataFinal = txtDataFinal.getText();
+        String impressora = (String) comboBoxImpressoras.getSelectedItem();
+
+        int idImpressora = cpd.getIdJcomboBoxImpressora(impressora);
+
+        String dataInicial = txtDataInicial.getText();
+        String dataFinal = txtDataFinal.getText();
+
             //Caso os campos das datas sejam = "    -  -  ", deve-se, aqui, tratar tal excesao.
-                
-                //Verificação abaixo não funciona. É gerada uma Exceção no conolse, apenas.
-                if((dataInicial != "  /  /    ") || (dataFinal != "  /  /    ")){
-                    dataInicial = dataToSql(dataInicial);
-                    dataFinal = dataToSql(dataFinal);
+            if((!dataInicial.equals("  /  /    ")) && (!dataFinal.equals("  /  /    "))){
+                dataInicial = dataToSql(dataInicial);
+                dataFinal = dataToSql(dataFinal);
 
                 listarRelatorio(idImpressora, dataInicial, dataFinal);
 
                 txtPagImpressas.setText(Integer.toString(getPagImpressas()));
 
-                }
-                else{
-                    System.out.println("erro.");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Preencha os campos do período.");
+                txtDataInicial.setText("");
+                txtDataFinal.setText("");
+            }
+    }
+    //Quando o radio Buscar todos está selecionado
+    if(radioBuscarTodos.isSelected() == true){
 
-                }
+        if((!txtDataInicial.getText().equals("  /  /    ")) && (!txtDataFinal.getText().equals("  /  /    "))){
 
-        }
-        //Quando o radio Buscar todos está selecionado
-        if(radioBuscarTodos.isSelected() == true){
-            System.out.println("Radio ok!");
             ControlePaginasDao cpd = new ControlePaginasDao();
             cpd.zerarIdTabelaReceberVetores();//Para o id da tabela recebervetores sempre iniciar em 1.
             cpd.deletarRelatorioVetores();//limpando a planilha de receber relatório.
-            
+
             //Tentando inserir todos os dados de uma única vez, para impressão do relatório de forma otimizada.
             String[] vetorImpressoras = vetorImpressoras();
             //Convertendo datas para  formato do SQL
             String dataInicial = dataToSql(txtDataInicial.getText());
             //Convertendo datas para  formato do SQL
             String dataFinal = dataToSql(txtDataFinal.getText());
-            String paginasTotal = txtPagImpressas.getText();// Rever esta linha!!!! Linha para adicioanr informação à tabela.
+            String paginasTotal = txtPagImpressas.getText();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date data = new Date();
             String dataAtual = dataToSql(sdf.format(data));
+
             //pegando id das impressoras, através do vetorImpressoras;
-        
+
             for(int i = 0; i<vetorImpressoras.length;i++){
                 cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]);
                 //System.out.println(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]));
-            
+
+                // Lista para preencher  tabela com os dados de cada impressora.
                 List<ControlePaginas>lista = cpd.listar(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]), dataInicial, dataFinal);
-            
+
                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            
+
                 model.setNumRows(0);
-             
+
                 for(ControlePaginas cp: cpd.listar(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]), dataInicial, dataFinal)){
                     model.addRow(new Object[]{
                     cp.getIdControle(),
@@ -316,50 +319,64 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                     cp.getPaginaTotal()
                     });
                 }    
-            
-            int linhas = jTable1.getRowCount();
-            int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
-                
-                
+
+                int linhas = jTable1.getRowCount();
+                int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
+
                 for(int j=0; j < vetor.length; j++){
                     System.out.println("Coletando linha da tabela.");
-                    vetor [j] = (Integer) jTable1.getModel().getValueAt(j, 3);
-            
-                    // >>Teste<< Código para selecionar a última linha da tabela.
-                    jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
 
-                    int linhaSelecionada = jTable1.getSelectedRow();
-                                
-                    int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
-            
-                    this.soma = valorUltimaLinha - vetor[0];
-            
-                    //Condição caso só haja 1 linha.
-                    if(this.soma == 0){
-                        this.soma = vetor[0];
+                    //teste para zerar o valor de soma, caso só haja 1 item nesse vetor.
+                    if(vetor.length == 1){
+                        //System.out.println("Zero Linhas!");
+                        soma = 0;
+                    }else{
+                        vetor [j] = (Integer) jTable1.getModel().getValueAt(j, 3);
+
+                        // >>Teste<< Código para selecionar a última linha da tabela.
+                        jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
+
+                        int linhaSelecionada = jTable1.getSelectedRow();
+
+                        int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
+
+                        this.soma = valorUltimaLinha - vetor[0];
+
+                        //Condição caso só haja 1 linha.
+                        if(this.soma == 0){
+                            this.soma = vetor[0];
+                        }
                     }
-            
                 }
+
             //Criando objeto para armazenar impressoras[i] para lançar no banco de dados.
             ControlePaginas cp = new ControlePaginas();
             cp.setImpressora(vetorImpressoras[i]);
             cp.setData(dataAtual);
             cp.setSoma(soma);
                 if(cpd.salvarRelatorioVetores(cp) == true){
-                    System.out.println(" Objeto " + cp.getImpressora() + " salvo com sucesso!");
+                    //System.out.println(" Objeto " + cp.getImpressora() + " salvo com sucesso!");
                 }
             setPagImpressas(soma);
             soma = 0;
-            
+
             //txtPagImpressas.setText(Integer.toString(getPagImpressas()));
             }
-        
+
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
+
             //model.removeRow(jTable1.getSelectedRow()); Nao descomentar essa linha!!!!!
-            
+
             listarVetores();
+
         }
+        else{
+            JOptionPane.showMessageDialog(null, "Preencha os campos do período.");
+            txtDataInicial.setText("");
+            txtDataFinal.setText("");
+        }
+
+    }
         
     }//GEN-LAST:event_btnBuscaActionPerformed
 
@@ -545,7 +562,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         ControlePaginasDao cpd = new ControlePaginasDao();
         for(int i=0;i<vetorImpressora.length;i++){
             cpd.todasImpressoras(vetorImpressora);
-            System.out.println("Vetor na posição [" + i + "]: " + vetorImpressora[i]);
+            //System.out.println("Vetor na posição [" + i + "]: " + vetorImpressora[i]);
         }
         
         return vetorImpressora;

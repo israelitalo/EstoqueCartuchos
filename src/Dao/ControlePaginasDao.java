@@ -52,7 +52,7 @@ public class ControlePaginasDao {
     
     public void carregarComboBoxImpressora(JComboBox comboBox){
         
-        String sql = "SELECT modelo FROM impressora";
+        String sql = "SELECT modelo FROM impressora ORDER BY modelo";
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -204,7 +204,7 @@ public class ControlePaginasDao {
     
     //Método para listar itens da tabela recebervetores, na tabela da tela TelaControlPaginasRel, quando o botão radio Buscar Todos estiver selecionado.
     public List<ControlePaginas> listarRelatorioVetores(){
-        String sql = "SELECT * FROM recebervetores";
+        String sql = "SELECT * FROM recebervetores ORDER BY impressora";
         
         List<ControlePaginas> lista = new ArrayList<>();
         
