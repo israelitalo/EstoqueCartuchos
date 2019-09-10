@@ -6,7 +6,6 @@
 package controller;
 
 import Telas.Icones.TelaLogin;
-import Telas.Icones.TelaPrincipal;
 
 /**
  *
