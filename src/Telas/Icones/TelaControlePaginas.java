@@ -433,11 +433,13 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         
                 txtQtdFinal.setValue(getQtdTotalGlobal());
             }
-            else
+            /*else
             {
                 JOptionPane.showMessageDialog(null, "Não há histórico de datas para esta impressora!");
                 limparCampos();
-            }
+            }*/
+            
+            listarControlePagians();
         }
          
     }//GEN-LAST:event_jComboBoxImpressoraActionPerformed

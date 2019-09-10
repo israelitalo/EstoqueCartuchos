@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -143,7 +145,7 @@ public class CartuchoDao {
     
     public List<Cartucho> selectCartucho (){
         //01/07/2019 funcionando, com consulta com chave estrangeira (FOREIGN KEY).
-        String sql = "SELECT c.id_cartucho, c.tipo, c.modelo, i.modelo, c.cor, c.quantidade FROM cartucho c, impressora i WHERE c.id_impressora = i.id_impressora";
+        String sql = "SELECT c.id_cartucho, c.tipo, c.modelo, i.modelo, i.id_setor, c.cor, c.quantidade FROM cartucho c, impressora i WHERE c.id_impressora = i.id_impressora";
         
         List<Cartucho> cartuchos = new ArrayList<Cartucho>();
         
@@ -159,6 +161,7 @@ public class CartuchoDao {
                 cartucho.setTipo(rs.getString("tipo"));
                 cartucho.setModelo(rs.getString("modelo"));
                 cartucho.setModeloImpressora(rs.getString("i.modelo"));//mudou para getInt
+                cartucho.setSetor(getSetorCartucho(rs.getInt("i.id_setor")));
                 cartucho.setCor(rs.getString("cor"));
                 cartucho.setQuantidade(rs.getInt("quantidade"));
                 
@@ -282,6 +285,28 @@ public class CartuchoDao {
             ConexaoJdbc.closeConnection(con, stmt);
         } catch (SQLException ex) {
             System.err.println("Erro!" + ex);
+        }
+        return null;
+    }
+    
+    //Método para pegar o setor da tabela da Tela Estoque.
+    public String getSetorCartucho(Integer idSetor){
+        
+        String sql = "SELECT s.setor FROM setor s, impressora i WHERE s.id_setor = '" + idSetor + "' AND i.id_setor = '" + idSetor + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                String setor = rs.getString("s.setor");
+                return setor;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CartuchoDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
         return null;
     }

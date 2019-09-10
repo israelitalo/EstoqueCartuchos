@@ -15,6 +15,8 @@ public class Cartucho {
    private String tipo;
    private String modelo;
    private Integer idImpressora;
+   private String setor;
+   private Integer id_setor;
    private String cor;
    private Integer quantidade;
    private String modeloImpressora;//para utilização da String nas listas de Arrays.
@@ -28,11 +30,22 @@ public class Cartucho {
         this.quantidade = quantidade;
     }
 
-    public Cartucho(Integer idCartucho, String tipo, String modelo, String modeloImpressora, String cor, Integer quantidade) {
+    public Cartucho(Integer idCartucho, String tipo, String modelo, String modeloImpressora, String setor, String cor, Integer quantidade) {
     this.idCartucho = idCartucho;
     this.tipo = tipo;
     this.modelo = modelo;
     this.modeloImpressora = modeloImpressora;
+    this.setor = setor;
+    this.cor = cor;
+    this.quantidade = quantidade;
+    }
+    
+    public Cartucho(Integer idCartucho, String tipo, String modelo, String modeloImpressora, Integer id_setor, String cor, Integer quantidade) {
+    this.idCartucho = idCartucho;
+    this.tipo = tipo;
+    this.modelo = modelo;
+    this.modeloImpressora = modeloImpressora;
+    this.id_setor = id_setor;
     this.cor = cor;
     this.quantidade = quantidade;
     }
@@ -118,6 +131,22 @@ public class Cartucho {
     
     public Integer subtrairQuantidade(Integer quantidadeBD, Integer quantidade){
         return quantidadeBD - quantidade;
+    }
+
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
+    }
+
+    public Integer getId_setor() {
+        return id_setor;
+    }
+
+    public void setId_setor(Integer id_setor) {
+        this.id_setor = id_setor;
     }
     
 }
