@@ -86,6 +86,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel5.setText("Controle de usuarios");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/user_customer_person_13976.png"))); // NOI18N
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel6MouseClicked(evt);
