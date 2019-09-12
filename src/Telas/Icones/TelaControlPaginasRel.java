@@ -363,7 +363,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             //txtPagImpressas.setText(Integer.toString(getPagImpressas()));
             }
 
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            // DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
             //model.removeRow(jTable1.getSelectedRow()); Nao descomentar essa linha!!!!!
 

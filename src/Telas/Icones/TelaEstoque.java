@@ -16,7 +16,11 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
@@ -104,7 +108,7 @@ public class TelaEstoque extends javax.swing.JDialog {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "CÓDIGO", "TIPO", "MODELO", "IMPRESSORA", "SETOR", "COR", "QUANTIDADE"
+                "CÓDIGO", "TIPO", "MODELO", "IMPRESSORA", "SETOR IMPRESSORA", "COR", "QUANTIDADE"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -116,6 +120,7 @@ public class TelaEstoque extends javax.swing.JDialog {
             }
         });
         tabelaCartuchos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tabelaCartuchos.setName("Tabela Estoque de Cartuchos"); // NOI18N
         tabelaCartuchos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaCartuchosMouseClicked(evt);
@@ -332,6 +337,9 @@ public class TelaEstoque extends javax.swing.JDialog {
            
         DefaultTableModel modelo = (DefaultTableModel) tabelaCartuchos.getModel();
         
+        //Para a tabela não definir a largura das colunas de forma automática.
+        tabelaCartuchos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
         modelo.setNumRows(0);
         
         for (Cartucho c : cd.selectCartucho()) {
@@ -349,12 +357,14 @@ public class TelaEstoque extends javax.swing.JDialog {
         }
         
         //Definindo a largura das colunas da tabela tabelaCartuchos.
-        tabelaCartuchos.getColumnModel().getColumn(0).setPreferredWidth(0);
-        tabelaCartuchos.getColumnModel().getColumn(1).setPreferredWidth(0);
-        tabelaCartuchos.getColumnModel().getColumn(2).setPreferredWidth(50);
-        tabelaCartuchos.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tabelaCartuchos.getColumnModel().getColumn(4).setPreferredWidth(0);
-        tabelaCartuchos.getColumnModel().getColumn(5).setPreferredWidth(0);
+        
+        tabelaCartuchos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tabelaCartuchos.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tabelaCartuchos.getColumnModel().getColumn(2).setPreferredWidth(130);
+        tabelaCartuchos.getColumnModel().getColumn(3).setPreferredWidth(250);
+        tabelaCartuchos.getColumnModel().getColumn(4).setPreferredWidth(150);
+        tabelaCartuchos.getColumnModel().getColumn(5).setPreferredWidth(80);
+        tabelaCartuchos.getColumnModel().getColumn(6).setPreferredWidth(100);
     }
     
     private void jLabelVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVoltarMouseClicked
