@@ -183,16 +183,16 @@ public class ControlePaginasDao {
     //Método para salvar itens na tabela recebervetores, quando o botao radio Buscar Todos, na tela TelaControlPaginasRel, estiver selecionado.
     public boolean salvarRelatorioVetores(ControlePaginas cp){
         
-        String sql = "INSERT INTO recebervetores (impressora, datarelatorio, soma) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO recebervetores (impressora, setor, datarelatorio, soma) VALUES (?, ?, ?, ?)";
         
         PreparedStatement stmt = null;
         
         try{
             stmt = con.prepareStatement(sql);
             stmt.setString(1, cp.getImpressora());
-            //a data do relatorio será administrada na aplicação.
-            stmt.setString(2, cp.getData());
-            stmt.setInt(3, cp.getSoma());
+            stmt.setString(2, cp.getSetor());
+            stmt.setString(3, cp.getData());
+            stmt.setInt(4, cp.getSoma());
             stmt.executeUpdate();
             //ConexaoJdbc.closeConnection(con, stmt);
             return true;
@@ -219,6 +219,7 @@ public class ControlePaginasDao {
                 ControlePaginas cp = new ControlePaginas();
                 cp.setIdReceberVetores(rs.getInt("id"));
                 cp.setImpressora(rs.getString("impressora"));
+                cp.setSetor(rs.getString("setor"));
                 String data = dataToJava(rs.getString("datarelatorio"));
                 cp.setData(data);
                 cp.setSoma(rs.getInt("soma"));
@@ -357,8 +358,8 @@ public class ControlePaginasDao {
     }
     
     public List<ControlePaginas> listar(Integer idImpressora, String dataInicial, String dataFinal){
-        
-        String sql = "SELECT c.id_controle, i.modelo, c.data, c.pagina_total  FROM controlepaginas c, impressora i WHERE c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
+        //teste tentando inserir o setor nessa tabela.
+        String sql = "SELECT c.id_controle, i.modelo, s.setor, c.data, c.pagina_total FROM controlepaginas c, impressora i, setor s WHERE s.id_setor = i.id_setor AND c.id_impressora = '" + idImpressora + "' AND c.id_impressora = i.id_impressora AND data >= '" + dataInicial + "' AND data <= '" + dataFinal + "' ORDER BY data"; // novo select.
 
         List<ControlePaginas> lista = new ArrayList<>();
         
@@ -372,6 +373,7 @@ public class ControlePaginasDao {
                 ControlePaginas cp = new ControlePaginas();
                 cp.setIdControle(rs.getInt("id_controle"));
                 cp.setImpressora(rs.getString("i.modelo"));
+                cp.setSetor(rs.getString("s.setor"));
                 String data = rs.getString("data");//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
                 data = dataToJava(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.
                 cp.setData(data);//Converter data 1991-10-05 para 05/10/1991 antes de jogar para a tabela.

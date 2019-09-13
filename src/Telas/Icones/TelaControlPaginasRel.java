@@ -62,7 +62,6 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatórios de páginas impressas");
-        setPreferredSize(new java.awt.Dimension(958, 745));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(958, 745));
 
@@ -97,11 +96,11 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "IMPRESSORA", "DATA", "PAG. TOTAL"
+                "ID", "IMPRESSORA", "SETOR", "DATA", "PAG. TOTAL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -302,6 +301,8 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
             for(int i = 0; i<vetorImpressoras.length;i++){
                 cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]);
+                int idSetor = cpd.getIdSetor(vetorImpressoras[i]);
+                String setor = cpd.getSetor(idSetor);
                 //System.out.println(cpd.getIdJcomboBoxImpressora(vetorImpressoras[i]));
 
                 // Lista para preencher  tabela com os dados de cada impressora.
@@ -315,6 +316,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                     model.addRow(new Object[]{
                     cp.getIdControle(),
                     cp.getImpressora(),
+                    cp.getSetor(),
                     cp.getData(),
                     cp.getPaginaTotal()
                     });
@@ -331,14 +333,14 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                         //System.out.println("Zero Linhas!");
                         soma = 0;
                     }else{
-                        vetor [j] = (Integer) jTable1.getModel().getValueAt(j, 3);
+                        vetor [j] = (Integer) jTable1.getModel().getValueAt(j, 4);
 
                         // >>Teste<< Código para selecionar a última linha da tabela.
                         jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
 
                         int linhaSelecionada = jTable1.getSelectedRow();
 
-                        int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
+                        int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 4);
 
                         this.soma = valorUltimaLinha - vetor[0];
 
@@ -353,6 +355,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             ControlePaginas cp = new ControlePaginas();
             cp.setImpressora(vetorImpressoras[i]);
             cp.setData(dataAtual);
+            cp.setSetor(setor);
             cp.setSoma(soma);
                 if(cpd.salvarRelatorioVetores(cp) == true){
                     //System.out.println(" Objeto " + cp.getImpressora() + " salvo com sucesso!");
@@ -388,12 +391,15 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         List<ControlePaginas> lista = cpd.listarRelatorioVetores();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
+        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
         model.setNumRows(0);
         
         for(ControlePaginas cp: cpd.listarRelatorioVetores()){
             model.addRow(new Object[]{
                 cp.getIdReceberVetores(),
                 cp.getImpressora(),
+                cp.getSetor(),
                 cp.getData(),
                 cp.getSoma()
             });
@@ -408,11 +414,18 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             
             int linhaSelecionada = jTable1.getSelectedRow();
             
-            vetor[i] = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
+            vetor[i] = (int) jTable1.getModel().getValueAt(linhaSelecionada, 4);
             
             qtdPaginas += vetor[i];
             
         }
+        
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(80);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(300);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(150);
+        
         System.out.println(qtdPaginas);
         txtPagImpressas.setText(Integer.toString(qtdPaginas));
     }
@@ -511,6 +524,8 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
+        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
         model.setNumRows(0);
         
         for(ControlePaginas cp: cpd.listar(idImpressora, dataInicial, dataFinal)){
@@ -518,6 +533,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             model.addRow(new Object[]{
                 cp.getIdControle(),
                 cp.getImpressora(),
+                cp.getSetor(),
                 cp.getData(),
                 cp.getPaginaTotal()
             });
@@ -529,14 +545,14 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
             //int soma = 0;
             for(int i = 0; i < linhas; i++){
-            vetor [i] = (Integer) jTable1.getModel().getValueAt(i, 3);
+            vetor [i] = (Integer) jTable1.getModel().getValueAt(i, 4);
             
             // >>Teste<< Código para selecionar a última linha da tabela.
             jTable1.changeSelection(jTable1.getRowCount()-1,jTable1.getRowCount(),false,false);
             
             int linhaSelecionada = jTable1.getSelectedRow();
             
-            int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 3);
+            int valorUltimaLinha = (int) jTable1.getModel().getValueAt(linhaSelecionada, 4);
             
             this.soma = valorUltimaLinha - vetor[0];
             
@@ -545,6 +561,12 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                     this.soma = vetor[0];
                 }
             }
+            
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(80);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(316);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(150);
             setPagImpressas(soma);
         }
         else

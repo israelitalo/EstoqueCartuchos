@@ -28,6 +28,7 @@ public class ControlePaginas {
     private String impressora;
     private Integer soma;
     private Integer idReceberVetores;
+    private String setor;
 
     public ControlePaginas(Integer idControle, Integer idImpressora, String data, Date datafinal, Integer paginaInicial, Integer paginaFinal, Integer paginaTotal) {
         this.idControle = idControle;
@@ -100,6 +101,14 @@ public class ControlePaginas {
         this.paginaTotal = paginaTotal;
     }
     
+    public ControlePaginas(Integer idControle, Integer idImpressora, String setor, String data, Integer paginaTotal) {
+    this.idControle = idControle;
+    this.idImpressora = idImpressora;
+    this.setor = setor;
+    this.data = data;
+    this.paginaTotal = paginaTotal;
+    }
+    
     public ControlePaginas(){
     }
 
@@ -159,6 +168,14 @@ public class ControlePaginas {
         this.data = data;
     }
 
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
+    }
+    
     public Integer getPaginaInicial() {
         return paginaInicial;
     }
