@@ -192,6 +192,9 @@ public class TelaLogin extends javax.swing.JDialog {
                 ud.setUsuarioLogado(usuario);
                 TelaPrincipal telaPrincipal = new TelaPrincipal();
                 telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+                
+                telaPrincipal.labelUsuario.setText(login);
+                
                 telaPrincipal.setVisible(true);
                 dispose();
             }
