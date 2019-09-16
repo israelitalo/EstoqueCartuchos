@@ -38,7 +38,7 @@ public class TelaInserirNotificacao extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         txtusuario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        comboBoxTipo = new javax.swing.JComboBox<>();
+        comboBoxTipo = new javax.swing.JComboBox<String>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescricao = new javax.swing.JTextPane();
@@ -51,7 +51,7 @@ public class TelaInserirNotificacao extends javax.swing.JDialog {
 
         jLabel1.setText("Usuário:");
 
-        comboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tipo", "cartucho", "impressora" }));
+        comboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "tipo", "cartucho", "impressora" }));
 
         jLabel2.setText("Tipo de notificação:");
 
@@ -127,10 +127,10 @@ public class TelaInserirNotificacao extends javax.swing.JDialog {
         Notificacao ntf = new Notificacao();
         NotificacaoDao ntfd = new NotificacaoDao();
         UsuarioDao ud = new UsuarioDao();
+        
         String usuario = getUsuarioLogado();
-       
         String tipo = (String)comboBoxTipo.getSelectedItem();
-        String descricao = txtDescricao.getText();
+        String descricao = txtDescricao.getText().toUpperCase();
         
         //verificando se tipo é diferente de tipo e se o campo descrição não está vazio.
         if(tipo != "tipo" && !descricao.equals("")){
