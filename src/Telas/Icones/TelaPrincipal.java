@@ -20,7 +20,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
-        receberUsuarioLogado();
+        //receberUsuarioLogado();
         countNotificacao();
     }
 
@@ -41,9 +41,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabelImpressoraPrincipal = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelUsuario = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnNotificacao = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtNotificacao = new javax.swing.JLabel();
@@ -52,13 +52,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        MenuCartucho = new javax.swing.JMenuItem();
+        MenuImpressora = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerenciamento de Impressoras e cartuchos");
         setPreferredSize(new java.awt.Dimension(1150, 800));
         setSize(new java.awt.Dimension(1150, 800));
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1140, 163));
 
         jLabel1.setText("Cartuchos");
 
@@ -92,21 +94,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel5.setText("Controle de usuarios");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/user_customer_person_13976.png"))); // NOI18N
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/user_customer_person_13976.png"))); // NOI18N
+        jLabelUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+                jLabelUsuarioMouseClicked(evt);
             }
         });
 
         jLabel7.setText("Notificações");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/notificacao.png"))); // NOI18N
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/notificacao.png"))); // NOI18N
+        btnNotificacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNotificacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnNotificacaoActionPerformed(evt);
             }
         });
 
@@ -132,10 +134,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelImpressoraPrincipal)
                         .addGap(114, 114, 114)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabelUsuario)))
                 .addGap(142, 142, 142)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addComponent(btnNotificacao)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -170,15 +172,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                            .addComponent(jLabelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
                             .addComponent(iconEstoque)
                             .addComponent(IconSair)
                             .addComponent(jLabelImpressoraPrincipal))
                         .addContainerGap(25, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnNotificacao)
                         .addContainerGap(36, Short.MAX_VALUE))))
         );
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(1150, 36));
 
         labelUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
@@ -206,21 +210,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Arquivos");
 
-        jMenuItem1.setText("Cartuchos");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        MenuCartucho.setText("Cartuchos");
+        MenuCartucho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                MenuCartuchoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(MenuCartucho);
 
-        jMenuItem2.setText("Impressoras");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        MenuImpressora.setText("Impressoras");
+        MenuImpressora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                MenuImpressoraActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(MenuImpressora);
 
         jMenuBar1.add(jMenu1);
 
@@ -233,7 +237,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -241,7 +245,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 603, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 646, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -251,16 +255,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    public void receberUsuarioLogado(){
+    /*public void receberUsuarioLogado(){
         UsuarioDao ud = new UsuarioDao();
         String usuario;
         usuario = ud.getUsuarioLogado();
         //txtUsuario.setText(usuario);
         int idUsuarioLogado = ud.getIdUsuarioLogado(usuario);
         String adm = ud.verSeUsuarioEadm(idUsuarioLogado);
-    }
+    }*/
     
-    public String usuarioAtivoOuInativo(){
+    public String usuarioAdmOuNao(){
         UsuarioDao ud = new UsuarioDao();
         String usuario = ud.getUsuarioLogado();
         int idUsuario = ud.getIdUsuarioLogado(usuario);
@@ -273,6 +277,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String count = ntfd.countNotificacao();
         txtNotificacao.setText(count);
     }
+    
     private void iconEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconEstoqueMouseClicked
     TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
     telaEstoque.setVisible(true);      
@@ -282,10 +287,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_IconSairMouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void MenuCartuchoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCartuchoActionPerformed
         TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
         telaEstoque.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_MenuCartuchoActionPerformed
 
     private void jLabelImpressoraPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelImpressoraPrincipalMouseClicked
         if(jLabelImpressoraPrincipal.isEnabled()){
@@ -298,20 +303,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jLabelImpressoraPrincipalMouseClicked
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void MenuImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuImpressoraActionPerformed
         TelaImpressora2 telaImpressora = new TelaImpressora2(this, rootPaneCheckingEnabled);
         telaImpressora.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_MenuImpressoraActionPerformed
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        TelaControleUsuario telaUsuario = new TelaControleUsuario(this, rootPaneCheckingEnabled);
-        telaUsuario.setVisible(true);
-    }//GEN-LAST:event_jLabel6MouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String usuarioAtivo = usuarioAtivoOuInativo();
+    private void jLabelUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelUsuarioMouseClicked
+        String usuarioAdm = usuarioAdmOuNao();
         
-        if(usuarioAtivo.equals("sim")){
+        if(usuarioAdm.equals("sim")){
+            TelaControleUsuario telaUsuario = new TelaControleUsuario(this, rootPaneCheckingEnabled);
+            telaUsuario.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
+        
+    }//GEN-LAST:event_jLabelUsuarioMouseClicked
+
+    private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
+        String usuarioAdm = usuarioAdmOuNao();
+        
+        if(usuarioAdm.equals("sim")){
             TelaVerNotificacao verNotificacao = new TelaVerNotificacao(this, rootPaneCheckingEnabled);
             verNotificacao.setVisible(true);
         }
@@ -320,7 +333,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             inserirNotificacao.setVisible(true);
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnNotificacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,22 +373,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconSair;
+    private javax.swing.JMenuItem MenuCartucho;
+    private javax.swing.JMenuItem MenuImpressora;
+    private javax.swing.JButton btnNotificacao;
     private javax.swing.JLabel iconEstoque;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelImpressoraPrincipal;
+    private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public javax.swing.JLabel labelUsuario;

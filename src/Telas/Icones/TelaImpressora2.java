@@ -400,15 +400,20 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             int idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
             int idSetor = impDao.getIdSetorJComboBox(setor);
             
+            String serieLinha = jTableImpressora.getModel().getValueAt(linha, 2).toString();
+            
             impressora.setModelo(txtModelo.getText());
             impressora.setSerie(txtSerie.getText());
             impressora.setId_fabricante(idFabricante);
             impressora.setId_setor(idSetor);
             
-            if(impDao.editar(impressora, idImpressora) == true){
+            if(!txtSerie.getText().equals(serieLinha)){
+                if(impDao.editar(impressora, idImpressora) == true){
                 impDao.editar(impressora, idImpressora);
                 JOptionPane.showMessageDialog(null, "Impressora alterada com sucesso!");
                 listarImpressora();
+                limparCampos();
+                }
             }
             else
             {
