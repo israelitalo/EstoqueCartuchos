@@ -222,17 +222,17 @@ public class TelaLogin extends javax.swing.JDialog {
             {
                 String login = txtLogin.getText();
                 String senha = txtSenha.getText();
-                
+
                 Usuario usuario = new Usuario(login, senha);
-            
+
                 UsuarioDao ud = new UsuarioDao();
-            
+
                 //testando validacao de usuario ativo ou inativo.
                 int idUsuarioLogado = ud.getIdUsuarioLogado(usuario.getLogin());
                 String ativo = ud.usuarioAtivoOuInativo(idUsuarioLogado);
-            
+
                 boolean testeConexao = ud.login(login, senha);
-            
+
                 if(ativo.equals("nao")){
                     JOptionPane.showMessageDialog(null, "Usuário inativo. Contate à administração.");
                     limparCampos();
@@ -242,6 +242,9 @@ public class TelaLogin extends javax.swing.JDialog {
                     ud.setUsuarioLogado(usuario);
                     TelaPrincipal telaPrincipal = new TelaPrincipal();
                     telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+
+                    telaPrincipal.labelUsuario.setText(login);
+
                     telaPrincipal.setVisible(true);
                     dispose();
                 }
@@ -250,8 +253,7 @@ public class TelaLogin extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
                     limparCampos();
                 }
-            }
-            
+            }    
         }
         else if(evt.getKeyCode() == KeyEvent.VK_END){
             System.exit(0);
@@ -269,17 +271,17 @@ public class TelaLogin extends javax.swing.JDialog {
             {
                 String login = txtLogin.getText();
                 String senha = txtSenha.getText();
-                
+
                 Usuario usuario = new Usuario(login, senha);
-            
+
                 UsuarioDao ud = new UsuarioDao();
-            
+
                 //testando validacao de usuario ativo ou inativo.
                 int idUsuarioLogado = ud.getIdUsuarioLogado(usuario.getLogin());
                 String ativo = ud.usuarioAtivoOuInativo(idUsuarioLogado);
 
                 boolean testeConexao = ud.login(login, senha);
-            
+
                 if(ativo.equals("nao")){
                     JOptionPane.showMessageDialog(null, "Usuário inativo. Contate à administração.");
                     limparCampos();
@@ -289,6 +291,9 @@ public class TelaLogin extends javax.swing.JDialog {
                     ud.setUsuarioLogado(usuario);
                     TelaPrincipal telaPrincipal = new TelaPrincipal();
                     telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+
+                    telaPrincipal.labelUsuario.setText(login);
+
                     telaPrincipal.setVisible(true);
                     dispose();
                 }
@@ -297,8 +302,7 @@ public class TelaLogin extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!");
                     limparCampos();
                 }
-            }
-            
+            }    
         }
         else if(evt.getKeyCode() == KeyEvent.VK_END){
             System.exit(0);

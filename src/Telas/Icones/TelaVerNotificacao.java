@@ -44,7 +44,6 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Notificações pendentes");
-        setPreferredSize(new java.awt.Dimension(958, 745));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(958, 745));
 
@@ -83,6 +82,11 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
         jLabel1.setText("Descrição:");
 
         jButton1.setText("Atender à solicitação");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,13 +95,13 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jButton1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -146,6 +150,22 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
         
     }//GEN-LAST:event_jTableNotificacaoMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            
+            int linha = jTableNotificacao.getSelectedRow();
+            
+            String tipoNotificacao = jTableNotificacao.getModel().getValueAt(linha, 2).toString();
+            
+            if(tipoNotificacao.equals("cartucho")){
+                TelaEstoque estoque = new TelaEstoque(null, rootPaneCheckingEnabled);
+                estoque.setVisible(true);
+            }
+            if(tipoNotificacao.equals("impressora")){
+                TelaImpressora2 impr = new TelaImpressora2(null, rootPaneCheckingEnabled);
+                impr.setVisible(true);
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void listarNotificacoes(){
         
         NotificacaoDao ntfd = new NotificacaoDao();
@@ -164,8 +184,6 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
                 ntf.getDescricao()
             });
         }
-        
-        
     }
     /**
      * @param args the command line arguments

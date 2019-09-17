@@ -75,5 +75,24 @@ public class NotificacaoDao {
         }
     }
     
+    //Saber o count da tabela notificacao. Nao pode haver espeço entre o COUNT e os parenteses.
+    public String countNotificacao(){
+        
+        String sql = "SELECT COUNT(id_notificacao) FROM notificacao";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            rs.next();
+            String count = rs.getString(1);
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(NotificacaoDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
     
 }

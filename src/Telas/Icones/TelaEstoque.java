@@ -70,7 +70,9 @@ public class TelaEstoque extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Controle de estoque");
-        setPreferredSize(new java.awt.Dimension(900, 700));
+        setPreferredSize(new java.awt.Dimension(958, 745));
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(958, 745));
 
         tabelaCartuchos.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204)));
         tabelaCartuchos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -251,7 +253,7 @@ public class TelaEstoque extends javax.swing.JDialog {
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -259,7 +261,7 @@ public class TelaEstoque extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
                 .addGap(33, 33, 33))
         );
 
@@ -301,7 +303,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
         );
 
         pack();
@@ -358,9 +360,9 @@ public class TelaEstoque extends javax.swing.JDialog {
         tabelaCartuchos.getColumnModel().getColumn(1).setPreferredWidth(80);
         tabelaCartuchos.getColumnModel().getColumn(2).setPreferredWidth(130);
         tabelaCartuchos.getColumnModel().getColumn(3).setPreferredWidth(250);
-        tabelaCartuchos.getColumnModel().getColumn(4).setPreferredWidth(150);
+        tabelaCartuchos.getColumnModel().getColumn(4).setPreferredWidth(200);
         tabelaCartuchos.getColumnModel().getColumn(5).setPreferredWidth(80);
-        tabelaCartuchos.getColumnModel().getColumn(6).setPreferredWidth(100);
+        tabelaCartuchos.getColumnModel().getColumn(6).setPreferredWidth(102);
     }
     
     private void jLabelVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVoltarMouseClicked
