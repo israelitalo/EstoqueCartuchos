@@ -177,26 +177,33 @@ public class TelaLogin extends javax.swing.JDialog {
             
             UsuarioDao ud = new UsuarioDao();
             
-            //testando validacao de usuario ativo ou inativo.
-            int idUsuarioLogado = ud.getIdUsuarioLogado(usuario.getLogin());
-            String ativo = ud.usuarioAtivoOuInativo(idUsuarioLogado);
-            
             boolean testeConexao = ud.login(login, senha);
             
-            if(ativo.equals("nao")){
-                JOptionPane.showMessageDialog(null, "Usuário inativo. Contate à administração.");
-                limparCampos();
-            }
-            else if(testeConexao == true && ativo.equals("sim")){
+            if(testeConexao == true){
+                
                 //método para inserir usuário logado à tabela usuariologado.
                 ud.setUsuarioLogado(usuario);
-                TelaPrincipal telaPrincipal = new TelaPrincipal();
-                telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+                System.out.println(usuario.getLogin());
                 
-                telaPrincipal.labelUsuario.setText(login);
-                
-                telaPrincipal.setVisible(true);
-                dispose();
+                //testando validacao de usuario ativo ou inativo.
+                int idUsuarioLogado = ud.getIdUsuarioLogado(usuario.getLogin());
+                System.out.println("id usuario:" + idUsuarioLogado);
+                String ativo = ud.usuarioAtivoOuInativo(idUsuarioLogado);
+                System.out.println("ativo: " + ativo);
+            
+                if(ativo.equals("sim")){
+                    TelaPrincipal telaPrincipal = new TelaPrincipal();
+                    telaPrincipal.setExtendedState(telaPrincipal.MAXIMIZED_BOTH);
+
+                    //telaPrincipal.labelUsuario.setText(login);
+
+                    telaPrincipal.setVisible(true);
+                    dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Usuário inativo. Contate à administração.");
+                    limparCampos();
+                }
             }
             else
             {

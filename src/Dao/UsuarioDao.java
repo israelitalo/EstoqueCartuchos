@@ -35,7 +35,7 @@ public class UsuarioDao {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, usuario.getLogin());
             stmt.executeUpdate();
-            ConexaoJdbc.closeConnection(con, stmt);
+            //ConexaoJdbc.closeConnection(con, stmt);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
