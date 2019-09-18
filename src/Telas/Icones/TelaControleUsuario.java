@@ -124,6 +124,11 @@ public class TelaControleUsuario extends javax.swing.JDialog {
 
         btnAlterar.setText("ALTERAR");
         btnAlterar.setPreferredSize(new java.awt.Dimension(81, 23));
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("REMOVER");
 
@@ -314,6 +319,42 @@ public class TelaControleUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Prencha todos os campos!");
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+    //pegando dados da tabela.    
+    int linha = getLinhaTable();
+    
+    String idUsuario = getValorLinhaTable(linha, 0).toString();
+    int idUsuarioInt = Integer.parseInt(idUsuario);
+    
+    String nomeUsuario = getValorLinhaTable(linha, 1).toString();
+    String loginUsuario = getValorLinhaTable(linha, 2).toString();
+    String usuarioAdm = getValorLinhaTable(linha, 3).toString();
+    String usuarioAtivo = getValorLinhaTable(linha, 4).toString();
+    
+    //pegando os dados dos campos de texto e checkBox.
+    String txtUsuarioAlter = txtUsuario.getText();
+    String txtLoginAlter = txtLogin.getText();
+    String txtSenhaAlter = txtSenha.getText();
+    String adm = checarCheck(checkAdm);
+    String ativo = checarCheck(checkAtivo);
+    
+    Usuario usuario = new Usuario();
+    UsuarioDao ud = new UsuarioDao();
+    ControleUsuarioDao cdu = new ControleUsuarioDao();
+    
+    usuario.setNome(txtUsuarioAlter);
+    usuario.setLogin(txtLoginAlter);
+    usuario.setSenha(txtSenhaAlter);
+    
+        if(ud.alterar(usuario, idUsuarioInt)){
+            JOptionPane.showMessageDialog(null, "Usuario alterado com sucesso.");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Falha ao alterar usuário.");
+        }
+    
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     public String checarCheck(JCheckBox check){
         String resposta;

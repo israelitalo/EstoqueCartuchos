@@ -222,4 +222,21 @@ public class UsuarioDao {
         return null;
     }
     
+    public boolean alterar(Usuario usuario, Integer idUsuario){
+        String sql = "UPDATE usuario SET nome=?, login=?, senha=? WHERE usuario.id_usuario = '" + idUsuario + "'";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getLogin());
+            stmt.setString(3, usuario.getSenha());
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
 }
