@@ -95,4 +95,19 @@ public class NotificacaoDao {
         }
     }
     
+    public boolean excluir(Integer idNotificacao){
+        String sql = "DELETE FROM notificacao WHERE id_notificacao = '" + idNotificacao + "'";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NotificacaoDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
 }

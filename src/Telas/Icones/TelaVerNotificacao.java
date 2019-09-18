@@ -8,6 +8,7 @@ package Telas.Icones;
 import Dao.NotificacaoDao;
 import controller.Notificacao;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,14 +41,15 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescricao = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAtenderSolicitacao = new javax.swing.JButton();
+        btnNotificacaoAtendida = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Notificações pendentes");
 
         jPanel1.setPreferredSize(new java.awt.Dimension(958, 745));
 
-        jTableNotificacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTableNotificacao.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTableNotificacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -81,10 +83,19 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
 
         jLabel1.setText("Descrição:");
 
-        jButton1.setText("Atender à solicitação");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAtenderSolicitacao.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAtenderSolicitacao.setText("Atender à Solicitação");
+        btnAtenderSolicitacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAtenderSolicitacaoActionPerformed(evt);
+            }
+        });
+
+        btnNotificacaoAtendida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnNotificacaoAtendida.setText("Solicitação Atendida");
+        btnNotificacaoAtendida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNotificacaoAtendidaActionPerformed(evt);
             }
         });
 
@@ -95,13 +106,16 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jButton1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAtenderSolicitacao)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnNotificacaoAtendida)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -114,7 +128,9 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAtenderSolicitacao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNotificacaoAtendida, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(230, 230, 230))
         );
 
@@ -150,7 +166,7 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
         
     }//GEN-LAST:event_jTableNotificacaoMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAtenderSolicitacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtenderSolicitacaoActionPerformed
             
             int linha = jTableNotificacao.getSelectedRow();
             
@@ -164,7 +180,35 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
                 TelaImpressora2 impr = new TelaImpressora2(null, rootPaneCheckingEnabled);
                 impr.setVisible(true);
             }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAtenderSolicitacaoActionPerformed
+
+    private void btnNotificacaoAtendidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoAtendidaActionPerformed
+        
+    int linha = jTableNotificacao.getSelectedRow();
+    
+    String Notificacao = jTableNotificacao.getModel().getValueAt(linha, 0).toString();
+    
+    int idNotificacao = Integer.parseInt(Notificacao);
+    
+    NotificacaoDao nd = new NotificacaoDao();
+    
+    boolean excluir = nd.excluir(idNotificacao);
+    
+        if(excluir == true){
+            JOptionPane.showMessageDialog(null, "Notificações atualizadas com sucesso.");
+            listarNotificacoes();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar notificações.");
+        }
+    
+        //Atualizacao do jlabel com a quantidade de notificacoes nao funciona.
+        TelaPrincipal principal = new TelaPrincipal();
+        principal.countNotificacao();
+        
+        principal.repaint();
+        
+    }//GEN-LAST:event_btnNotificacaoAtendidaActionPerformed
 
     public void listarNotificacoes(){
         
@@ -228,7 +272,8 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAtenderSolicitacao;
+    private javax.swing.JButton btnNotificacaoAtendida;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

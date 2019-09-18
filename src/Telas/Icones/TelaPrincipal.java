@@ -46,7 +46,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnNotificacao = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtNotificacao = new javax.swing.JLabel();
+        labelNotificacao = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         labelUsuario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -54,10 +54,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         MenuCartucho = new javax.swing.JMenuItem();
         MenuImpressora = new javax.swing.JMenuItem();
+        attNotificacao = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerenciamento de Impressoras e cartuchos");
-        setPreferredSize(new java.awt.Dimension(1150, 800));
         setSize(new java.awt.Dimension(1150, 800));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1140, 163));
@@ -143,7 +143,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addGap(5, 5, 5)
-                        .addComponent(txtNotificacao)
+                        .addComponent(labelNotificacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -167,7 +167,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9)
-                    .addComponent(txtNotificacao))
+                    .addComponent(labelNotificacao))
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -179,7 +179,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addContainerGap(25, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNotificacao)
-                        .addContainerGap(36, Short.MAX_VALUE))))
+                        .addContainerGap(34, Short.MAX_VALUE))))
         );
 
         jPanel2.setPreferredSize(new java.awt.Dimension(1150, 36));
@@ -228,6 +228,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        attNotificacao.setText("Atualizar Notificações");
+        attNotificacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                attNotificacaoMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(attNotificacao);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -275,7 +283,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void countNotificacao(){
         NotificacaoDao ntfd = new NotificacaoDao();
         String count = ntfd.countNotificacao();
-        txtNotificacao.setText(count);
+        labelNotificacao.setText(count);
     }
     
     private void iconEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconEstoqueMouseClicked
@@ -335,6 +343,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnNotificacaoActionPerformed
 
+    private void attNotificacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attNotificacaoMouseClicked
+        countNotificacao();
+    }//GEN-LAST:event_attNotificacaoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -375,6 +387,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel IconSair;
     private javax.swing.JMenuItem MenuCartucho;
     private javax.swing.JMenuItem MenuImpressora;
+    private javax.swing.JMenu attNotificacao;
     private javax.swing.JButton btnNotificacao;
     private javax.swing.JLabel iconEstoque;
     private javax.swing.JLabel jLabel1;
@@ -391,7 +404,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    public javax.swing.JLabel labelNotificacao;
     public javax.swing.JLabel labelUsuario;
-    private javax.swing.JLabel txtNotificacao;
     // End of variables declaration//GEN-END:variables
 }
