@@ -141,6 +141,7 @@ public class TelaInserirNotificacao extends javax.swing.JDialog {
             
             if(ntfd.cadastrar(ntf)){
                 JOptionPane.showMessageDialog(null, "Solicitação cadastrada com sucesso!");
+                limparCampos();
             }
             else{
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar solicitação.");
@@ -148,7 +149,7 @@ public class TelaInserirNotificacao extends javax.swing.JDialog {
         }
         else{
             JOptionPane.showMessageDialog(null, "Selecione um tipo e preencha o campo descrição!");
-            txtDescricao.setText("");
+            limparCampos();
         }
         
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -163,6 +164,11 @@ public class TelaInserirNotificacao extends javax.swing.JDialog {
     public void setTxtUsuario(String usuarioLogado){
         txtusuario.setText(usuarioLogado);
         txtusuario.disable();
+    }
+    
+    public void limparCampos(){
+        txtDescricao.setText("");
+        comboBoxTipo.setSelectedItem("tipo");
     }
 
     /**

@@ -153,6 +153,10 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void limparCampos(){
+        txtDescricao.setText("");
+    }
+    
     private void jTableNotificacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableNotificacaoMouseClicked
         
         if(evt.getClickCount() == 2){
@@ -197,6 +201,7 @@ public class TelaVerNotificacao extends javax.swing.JDialog {
         if(excluir == true){
             JOptionPane.showMessageDialog(null, "Notificações atualizadas com sucesso.");
             listarNotificacoes();
+            limparCampos();
         }
         else{
             JOptionPane.showMessageDialog(null, "Erro ao atualizar notificações.");
