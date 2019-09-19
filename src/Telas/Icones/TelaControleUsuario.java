@@ -161,6 +161,11 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         });
 
         btnRemover.setText("REMOVER");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/KeyChainAccess_37052.png"))); // NOI18N
 
@@ -312,8 +317,9 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         }
         if(evt.getButton() == 3){
             int linha = getLinhaTable();
-            if(linha > 0){
+            if(linha >= 0){
                 jTable1.getSelectionModel().clearSelection();
+                btnSalvar.setEnabled(true);
                 limparCampos();
             }
         }
@@ -520,6 +526,14 @@ public class TelaControleUsuario extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnAlterarKeyPressed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        int linha = getLinhaTable();
+        
+        int idUsuario = Integer.parseInt(getValorLinhaTable(linha, 0));
+        
+        //enviar id para excluir, com o método excluir da classe UsuarioDao.
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     public void limparCampos(){
         txtLogin.setText("");

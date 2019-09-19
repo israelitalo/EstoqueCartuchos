@@ -264,5 +264,20 @@ public class UsuarioDao {
         }
         return false;
     }
+ 
+    public boolean excluir(Integer idUsuario){
+        String sql = "DELETE FROM usuario WHERE id_usuario = '" + idUsuario + "'";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
     
 }

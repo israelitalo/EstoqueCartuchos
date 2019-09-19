@@ -100,14 +100,25 @@ public class ControleUsuarioDao {
     }
     
     public boolean alterar(Integer idUsuario, ControleDeUsuario cdu){
-        
         String sql = "UPDATE controledeusuario SET adm=?, ativo=? WHERE idusuario = '" + idUsuario + "'";
         PreparedStatement stmt = null;
-        
         try{
             stmt = con.prepareStatement(sql);
             stmt.setString(1, cdu.getAdm());
             stmt.setString(2, cdu.getAtivo());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleUsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean excluir(Integer idUsuario){
+        String sql = "DELETE FROM controledeusuario WHERE idusuario = '" + idUsuario + "'";
+        PreparedStatement stmt = null;
+        try{
+            stmt = con.prepareStatement(sql);
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
