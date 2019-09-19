@@ -324,38 +324,54 @@ public class TelaControleUsuario extends javax.swing.JDialog {
     //pegando dados da tabela.    
     int linha = getLinhaTable();
     
-    String idUsuario = getValorLinhaTable(linha, 0).toString();
-    int idUsuarioInt = Integer.parseInt(idUsuario);
-    
-    String nomeUsuario = getValorLinhaTable(linha, 1).toString();
-    String loginUsuario = getValorLinhaTable(linha, 2).toString();
-    String usuarioAdm = getValorLinhaTable(linha, 3).toString();
-    String usuarioAtivo = getValorLinhaTable(linha, 4).toString();
-    
-    //pegando os dados dos campos de texto e checkBox.
-    String txtUsuarioAlter = txtUsuario.getText();
-    String txtLoginAlter = txtLogin.getText();
-    String txtSenhaAlter = txtSenha.getText();
-    String adm = checarCheck(checkAdm);
-    String ativo = checarCheck(checkAtivo);
-    
-    Usuario usuario = new Usuario();
-    UsuarioDao ud = new UsuarioDao();
-    ControleUsuarioDao cdu = new ControleUsuarioDao();
-    
-    usuario.setNome(txtUsuarioAlter);
-    usuario.setLogin(txtLoginAlter);
-    usuario.setSenha(txtSenhaAlter);
-    
-        if(ud.alterar(usuario, idUsuarioInt)){
+    if(linha < 0){
+        JOptionPane.showMessageDialog(null, "Selecione um item para alterá-lo.");
+    }
+    else{
+        String idUsuario = getValorLinhaTable(linha, 0).toString();
+        int idUsuarioInt = Integer.parseInt(idUsuario);
+        
+        //pegando os dados dos campos de texto e checkBox.
+        String txtUsuarioAlter = txtUsuario.getText();
+        String txtLoginAlter = txtLogin.getText();
+        String txtSenhaAlter = txtSenha.getText();
+        String adm = checarCheck(checkAdm);
+        String ativo = checarCheck(checkAtivo);
+
+        Usuario usuario = new Usuario();
+        UsuarioDao ud = new UsuarioDao();
+        ControleUsuarioDao cdud = new ControleUsuarioDao();
+
+        usuario.setNome(txtUsuarioAlter);
+        usuario.setLogin(txtLoginAlter);
+        usuario.setSenha(txtSenhaAlter);
+
+        if(ud.alterar(usuario, idUsuarioInt) == true){
+
+            ControleDeUsuario cdu = new ControleDeUsuario();
+            cdu.setAdm(adm);
+            cdu.setAtivo(ativo);
+
+            cdud.alterar(idUsuarioInt, cdu);
+
             JOptionPane.showMessageDialog(null, "Usuario alterado com sucesso.");
+            listarUsuarios();
+            limparCampos();
         }
         else{
             JOptionPane.showMessageDialog(null, "Falha ao alterar usuário.");
+            listarUsuarios();
+            limparCampos();
         }
-    
+    }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
+    public void limparCampos(){
+        txtLogin.setText("");
+        txtSenha.setText("");
+        txtUsuario.setText("");
+    }
+    
     public String checarCheck(JCheckBox check){
         String resposta;
         if(check.isSelected()){
