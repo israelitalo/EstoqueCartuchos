@@ -9,6 +9,7 @@ import Dao.ControleUsuarioDao;
 import Dao.UsuarioDao;
 import controller.ControleDeUsuario;
 import controller.Usuario;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -81,6 +82,7 @@ public class TelaControleUsuario extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setToolTipText("Clique com botão direito do mouse para desmarcar uma linha.");
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -108,11 +110,29 @@ public class TelaControleUsuario extends javax.swing.JDialog {
 
         checkImprimirRelImpr.setText("IMPRIMIR REL. IMPR.");
 
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Usuário:");
 
         jLabel2.setText("Login:");
 
+        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLoginActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Senha:");
+
+        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSenhaActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("CADASTRAR");
         btnSalvar.setPreferredSize(new java.awt.Dimension(81, 23));
@@ -121,12 +141,22 @@ public class TelaControleUsuario extends javax.swing.JDialog {
                 btnSalvarActionPerformed(evt);
             }
         });
+        btnSalvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSalvarKeyPressed(evt);
+            }
+        });
 
         btnAlterar.setText("ALTERAR");
         btnAlterar.setPreferredSize(new java.awt.Dimension(81, 23));
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
+            }
+        });
+        btnAlterar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAlterarKeyPressed(evt);
             }
         });
 
@@ -257,7 +287,7 @@ public class TelaControleUsuario extends javax.swing.JDialog {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         //funcionando a verificação de dois cliques.
         if(evt.getClickCount()== 2){
-            
+            btnSalvar.setEnabled(false);
             int linha = getLinhaTable();
             
             String idUsuario = getValorLinhaTable(linha, 0);
@@ -278,9 +308,15 @@ public class TelaControleUsuario extends javax.swing.JDialog {
             }else{
                 checkAdm.setSelected(false);
             }
-
+            btnAlterar.requestFocus();
         }
-        
+        if(evt.getButton() == 3){
+            int linha = getLinhaTable();
+            if(linha > 0){
+                jTable1.getSelectionModel().clearSelection();
+                limparCampos();
+            }
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -288,35 +324,44 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         ControleDeUsuario cdu = new ControleDeUsuario();
         UsuarioDao ud = new UsuarioDao();
         Usuario usuario = new Usuario();
-        
+
         //salvando usuario ao banco de Dados.
         usuario.setNome(txtUsuario.getText());
         usuario.setLogin(txtLogin.getText());
         usuario.setSenha(txtSenha.getText());
-        
+
+        boolean loginDisponivel = ud.loginDisponivel(txtLogin.getText());
+
         if(!txtUsuario.getText().equals("") && !txtLogin.getText().equals("") && !txtSenha.getText().equals("")){
-            ud.salvarUsuario(usuario);
-            JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
-            
-            //selecionando o usario cadastrado acima e salvando-o à tabela controledeusuario.
-            String login = txtLogin.getText();
-            int idUsuario = ud.getIdUsuario(login);
-            System.out.println(idUsuario);
-            String adm = checarCheck(checkAdm);
-            String ativo = checarCheck(checkAtivo);
+            if(loginDisponivel == true){
+                ud.salvarUsuario(usuario);
+                JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
 
-            cdu.setIdUsuario(idUsuario);
-            cdu.setAdm(adm);
-            cdu.setAtivo(ativo);
+                //selecionando o usario cadastrado acima e salvando-o à tabela controledeusuario.
+                String login = txtLogin.getText();
+                int idUsuario = ud.getIdUsuario(login);
+                System.out.println(idUsuario);
+                String adm = checarCheck(checkAdm);
+                String ativo = checarCheck(checkAtivo);
 
-            if(cud.salvar(cdu)){
-                JOptionPane.showMessageDialog(null, "Usuario inserido à tabela controle de usuario.");
+                cdu.setIdUsuario(idUsuario);
+                cdu.setAdm(adm);
+                cdu.setAtivo(ativo);
+
+                if(cud.salvar(cdu)){
+                    JOptionPane.showMessageDialog(null, "Usuario inserido à tabela controle de usuario.");
+                }
+                listarUsuarios();
             }
-
-            listarUsuarios();
-            
-        }else{
+            else{
+            JOptionPane.showMessageDialog(null, "Login já existe. Escolha um novo login.");
+            txtLogin.setText("");
+            txtLogin.requestFocus();
+            }
+        }
+        else{
             JOptionPane.showMessageDialog(null, "Prencha todos os campos!");
+            txtUsuario.requestFocus();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -351,7 +396,8 @@ public class TelaControleUsuario extends javax.swing.JDialog {
             ControleDeUsuario cdu = new ControleDeUsuario();
             cdu.setAdm(adm);
             cdu.setAtivo(ativo);
-
+            
+            //alterando se usuario é adm e ativo na tabela controledeusuario.
             cdud.alterar(idUsuarioInt, cdu);
 
             JOptionPane.showMessageDialog(null, "Usuario alterado com sucesso.");
@@ -365,6 +411,115 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         }
     }
     }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        txtLogin.requestFocus();
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
+        txtSenha.requestFocus();
+    }//GEN-LAST:event_txtLoginActionPerformed
+
+    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+        btnSalvar.requestFocus();
+    }//GEN-LAST:event_txtSenhaActionPerformed
+
+    private void btnSalvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalvarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            ControleUsuarioDao cud = new ControleUsuarioDao();
+            ControleDeUsuario cdu = new ControleDeUsuario();
+            UsuarioDao ud = new UsuarioDao();
+            Usuario usuario = new Usuario();
+
+            //salvando usuario ao banco de Dados.
+            usuario.setNome(txtUsuario.getText());
+            usuario.setLogin(txtLogin.getText());
+            usuario.setSenha(txtSenha.getText());
+
+            boolean loginDisponivel = ud.loginDisponivel(txtLogin.getText());
+            
+            if(!txtUsuario.getText().equals("") && !txtLogin.getText().equals("") && !txtSenha.getText().equals("")){
+                if(loginDisponivel == true){
+                    ud.salvarUsuario(usuario);
+                    JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
+
+                    //selecionando o usario cadastrado acima e salvando-o à tabela controledeusuario.
+                    String login = txtLogin.getText();
+                    int idUsuario = ud.getIdUsuario(login);
+                    System.out.println(idUsuario);
+                    String adm = checarCheck(checkAdm);
+                    String ativo = checarCheck(checkAtivo);
+
+                    cdu.setIdUsuario(idUsuario);
+                    cdu.setAdm(adm);
+                    cdu.setAtivo(ativo);
+
+                    if(cud.salvar(cdu)){
+                        JOptionPane.showMessageDialog(null, "Usuario inserido à tabela controle de usuario.");
+                    }
+                    listarUsuarios();
+                }
+                else{
+                JOptionPane.showMessageDialog(null, "Login já existe. Escolha um novo login.");
+                txtLogin.setText("");
+                txtLogin.requestFocus();
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Prencha todos os campos!");
+                txtUsuario.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_btnSalvarKeyPressed
+
+    private void btnAlterarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAlterarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            //pegando dados da tabela.    
+            int linha = getLinhaTable();
+
+            if(linha < 0){
+                JOptionPane.showMessageDialog(null, "Selecione um item para alterá-lo.");
+            }
+            else{
+                String idUsuario = getValorLinhaTable(linha, 0).toString();
+                int idUsuarioInt = Integer.parseInt(idUsuario);
+
+                //pegando os dados dos campos de texto e checkBox.
+                String txtUsuarioAlter = txtUsuario.getText();
+                String txtLoginAlter = txtLogin.getText();
+                String txtSenhaAlter = txtSenha.getText();
+                String adm = checarCheck(checkAdm);
+                String ativo = checarCheck(checkAtivo);
+
+                Usuario usuario = new Usuario();
+                UsuarioDao ud = new UsuarioDao();
+                ControleUsuarioDao cdud = new ControleUsuarioDao();
+
+                usuario.setNome(txtUsuarioAlter);
+                usuario.setLogin(txtLoginAlter);
+                usuario.setSenha(txtSenhaAlter);
+
+                if(ud.alterar(usuario, idUsuarioInt) == true){
+
+                    ControleDeUsuario cdu = new ControleDeUsuario();
+                    cdu.setAdm(adm);
+                    cdu.setAtivo(ativo);
+
+                    //alterando se usuario é adm e ativo na tabela controledeusuario.
+                    cdud.alterar(idUsuarioInt, cdu);
+
+                    JOptionPane.showMessageDialog(null, "Usuario alterado com sucesso.");
+                    listarUsuarios();
+                    limparCampos();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Falha ao alterar usuário.");
+                    listarUsuarios();
+                    limparCampos();
+                }
+            }
+        }
+    }//GEN-LAST:event_btnAlterarKeyPressed
 
     public void limparCampos(){
         txtLogin.setText("");

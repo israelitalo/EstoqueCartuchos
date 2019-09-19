@@ -240,4 +240,29 @@ public class UsuarioDao {
         }
     }
     
+    public boolean loginDisponivel(String login){
+        String sql = "SELECT u.login FROM usuario u WHERE u.login = '" + login + "'";
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                String loginBD = rs.getString("login");
+                if(!loginBD.equals(login)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return false;
+    }
+    
 }
