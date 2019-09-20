@@ -240,8 +240,8 @@ public class UsuarioDao {
         }
     }
     
-    public boolean loginDisponivel(String login){
-        String sql = "SELECT u.login FROM usuario u WHERE u.login = '" + login + "'";
+    public String loginDisponivel(String login){
+        String sql = "SELECT login FROM usuario WHERE login = '" + login + "'";
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -249,20 +249,15 @@ public class UsuarioDao {
         try{
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
-            while(rs.next()){
-                String loginBD = rs.getString("login");
-                if(!loginBD.equals(login)){
-                    return true;
-                }
-                else{
-                    return false;
-                }
+            if(rs.next() == false){
+                String loginBD = "disponivel";
+                return loginBD;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            return null;
         }
-        return false;
+        return null;
     }
  
     public boolean excluir(Integer idUsuario){

@@ -28,6 +28,7 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         listarUsuarios();
+        btnRemover.setEnabled(false);
     }
 
     /**
@@ -166,6 +167,11 @@ public class TelaControleUsuario extends javax.swing.JDialog {
                 btnRemoverActionPerformed(evt);
             }
         });
+        btnRemover.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnRemoverKeyPressed(evt);
+            }
+        });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/KeyChainAccess_37052.png"))); // NOI18N
 
@@ -293,6 +299,7 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         //funcionando a verificação de dois cliques.
         if(evt.getClickCount()== 2){
             btnSalvar.setEnabled(false);
+            btnRemover.setEnabled(true);
             int linha = getLinhaTable();
             
             String idUsuario = getValorLinhaTable(linha, 0);
@@ -320,6 +327,7 @@ public class TelaControleUsuario extends javax.swing.JDialog {
             if(linha >= 0){
                 jTable1.getSelectionModel().clearSelection();
                 btnSalvar.setEnabled(true);
+                btnRemover.setEnabled(false);
                 limparCampos();
             }
         }
@@ -336,17 +344,16 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         usuario.setLogin(txtLogin.getText());
         usuario.setSenha(txtSenha.getText());
 
-        boolean loginDisponivel = ud.loginDisponivel(txtLogin.getText());
+        String login = txtLogin.getText();
 
         if(!txtUsuario.getText().equals("") && !txtLogin.getText().equals("") && !txtSenha.getText().equals("")){
-            if(loginDisponivel == true){
+            String loginDisponivel = ud.loginDisponivel(login);
+            if(loginDisponivel == "disponivel"){
                 ud.salvarUsuario(usuario);
                 JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
 
                 //selecionando o usario cadastrado acima e salvando-o à tabela controledeusuario.
-                String login = txtLogin.getText();
                 int idUsuario = ud.getIdUsuario(login);
-                System.out.println(idUsuario);
                 String adm = checarCheck(checkAdm);
                 String ativo = checarCheck(checkAtivo);
 
@@ -442,17 +449,16 @@ public class TelaControleUsuario extends javax.swing.JDialog {
             usuario.setLogin(txtLogin.getText());
             usuario.setSenha(txtSenha.getText());
 
-            boolean loginDisponivel = ud.loginDisponivel(txtLogin.getText());
-            
+            String login = txtLogin.getText();
+
             if(!txtUsuario.getText().equals("") && !txtLogin.getText().equals("") && !txtSenha.getText().equals("")){
-                if(loginDisponivel == true){
+                String loginDisponivel = ud.loginDisponivel(login);
+                if(loginDisponivel == "disponivel"){
                     ud.salvarUsuario(usuario);
                     JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
 
                     //selecionando o usario cadastrado acima e salvando-o à tabela controledeusuario.
-                    String login = txtLogin.getText();
                     int idUsuario = ud.getIdUsuario(login);
-                    System.out.println(idUsuario);
                     String adm = checarCheck(checkAdm);
                     String ativo = checarCheck(checkAtivo);
 
@@ -532,8 +538,70 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         
         int idUsuario = Integer.parseInt(getValorLinhaTable(linha, 0));
         
-        //enviar id para excluir, com o método excluir da classe UsuarioDao.
+        UsuarioDao ud = new UsuarioDao();
+        
+        boolean excluir = ud.excluir(idUsuario);
+        
+        if(excluir == true){
+            JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso.");
+            jTable1.getSelectionModel().clearSelection();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Erro ao excluir usuário.");
+        }
+        
+        ControleUsuarioDao cdu = new ControleUsuarioDao();
+        
+        boolean excluirContDeUsu = cdu.excluir(idUsuario);
+        
+        if(excluirContDeUsu == true){
+            JOptionPane.showMessageDialog(null, "Usuário excluído do controle de usuários.");
+            jTable1.getSelectionModel().clearSelection();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Erro ao excluir usuário do controle de usuários.");
+        }
+        btnSalvar.setEnabled(true);
+        listarUsuarios();
+        limparCampos();
+        txtUsuario.requestFocus();
     }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnRemoverKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnRemoverKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            int linha = getLinhaTable();
+        
+            int idUsuario = Integer.parseInt(getValorLinhaTable(linha, 0));
+
+            UsuarioDao ud = new UsuarioDao();
+
+            boolean excluir = ud.excluir(idUsuario);
+
+            if(excluir == true){
+                JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso.");
+                jTable1.getSelectionModel().clearSelection();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Erro ao excluir usuário.");
+            }
+
+            ControleUsuarioDao cdu = new ControleUsuarioDao();
+
+            boolean excluirContDeUsu = cdu.excluir(idUsuario);
+
+            if(excluirContDeUsu == true){
+                JOptionPane.showMessageDialog(null, "Usuário excluído do controle de usuários.");
+                jTable1.getSelectionModel().clearSelection();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Erro ao excluir usuário do controle de usuários.");
+            }
+            btnSalvar.setEnabled(true);
+            listarUsuarios();
+            limparCampos();
+            txtUsuario.requestFocus();
+        }
+    }//GEN-LAST:event_btnRemoverKeyPressed
 
     public void limparCampos(){
         txtLogin.setText("");
