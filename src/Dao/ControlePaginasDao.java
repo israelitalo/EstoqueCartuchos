@@ -182,7 +182,7 @@ public class ControlePaginasDao {
     }
     
     public boolean alterar(Integer idControle, ControlePaginas controle){
-        String sql = "UPDATE SET id_impressora=?, data=?, pagina_total=? WHERE id_controle = '" + idControle + "'";
+        String sql = "UPDATE controlepaginas SET id_impressora=?, data=?, pagina_total=? WHERE id_controle = '" + idControle + "'";
         
         PreparedStatement stmt = null;
         

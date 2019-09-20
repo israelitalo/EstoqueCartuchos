@@ -7,6 +7,7 @@ package Telas.Icones;
 
 import Dao.ControlePaginasDao;
 import controller.ControlePaginas;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -57,14 +58,14 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        jComboBoxData = new javax.swing.JComboBox<String>();
+        jComboBoxData = new javax.swing.JComboBox<>();
         jLabelData = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        comboBoxSetor = new javax.swing.JComboBox<String>();
+        comboBoxSetor = new javax.swing.JComboBox<>();
         txtDataRelatorio = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -129,28 +130,43 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jLabel7.setText("Último registro da impressora:");
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAlterarMouseClicked(evt);
+            }
+        });
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
             }
         });
+        btnAlterar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAlterarKeyPressed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
 
-        jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Último registro" }));
+        jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Último registro" }));
 
         jLabelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelData.setText("  /  /    ");
 
         jLabel8.setText("Setor:");
 
-        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Setor" }));
+        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
 
         try {
             txtDataRelatorio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtDataRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataRelatorioActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -314,7 +330,12 @@ public class TelaControlePaginas extends javax.swing.JDialog {
     
     
     private void txtQtdAtualStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtQtdAtualStateChanged
-   
+        if(!btnSalvar.isEnabled()){
+            btnAlterar.requestFocus();
+        }
+        else{
+            btnSalvar.requestFocus();
+        }
     }//GEN-LAST:event_txtQtdAtualStateChanged
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -445,6 +466,8 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 qtdTotalGlobal = qtdFinal;
         
                 txtQtdFinal.setValue(getQtdTotalGlobal());
+                
+                txtDataRelatorio.requestFocus();
             }
             else
             {
@@ -470,6 +493,7 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 
                 txtDataRelatorio.setText(data);
                 txtQtdAtual.setValue(totalPaginas);
+                txtQtdAtual.requestFocus();
                 } 
         }
         if(evt.getButton() == 3){
@@ -487,7 +511,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-
         int linha = selecionarLinha();
         
         if(linha >= 0){
@@ -496,7 +519,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             String impressora = (String) jComboBoxImpressora.getSelectedItem();
             String idControle = (getValorLinha(linha, 0));
             int idControleInt = Integer.parseInt(idControle);
-            
             
             //Dados que serão enviados para o banco de dados.
             String data = dataToSql(txtDataRelatorio.getText());
@@ -510,16 +532,61 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             
             if(cpd.alterar(idControleInt, cp) == true){
                 JOptionPane.showMessageDialog(null, "Controle alterado com sucesso.");
-                limparCampos();
+                txtQtdAtual.setValue(0);
+                txtDataRelatorio.setText("");
+                listarControlePagians();
                 btnSalvar.setEnabled(true);
+                jTable1.getSelectionModel().clearSelection();
             }
             else{
                 JOptionPane.showMessageDialog(null, "Erro ao alterar controle.");
-            }
-            
+            } 
         }
-        
     }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void txtDataRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataRelatorioActionPerformed
+        txtQtdAtual.requestFocus();
+    }//GEN-LAST:event_txtDataRelatorioActionPerformed
+
+    private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
+       
+    }//GEN-LAST:event_btnAlterarMouseClicked
+
+    private void btnAlterarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAlterarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            int linha = selecionarLinha();
+        
+            if(linha >= 0){
+                ControlePaginasDao cpd = new ControlePaginasDao();
+                ControlePaginas cp = new ControlePaginas();
+                String impressora = (String) jComboBoxImpressora.getSelectedItem();
+                String idControle = (getValorLinha(linha, 0));
+                int idControleInt = Integer.parseInt(idControle);
+
+                //Dados que serão enviados para o banco de dados.
+                String data = dataToSql(txtDataRelatorio.getText());
+                System.out.println(data);
+                int quantidadeAtual = (int) txtQtdAtual.getValue();
+                int idImpressora = cpd.getIdJcomboBoxImpressora(impressora);
+
+                cp.setData(data);
+                cp.setPaginaFinal(quantidadeAtual);
+                cp.setIdImpressora(idImpressora);            
+
+                if(cpd.alterar(idControleInt, cp) == true){
+                    JOptionPane.showMessageDialog(null, "Controle alterado com sucesso.");
+                    txtQtdAtual.setValue(0);
+                    txtDataRelatorio.setText("");
+                    listarControlePagians();
+                    btnSalvar.setEnabled(true);
+                    jTable1.getSelectionModel().clearSelection();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Erro ao alterar controle.");
+                } 
+            }
+        }
+    }//GEN-LAST:event_btnAlterarKeyPressed
 
     public String getValorLinha(Integer linha, Integer coluna){
         String valor = jTable1.getModel().getValueAt(linha, coluna).toString();
