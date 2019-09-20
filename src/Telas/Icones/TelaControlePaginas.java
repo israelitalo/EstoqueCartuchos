@@ -55,16 +55,16 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         btnSalvar = new javax.swing.JButton();
         txtQtdAtual = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jComboBoxData = new javax.swing.JComboBox<>();
+        btnAlterar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        jComboBoxData = new javax.swing.JComboBox<String>();
         jLabelData = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        comboBoxSetor = new javax.swing.JComboBox<>();
+        comboBoxSetor = new javax.swing.JComboBox<String>();
         txtDataRelatorio = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -88,10 +88,10 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             }
         });
         jComboBoxImpressora.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jComboBoxImpressoraInputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jComboBoxImpressora.addActionListener(new java.awt.event.ActionListener() {
@@ -128,18 +128,23 @@ public class TelaControlePaginas extends javax.swing.JDialog {
 
         jLabel7.setText("Último registro da impressora:");
 
-        jButton1.setText("Alterar");
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Excluir");
+        btnExcluir.setText("Excluir");
 
-        jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Último registro" }));
+        jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Último registro" }));
 
         jLabelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelData.setText("  /  /    ");
 
         jLabel8.setText("Setor:");
 
-        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
+        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Setor" }));
 
         try {
             txtDataRelatorio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -210,9 +215,9 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -248,8 +253,8 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnAlterar)
+                    .addComponent(btnExcluir))
                 .addGap(30, 30, 30))
         );
 
@@ -334,6 +339,7 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 if(cpd.salvar(cp) == true){
                 JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
                 limparCampos();
+                listarControlePagians();
             }
         }
             
@@ -456,17 +462,15 @@ public class TelaControlePaginas extends javax.swing.JDialog {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         if(evt.getClickCount() == 2){
-            btnSalvar.setEnabled(false);
             int linha = selecionarLinha();
-            if(linha >=0){
-                String impressora = getValorLinha(linha, 1);
+            btnSalvar.setEnabled(false);
+                if(linha > -1){
                 String data = getValorLinha(linha, 2);
                 int totalPaginas = Integer.parseInt(getValorLinha(linha, 3));
                 
                 txtDataRelatorio.setText(data);
                 txtQtdAtual.setValue(totalPaginas);
-                jComboBoxImpressora.setSelectedItem(impressora);
-            }
+                } 
         }
         if(evt.getButton() == 3){
             //int linha = selecionarLinha();
@@ -481,6 +485,41 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             //}
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+
+        int linha = selecionarLinha();
+        
+        if(linha >= 0){
+            ControlePaginasDao cpd = new ControlePaginasDao();
+            ControlePaginas cp = new ControlePaginas();
+            String impressora = (String) jComboBoxImpressora.getSelectedItem();
+            String idControle = (getValorLinha(linha, 0));
+            int idControleInt = Integer.parseInt(idControle);
+            
+            
+            //Dados que serão enviados para o banco de dados.
+            String data = dataToSql(txtDataRelatorio.getText());
+            System.out.println(data);
+            int quantidadeAtual = (int) txtQtdAtual.getValue();
+            int idImpressora = cpd.getIdJcomboBoxImpressora(impressora);
+            
+            cp.setData(data);
+            cp.setPaginaFinal(quantidadeAtual);
+            cp.setIdImpressora(idImpressora);            
+            
+            if(cpd.alterar(idControleInt, cp) == true){
+                JOptionPane.showMessageDialog(null, "Controle alterado com sucesso.");
+                limparCampos();
+                btnSalvar.setEnabled(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Erro ao alterar controle.");
+            }
+            
+        }
+        
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     public String getValorLinha(Integer linha, Integer coluna){
         String valor = jTable1.getModel().getValueAt(linha, coluna).toString();
@@ -540,10 +579,10 @@ public class TelaControlePaginas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboBoxSetor;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBoxData;
     private javax.swing.JComboBox jComboBoxImpressora;
     private javax.swing.JLabel jLabel1;

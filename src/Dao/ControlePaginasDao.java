@@ -180,6 +180,26 @@ public class ControlePaginasDao {
             return false;
         }
     }
+    
+    public boolean alterar(Integer idControle, ControlePaginas controle){
+        String sql = "UPDATE SET id_impressora=?, data=?, pagina_total=? WHERE id_controle = '" + idControle + "'";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, controle.getIdImpressora());
+            stmt.setString(2, controle.getData());
+            stmt.setInt(3, controle.getPaginaFinal());
+            stmt.executeUpdate();
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     //Método para salvar itens na tabela recebervetores, quando o botao radio Buscar Todos, na tela TelaControlPaginasRel, estiver selecionado.
     public boolean salvarRelatorioVetores(ControlePaginas cp){
         
