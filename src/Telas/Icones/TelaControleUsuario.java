@@ -620,8 +620,7 @@ public class TelaControleUsuario extends javax.swing.JDialog {
         }
     }
     
-    public Integer getLinhaTable(){
-        
+    public Integer getLinhaTable(){ 
         int linhaSelecionada = jTable1.getSelectedRow();
         return linhaSelecionada;
     }

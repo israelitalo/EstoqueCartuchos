@@ -57,14 +57,14 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jComboBoxData = new javax.swing.JComboBox<String>();
+        jComboBoxData = new javax.swing.JComboBox<>();
         jLabelData = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        comboBoxSetor = new javax.swing.JComboBox<String>();
+        comboBoxSetor = new javax.swing.JComboBox<>();
         txtDataRelatorio = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -88,10 +88,10 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             }
         });
         jComboBoxImpressora.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jComboBoxImpressoraInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jComboBoxImpressora.addActionListener(new java.awt.event.ActionListener() {
@@ -132,14 +132,14 @@ public class TelaControlePaginas extends javax.swing.JDialog {
 
         jButton2.setText("Excluir");
 
-        jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Último registro" }));
+        jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Último registro" }));
 
         jLabelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelData.setText("  /  /    ");
 
         jLabel8.setText("Setor:");
 
-        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Setor" }));
+        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
 
         try {
             txtDataRelatorio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -161,6 +161,11 @@ public class TelaControlePaginas extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -304,7 +309,7 @@ public class TelaControlePaginas extends javax.swing.JDialog {
     
     
     private void txtQtdAtualStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtQtdAtualStateChanged
-        
+   
     }//GEN-LAST:event_txtQtdAtualStateChanged
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -321,17 +326,19 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         
         ControlePaginas cp = new ControlePaginas();
         
-        cp.setIdImpressora(idImpressora);
-        cp.setData(dataToDB);
-        cp.setPaginaTotal(paginaTotal);
+            cp.setIdImpressora(idImpressora);
+            cp.setData(dataToDB);
+            cp.setPaginaTotal(paginaTotal);
         
-        if(cpd.salvar(cp) == true){
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
-            limparCampos();
+            if(!dataToDB.equals("")){
+                if(cpd.salvar(cp) == true){
+                JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+                limparCampos();
+            }
         }
-        
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setNumRows(0);
+            
+        /*DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);*/
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -433,12 +440,11 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         
                 txtQtdFinal.setValue(getQtdTotalGlobal());
             }
-            /*else
+            else
             {
-                JOptionPane.showMessageDialog(null, "Não há histórico de datas para esta impressora!");
+                JOptionPane.showMessageDialog(null, "Não há histórico para a impressora selecionada.");
                 limparCampos();
-            }*/
-            
+            }
             listarControlePagians();
         }
          
@@ -448,6 +454,44 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         txtQtdFinal.setValue(getQtdTotalGlobal());
     }//GEN-LAST:event_txtQtdFinalStateChanged
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if(evt.getClickCount() == 2){
+            btnSalvar.setEnabled(false);
+            int linha = selecionarLinha();
+            if(linha >=0){
+                String impressora = getValorLinha(linha, 1);
+                String data = getValorLinha(linha, 2);
+                int totalPaginas = Integer.parseInt(getValorLinha(linha, 3));
+                
+                txtDataRelatorio.setText(data);
+                txtQtdAtual.setValue(totalPaginas);
+                jComboBoxImpressora.setSelectedItem(impressora);
+            }
+        }
+        if(evt.getButton() == 3){
+            //int linha = selecionarLinha();
+            //if(linha >= 0){
+                jTable1.getSelectionModel().clearSelection();
+                btnSalvar.setEnabled(true);
+                //btnRemover.setEnabled(false);
+                limparCampos();
+                listarControlePagians();
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setNumRows(0);
+            //}
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    public String getValorLinha(Integer linha, Integer coluna){
+        String valor = jTable1.getModel().getValueAt(linha, coluna).toString();
+        return valor;
+    }
+    
+    public Integer selecionarLinha(){
+        int linha = jTable1.getSelectedRow();
+        return linha;
+    }
+    
     public void carregarComboBoxImpressora(){
         ControlePaginasDao cpd = new ControlePaginasDao();
         cpd.carregarComboBoxImpressora(jComboBoxImpressora);
