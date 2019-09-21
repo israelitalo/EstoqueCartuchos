@@ -200,6 +200,21 @@ public class ControlePaginasDao {
         }
     }
     
+    public boolean excluir(Integer idControle){
+        String sql = "DELETE FROM controlepaginas WHERE id_controle = '" + idControle + "'";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ControlePaginasDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     //Método para salvar itens na tabela recebervetores, quando o botao radio Buscar Todos, na tela TelaControlPaginasRel, estiver selecionado.
     public boolean salvarRelatorioVetores(ControlePaginas cp){
         

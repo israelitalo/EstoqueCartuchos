@@ -27,7 +27,8 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         carregarComboBoxImpressora();
-        //jLabelDataAtual.setText(getLocalDate() + ":");
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
         
     }
 
@@ -147,6 +148,16 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+        btnExcluir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnExcluirKeyPressed(evt);
+            }
+        });
 
         jComboBoxData.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Último registro" }));
 
@@ -327,8 +338,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         return data;
     }
     
-    
-    
     private void txtQtdAtualStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_txtQtdAtualStateChanged
         if(!btnSalvar.isEnabled()){
             btnAlterar.requestFocus();
@@ -363,9 +372,6 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 listarControlePagians();
             }
         }
-            
-        /*DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setNumRows(0);*/
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -487,6 +493,8 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         if(evt.getClickCount() == 2){
             int linha = selecionarLinha();
             btnSalvar.setEnabled(false);
+            btnExcluir.setEnabled(true);
+            btnAlterar.setEnabled(true);
                 if(linha > -1){
                 String data = getValorLinha(linha, 2);
                 int totalPaginas = Integer.parseInt(getValorLinha(linha, 3));
@@ -497,16 +505,17 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 } 
         }
         if(evt.getButton() == 3){
-            //int linha = selecionarLinha();
-            //if(linha >= 0){
+            int linha = selecionarLinha();
+            if(linha >= 0){
                 jTable1.getSelectionModel().clearSelection();
                 btnSalvar.setEnabled(true);
-                //btnRemover.setEnabled(false);
+                btnAlterar.setEnabled(false);
+                btnExcluir.setEnabled(false);
                 limparCampos();
                 listarControlePagians();
                 DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
                 model.setNumRows(0);
-            //}
+            }
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -587,6 +596,40 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnAlterarKeyPressed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linha = selecionarLinha();
+        if(linha > -1){
+            int idControle = Integer.parseInt(getValorLinha(linha, 0));
+            ControlePaginasDao cpd = new ControlePaginasDao();
+            if(cpd.excluir(idControle) == true){
+                JOptionPane.showMessageDialog(null, "Controle excluído com sucesso.");
+                listarControlePagians();
+                jTable1.getSelectionModel().clearSelection();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Falha ao excluir controle.");
+            }
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnExcluirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnExcluirKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            int linha = selecionarLinha();
+            if(linha > -1){
+                int idControle = Integer.parseInt(getValorLinha(linha, 0));
+                ControlePaginasDao cpd = new ControlePaginasDao();
+                if(cpd.excluir(idControle) == true){
+                    JOptionPane.showMessageDialog(null, "Controle excluído com sucesso.");
+                    listarControlePagians();
+                    jTable1.getSelectionModel().clearSelection();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Falha ao excluir controle.");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnExcluirKeyPressed
 
     public String getValorLinha(Integer linha, Integer coluna){
         String valor = jTable1.getModel().getValueAt(linha, coluna).toString();
