@@ -59,6 +59,7 @@ public class TelaSetor extends javax.swing.JDialog {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Setores");
         setPreferredSize(new java.awt.Dimension(958, 745));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(958, 745));
@@ -110,7 +111,7 @@ public class TelaSetor extends javax.swing.JDialog {
         });
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnExcluir.setText("Remover");
+        btnExcluir.setText("Excluir");
         btnExcluir.setPreferredSize(new java.awt.Dimension(90, 30));
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,6 +195,7 @@ public class TelaSetor extends javax.swing.JDialog {
                     listarSetor();
                     limparCampos();
                     JOptionPane.showMessageDialog(null, "Setor alterado com sucesso.");
+                    btnSalvar.setEnabled(true);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Erro ao alterar setor.");

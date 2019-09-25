@@ -42,7 +42,7 @@ public class FabricanteDao {
     }
     
     public boolean alterar(Fabricante fabricante, Integer idFabricante){
-        String sql = "ALTER fabricante SET nome = ? WHERE id_fabricante = '" + idFabricante + "'";
+        String sql = "UPDATE fabricante SET nome = ? WHERE id_fabricante = '" + idFabricante + "'";
         PreparedStatement stmt = null;
         try{
             stmt = con.prepareStatement(sql);
