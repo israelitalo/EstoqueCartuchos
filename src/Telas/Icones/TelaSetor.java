@@ -270,6 +270,9 @@ public class TelaSetor extends javax.swing.JDialog {
                 boolean excluir = std.excluir(idSetor);
                 if(excluir == true){
                     JOptionPane.showMessageDialog(null, "Setor excluído com sucesso.");
+                    listarSetor();
+                    limparCampos();
+                    btnSalvar.setEnabled(true);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Erro ao excluir setor.");

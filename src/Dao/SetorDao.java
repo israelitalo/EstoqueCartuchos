@@ -62,7 +62,7 @@ public class SetorDao {
     }
     
     public boolean excluir(Integer idSetor){
-        String sql = "DELETE FROM excluir WHERE id_setor = '" + idSetor + "'";
+        String sql = "DELETE FROM setor WHERE id_setor = '" + idSetor + "'";
         
         PreparedStatement stmt = null;
         
