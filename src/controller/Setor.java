@@ -22,6 +22,10 @@ public class Setor {
         this.setor = setor;
     }
 
+    public Setor(String setor) {
+        this.setor = setor;
+    }
+
     public Integer getIdSetor() {
         return idSetor;
     }

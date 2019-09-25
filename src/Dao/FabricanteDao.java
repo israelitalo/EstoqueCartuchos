@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,6 +84,30 @@ public class FabricanteDao {
         } catch (SQLException ex) {
             Logger.getLogger(FabricanteDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }
+    }
+    
+    public List<Fabricante> listarFabricante(){
+        String sql = "SELECT * FROM fabricante";
+        
+        List<Fabricante> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Fabricante fabricante = new Fabricante();
+                fabricante.setIdFabricante(rs.getInt("id_fabricante"));
+                fabricante.setNome(rs.getString("nome"));
+                lista.add(fabricante);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(FabricanteDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
     

@@ -22,6 +22,10 @@ public class Fabricante {
         this.nome = nome;
     }
 
+    public Fabricante(String nome) {
+        this.nome = nome;
+    }
+
     public Integer getIdFabricante() {
         return idFabricante;
     }

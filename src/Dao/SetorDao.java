@@ -5,11 +5,14 @@
  */
 package Dao;
 
+import controller.Fabricante;
 import controller.Setor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +46,7 @@ public class SetorDao {
     }
     
     public boolean alterar(Setor setor, Integer idSetor){
-        String sql = "UPDADE setor SET nome = ? WHERE id_setor = '" + idSetor + "'";
+        String sql = "UPDATE setor SET setor=? WHERE id_setor = '" + idSetor + "'";
         
         PreparedStatement stmt = null;
         
@@ -74,7 +77,7 @@ public class SetorDao {
     }
     
     public boolean verSeSetorCadastrado(String setor){
-        String sql = "SELECT FROM setor WHERE setor = '" + setor + "'";
+        String sql = "SELECT setor FROM setor WHERE setor = '" + setor + "'";
         
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -93,6 +96,30 @@ public class SetorDao {
             return false;
         }
         
+    }
+    
+    public List<Setor>listaSetor(){
+        String sql = "SELECT * FROM setor ORDER BY setor";
+        
+        List<Setor> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Setor setor = new Setor();
+                setor.setIdSetor(rs.getInt("id_setor"));
+                setor.setSetor(rs.getString("setor"));
+                lista.add(setor);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(FabricanteDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
 }
