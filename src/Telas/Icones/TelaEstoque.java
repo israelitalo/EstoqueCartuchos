@@ -6,17 +6,29 @@
 package Telas.Icones;
 
 import Dao.CartuchoDao;
+import Dao.ConexaoJdbc;
 import Dao.UsuarioDao;
 import controller.Cartucho;
 import controller.CartuchoTableModel;
+import impressoraJasper.ImprimeJasper;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.sql.Connection;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -309,6 +321,17 @@ public class TelaEstoque extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    private Toolkit tk = Toolkit.getDefaultToolkit();
+    private Dimension d = tk.getScreenSize();
+
+    //Tentativa de imprimir tabela no jasper.
+    public List<Cartucho> cartuchoJasper(){
+        CartuchoDao cd = new CartuchoDao();
+        
+        List<Cartucho> cartucho = cd.selectCartucho();
+        
+        return cartucho;
+    }
     
     public void receberUsuarioLogado(){
         UsuarioDao ud = new UsuarioDao();
@@ -445,20 +468,45 @@ public class TelaEstoque extends javax.swing.JDialog {
     private void jLabelImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelImprimirMouseClicked
         
         if(jLabelImprimir.isEnabled()){
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                   
-            Date data = new Date();
-        
-            MessageFormat header = new MessageFormat("Estoque de cartuchos do HJP em " + sdf.format(data) + ".");
+            //Tentando imprimir relatório pelo jasperSoft Studio
+            String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\listacartuchos.jasper";
+            Connection con = ConexaoJdbc.getConnection();
+            JDialog viewer = new JDialog(new javax.swing.JFrame(), "Relatório", true);  
+            //Pega a Resolução do Video  
+            viewer.setSize(d.width, d.height-25);  
+            viewer.setLocationRelativeTo(null);  
+            //Deixar true pois da problema no relatorio caso deixado false  
+            viewer.setResizable(true);  
+            JasperPrint jasperPrint;  
             try {
-                tabelaCartuchos.print(JTable.PrintMode.FIT_WIDTH, header, null);
-            } catch (java.awt.print.PrinterException e) {
-                System.err.format("Cannot print %s%n", e.getMessage());
-            }   
+                jasperPrint = JasperFillManager.fillReport(src, null, con);
+                JasperViewer jrViewer = new JasperViewer(jasperPrint, true);  
+                //Adicionando o relatorio no Jdialog  
+                viewer.getContentPane().add(jrViewer.getContentPane());  
+                //Deixar True para exibir a tela no sistema  
+                viewer.setVisible(true);  
+            } catch (JRException ex) {
+                Logger.getLogger(TelaEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            }    
         }
         else{
             JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
         }
+        
+        //O método abaixo gera o relatório, mas o mesmo aparece atrás dos jDiaglogs.
+        
+        /*Connection con = ConexaoJdbc.getConnection();        
+        String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\listacartuchos.jasper";        
+        JasperPrint jasperPrint = null;        
+        try {            
+            jasperPrint = JasperFillManager.fillReport(src, null, con);            
+        } catch (JRException ex) {
+            System.out.println("Erro: " + ex);
+        }
+
+        JasperViewer view = new JasperViewer(jasperPrint, false);
+        view.setVisible(true);*/
+        
     }//GEN-LAST:event_jLabelImprimirMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
