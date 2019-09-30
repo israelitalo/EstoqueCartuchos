@@ -10,7 +10,6 @@ import Dao.ConexaoJdbc;
 import Dao.UsuarioDao;
 import controller.Cartucho;
 import controller.CartuchoTableModel;
-import impressoraJasper.ImprimeJasper;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -26,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -470,6 +470,7 @@ public class TelaEstoque extends javax.swing.JDialog {
             viewer.setResizable(true);  
             JasperPrint jasperPrint;  
             try {
+                //Instanciando o JasperFillManager.fillReport no caminho src, sem parametros (null) e a conexão con para o select do banco.
                 jasperPrint = JasperFillManager.fillReport(src, null, con);
                 
                 JasperViewer jrViewer = new JasperViewer(jasperPrint, true);  
@@ -479,6 +480,7 @@ public class TelaEstoque extends javax.swing.JDialog {
                 
                 //Deixar True para exibir a tela no sistema  
                 viewer.setVisible(true);  
+                
             } catch (JRException ex) {
                 Logger.getLogger(TelaEstoque.class.getName()).log(Level.SEVERE, null, ex);
             }    
