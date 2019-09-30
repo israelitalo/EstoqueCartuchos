@@ -32,7 +32,7 @@ public class ControlePaginasDao {
     
     //Retornar todas as impressoras num vetor String[].
     public void todasImpressoras(String[] vetorImpressora){
-        String sql = "SELECT i.modelo FROM impressora i";
+        String sql = "SELECT i.modelo FROM impressora i ORDER BY i.modelo";
         
         PreparedStatement stmt = null;
         ResultSet rs = null;

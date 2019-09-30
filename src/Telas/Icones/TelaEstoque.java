@@ -323,15 +323,6 @@ public class TelaEstoque extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     private Toolkit tk = Toolkit.getDefaultToolkit();
     private Dimension d = tk.getScreenSize();
-
-    //Tentativa de imprimir tabela no jasper.
-    public List<Cartucho> cartuchoJasper(){
-        CartuchoDao cd = new CartuchoDao();
-        
-        List<Cartucho> cartucho = cd.selectCartucho();
-        
-        return cartucho;
-    }
     
     public void receberUsuarioLogado(){
         UsuarioDao ud = new UsuarioDao();
@@ -469,7 +460,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         
         if(jLabelImprimir.isEnabled()){
             //Tentando imprimir relatório pelo jasperSoft Studio
-            String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\listacartuchos.jasper";
+            String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\selectCartuchos.jasper";
             Connection con = ConexaoJdbc.getConnection();
             JDialog viewer = new JDialog(new javax.swing.JFrame(), "Relatório", true);  
             //Pega a Resolução do Video  
@@ -480,9 +471,12 @@ public class TelaEstoque extends javax.swing.JDialog {
             JasperPrint jasperPrint;  
             try {
                 jasperPrint = JasperFillManager.fillReport(src, null, con);
+                
                 JasperViewer jrViewer = new JasperViewer(jasperPrint, true);  
+                
                 //Adicionando o relatorio no Jdialog  
-                viewer.getContentPane().add(jrViewer.getContentPane());  
+                viewer.getContentPane().add(jrViewer.getContentPane());
+                
                 //Deixar True para exibir a tela no sistema  
                 viewer.setVisible(true);  
             } catch (JRException ex) {

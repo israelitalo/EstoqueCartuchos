@@ -21,6 +21,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class ImprimeJasper {
     
+    //Este código não está sendo utilizado.
     public void imprimirCartucho(List lista){
         
         String caminhoRelJasper = "/impressoraJasper/cartucho.jasper";

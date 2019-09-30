@@ -5,15 +5,26 @@
  */
 package Telas.Icones;
 
+import Dao.ConexaoJdbc;
 import Dao.ControlePaginasDao;
 import controller.ControlePaginas;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.sql.Connection;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -472,11 +483,40 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Para adicionar apenas uma impressora ao relatório, \n" + "desmerque a opção Buscar todos.");
         }
     }//GEN-LAST:event_btnAdcRelActionPerformed
-
+private Toolkit tk = Toolkit.getDefaultToolkit();
+private Dimension d = tk.getScreenSize();
     private void btnImprimirRelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirRelActionPerformed
         
         if(radioBuscarTodos.isSelected() == false){
-            TelaRelatorioPeriodoTable relatorioFinal = new TelaRelatorioPeriodoTable(null, rootPaneCheckingEnabled);
+            
+            //Testando impressao do Jasper.
+            String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\relatorioPeriodo.jasper";
+            Connection con = ConexaoJdbc.getConnection();
+            JDialog viewer = new JDialog(new javax.swing.JFrame(), "Relatório", true);  
+            //Pega a Resolução do Video  
+            viewer.setSize(d.width, d.height-25);  
+            viewer.setLocationRelativeTo(null);  
+            //Deixar true pois da problema no relatorio caso deixado false  
+            viewer.setResizable(true);  
+            JasperPrint jasperPrint;  
+            try {
+                jasperPrint = JasperFillManager.fillReport(src, null, con);
+                
+                JasperViewer jrViewer = new JasperViewer(jasperPrint, true);  
+                
+                //Adicionando o relatorio no Jdialog  
+                viewer.getContentPane().add(jrViewer.getContentPane());
+                
+                //Deixar True para exibir a tela no sistema  
+                viewer.setVisible(true);  
+            } catch (JRException ex) {
+                Logger.getLogger(TelaEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+            
+            ControlePaginasDao cpd = new ControlePaginasDao();
+            cpd.deletarRelatorioFinal();
+            
+            /*TelaRelatorioPeriodoTable relatorioFinal = new TelaRelatorioPeriodoTable(null, rootPaneCheckingEnabled);
         
             MessageFormat header = new MessageFormat("Controle de impressões de " + txtDataInicial.getText() + " a " + txtDataFinal.getText());
             try {
@@ -485,11 +525,38 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 cpd.deletarRelatorioFinal();
             }catch (java.awt.print.PrinterException e) {
                 System.err.format("Cannot print %s%n", e.getMessage());
-            }
+            }*/
         }
         
         if(radioBuscarTodos.isSelected() == true){
-            MessageFormat header = new MessageFormat("Controle de impressões de " + txtDataInicial.getText() + " a " + txtDataFinal.getText());
+            
+            String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\testeImpr.jasper";
+            Connection con = ConexaoJdbc.getConnection();
+            JDialog viewer = new JDialog(new javax.swing.JFrame(), "Relatório", true);  
+            //Pega a Resolução do Video  
+            viewer.setSize(d.width, d.height-25);  
+            viewer.setLocationRelativeTo(null);  
+            //Deixar true pois da problema no relatorio caso deixado false  
+            viewer.setResizable(true);  
+            JasperPrint jasperPrint;  
+            try {
+                jasperPrint = JasperFillManager.fillReport(src, null, con);
+                
+                JasperViewer jrViewer = new JasperViewer(jasperPrint, true);  
+                
+                //Adicionando o relatorio no Jdialog  
+                viewer.getContentPane().add(jrViewer.getContentPane());
+                
+                //Deixar True para exibir a tela no sistema  
+                viewer.setVisible(true);  
+            } catch (JRException ex) {
+                Logger.getLogger(TelaEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+            
+            ControlePaginasDao cpd = new ControlePaginasDao();
+            cpd.deletarRelatorioVetores();
+            cpd.zerarIdTabelaReceberVetores();
+            /*MessageFormat header = new MessageFormat("Controle de impressões de " + txtDataInicial.getText() + " a " + txtDataFinal.getText());
             try {
                 jTable1.print(JTable.PrintMode.FIT_WIDTH, header, null);
                 ControlePaginasDao cpd = new ControlePaginasDao();
@@ -497,7 +564,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 cpd.zerarIdTabelaReceberVetores();
             }catch (java.awt.print.PrinterException e) {
                 System.err.format("Cannot print %s%n", e.getMessage());
-            }
+            }*/
         }
         
     }//GEN-LAST:event_btnImprimirRelActionPerformed
