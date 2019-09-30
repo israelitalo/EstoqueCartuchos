@@ -35,13 +35,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        iconEstoque = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        IconSair = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabelImpressoraPrincipal = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabelUsuario = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         btnNotificacao = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -51,6 +47,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         btnFabricantes = new javax.swing.JButton();
         labelNotificacao = new javax.swing.JLabel();
+        btnUsuarios = new javax.swing.JButton();
+        btnCartuchos = new javax.swing.JButton();
+        btnImpressora = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         labelUsuario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -62,49 +62,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerenciamento de Impressoras e cartuchos");
-        setSize(new java.awt.Dimension(1170, 877));
+        setPreferredSize(new java.awt.Dimension(1247, 877));
+        setSize(new java.awt.Dimension(1247, 877));
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(1140, 163));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1247, 877));
 
         jLabel1.setText("Cartuchos");
 
-        iconEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/estoque.png"))); // NOI18N
-        iconEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        iconEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                iconEstoqueMouseClicked(evt);
-            }
-        });
-
         jLabel2.setText("Sair");
-
-        IconSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/sair.png"))); // NOI18N
-        IconSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        IconSair.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                IconSairMouseClicked(evt);
-            }
-        });
 
         jLabel3.setText("Impressoras");
 
-        jLabelImpressoraPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/impressoraPrincipal.png"))); // NOI18N
-        jLabelImpressoraPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelImpressoraPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelImpressoraPrincipalMouseClicked(evt);
-            }
-        });
-
         jLabel5.setText("Controle de usuarios");
-
-        jLabelUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/user_customer_person_13976.png"))); // NOI18N
-        jLabelUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelUsuarioMouseClicked(evt);
-            }
-        });
 
         jLabel7.setText("Notificações");
 
@@ -122,7 +91,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel6.setText("Setores");
 
-        btnSetores.setText("icone setores");
+        btnSetores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/setores.png"))); // NOI18N
         btnSetores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSetores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,11 +101,43 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel10.setText("Fabricantes");
 
-        btnFabricantes.setText("icone Fabricantes");
+        btnFabricantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/fabricantes.png"))); // NOI18N
         btnFabricantes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFabricantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFabricantesActionPerformed(evt);
+            }
+        });
+
+        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/usuarios.png"))); // NOI18N
+        btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuariosActionPerformed(evt);
+            }
+        });
+
+        btnCartuchos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/cartuhoss.png"))); // NOI18N
+        btnCartuchos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCartuchos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCartuchosActionPerformed(evt);
+            }
+        });
+
+        btnImpressora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/impressoraPrincipal.png"))); // NOI18N
+        btnImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImpressora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImpressoraActionPerformed(evt);
+            }
+        });
+
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/sair.png"))); // NOI18N
+        btnSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
             }
         });
 
@@ -145,32 +146,34 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconEstoque)
-                    .addComponent(jLabel1))
-                .addGap(84, 84, 84)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelImpressoraPrincipal)
-                        .addGap(65, 65, 65)
-                        .addComponent(btnSetores)
-                        .addGap(62, 62, 62)
-                        .addComponent(btnFabricantes)
-                        .addGap(66, 66, 66))
+                        .addContainerGap()
+                        .addComponent(btnCartuchos))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel1)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
                         .addComponent(jLabel3)
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10)
-                        .addGap(110, 110, 110)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabelUsuario)
-                        .addGap(25, 25, 25)))
+                        .addGap(45, 45, 45)
+                        .addComponent(btnImpressora)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnSetores)))
+                .addGap(61, 61, 61)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnFabricantes)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel10)))
+                .addGap(70, 70, 70)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(btnUsuarios))
                 .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -181,14 +184,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(labelNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(109, 109, 109)
+                        .addGap(90, 90, 90)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(92, 92, 92))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNotificacao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(IconSair)
-                        .addGap(57, 57, 57))))
+                        .addGap(57, 57, 57)
+                        .addComponent(btnSair)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,39 +199,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addComponent(btnFabricantes))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel10)
-                            .addComponent(labelNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel10))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnUsuarios))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel6))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(iconEstoque)
-                                    .addComponent(IconSair)
-                                    .addComponent(jLabelImpressoraPrincipal)
-                                    .addComponent(btnNotificacao))
-                                .addContainerGap(36, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSetores))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnSetores)
-                                    .addComponent(btnFabricantes))
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCartuchos))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnImpressora))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSair)
+                                    .addComponent(btnNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(753, Short.MAX_VALUE))
         );
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(1150, 36));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1247, 877));
 
         labelUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
@@ -248,7 +256,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 14, Short.MAX_VALUE)
+                .addGap(0, 855, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)))
@@ -291,15 +299,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1169, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1169, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1227, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1227, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 646, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -332,48 +340,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         labelNotificacao.setText(count);
     }
     
-    private void iconEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconEstoqueMouseClicked
-    TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
-    telaEstoque.setVisible(true);      
-    }//GEN-LAST:event_iconEstoqueMouseClicked
-
-    private void IconSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IconSairMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_IconSairMouseClicked
-
     private void MenuCartuchoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCartuchoActionPerformed
         TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
         telaEstoque.setVisible(true);
     }//GEN-LAST:event_MenuCartuchoActionPerformed
 
-    private void jLabelImpressoraPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelImpressoraPrincipalMouseClicked
-        if(jLabelImpressoraPrincipal.isEnabled()){
-            TelaImpressora2 telaImpressora = new TelaImpressora2(this, rootPaneCheckingEnabled);
-            telaImpressora.setVisible(true);
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
-        }
-       
-    }//GEN-LAST:event_jLabelImpressoraPrincipalMouseClicked
-
     private void MenuImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuImpressoraActionPerformed
         TelaImpressora2 telaImpressora = new TelaImpressora2(this, rootPaneCheckingEnabled);
         telaImpressora.setVisible(true);
     }//GEN-LAST:event_MenuImpressoraActionPerformed
-
-    private void jLabelUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelUsuarioMouseClicked
-        String usuarioAdm = usuarioAdmOuNao();
-        
-        if(usuarioAdm.equals("sim")){
-            TelaControleUsuario telaUsuario = new TelaControleUsuario(this, rootPaneCheckingEnabled);
-            telaUsuario.setVisible(true);
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
-        }
-        
-    }//GEN-LAST:event_jLabelUsuarioMouseClicked
 
     private void btnNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacaoActionPerformed
         String usuarioAdm = usuarioAdmOuNao();
@@ -402,6 +377,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
        TelaFabricante telaFabricante = new TelaFabricante(this, rootPaneCheckingEnabled);
        telaFabricante.setVisible(true);
     }//GEN-LAST:event_btnFabricantesActionPerformed
+
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+        String usuarioAdm = usuarioAdmOuNao();
+        
+        if(usuarioAdm.equals("sim")){
+            TelaControleUsuario telaUsuario = new TelaControleUsuario(this, rootPaneCheckingEnabled);
+            telaUsuario.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
+    }//GEN-LAST:event_btnUsuariosActionPerformed
+
+    private void btnCartuchosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartuchosActionPerformed
+    TelaEstoque telaEstoque = new TelaEstoque(this, rootPaneCheckingEnabled);
+    telaEstoque.setVisible(true);   
+    }//GEN-LAST:event_btnCartuchosActionPerformed
+
+    private void btnImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpressoraActionPerformed
+        if(btnImpressora.isEnabled()){
+            TelaImpressora2 telaImpressora = new TelaImpressora2(this, rootPaneCheckingEnabled);
+            telaImpressora.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
+        }
+    }//GEN-LAST:event_btnImpressoraActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -440,14 +446,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel IconSair;
     private javax.swing.JMenuItem MenuCartucho;
     private javax.swing.JMenuItem MenuImpressora;
     private javax.swing.JMenu attNotificacao;
+    private javax.swing.JButton btnCartuchos;
     private javax.swing.JButton btnFabricantes;
+    private javax.swing.JButton btnImpressora;
     private javax.swing.JButton btnNotificacao;
+    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSetores;
-    private javax.swing.JLabel iconEstoque;
+    private javax.swing.JButton btnUsuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -458,8 +466,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelImpressoraPrincipal;
-    private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;

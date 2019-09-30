@@ -13,13 +13,16 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -539,7 +542,16 @@ private Dimension d = tk.getScreenSize();
             viewer.setResizable(true);  
             JasperPrint jasperPrint;  
             try {
-                jasperPrint = JasperFillManager.fillReport(src, null, con);
+                //tentando passar parâmetros para o relatório Jasper.
+                Map<String, Object> parameters = new HashMap<String, Object>();
+                
+                String dataInicial = txtDataInicial.getText();
+                String dataFinal = txtDataFinal.getText();
+                parameters.put("periodo", dataInicial);
+                parameters.put("periodoFinal", dataFinal);
+                
+                jasperPrint = JasperFillManager.fillReport(src, parameters, new JREmptyDataSource(1)); //para passar parâmetros para o relatório.
+                jasperPrint = JasperFillManager.fillReport(src, parameters, con);//código para passar o parâmetro "con", para permitir a conexão do jasperStudio com o banco de dados.
                 
                 JasperViewer jrViewer = new JasperViewer(jasperPrint, true);  
                 
