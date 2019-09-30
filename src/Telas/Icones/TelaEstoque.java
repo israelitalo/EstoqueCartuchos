@@ -460,7 +460,7 @@ public class TelaEstoque extends javax.swing.JDialog {
         
         if(jLabelImprimir.isEnabled()){
             //Tentando imprimir relatório pelo jasperSoft Studio
-            String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\selectCartuchos.jasper";
+            String src = "C:\\Tontech\\relatorios\\selectCartuchos.jasper";
             Connection con = ConexaoJdbc.getConnection();
             JDialog viewer = new JDialog(new javax.swing.JFrame(), "Relatório", true);  
             //Pega a Resolução do Video  

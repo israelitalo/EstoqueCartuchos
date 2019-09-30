@@ -11,7 +11,6 @@ import controller.ControlePaginas;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.Connection;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -490,7 +489,7 @@ private Dimension d = tk.getScreenSize();
         if(radioBuscarTodos.isSelected() == false){
             
             //Testando impressao do Jasper.
-            String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\relatorioPeriodo.jasper";
+            String src = "C:\\Tontech\\relatorios\\relatorioPeriodo.jasper";
             Connection con = ConexaoJdbc.getConnection();
             JDialog viewer = new JDialog(new javax.swing.JFrame(), "Relatório", true);  
             //Pega a Resolução do Video  
@@ -530,7 +529,7 @@ private Dimension d = tk.getScreenSize();
         
         if(radioBuscarTodos.isSelected() == true){
             
-            String src = "C:\\Users\\israe\\JaspersoftWorkspace\\MyReports\\testeImpr.jasper";
+            String src = "C:\\Tontech\\relatorios\\testeImpr.jasper";
             Connection con = ConexaoJdbc.getConnection();
             JDialog viewer = new JDialog(new javax.swing.JFrame(), "Relatório", true);  
             //Pega a Resolução do Video  
