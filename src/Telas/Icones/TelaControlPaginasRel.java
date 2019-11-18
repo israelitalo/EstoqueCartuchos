@@ -42,7 +42,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         initComponents();
         carregarComboBoxImpressora();
         cleanTabelaVetoresErelatorioPeriodo();
-        System.out.println(txtDataInicial.getText() + ".");
+        tamanhoColunasTabela();
     }
 
     /**
@@ -120,7 +120,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jScrollPane1.setViewportView(jTable1);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -165,6 +165,11 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
 
         radioBuscarTodos.setText("Buscar todos");
         radioBuscarTodos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioBuscarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBuscarTodosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -259,6 +264,15 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         cpd.deletarRelatorioVetores();//limpando a planilha de receber relatório.
         cpd.deletarRelatorioFinal();
     }
+    
+    public void tamanhoColunasTabela(){
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(80);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(316);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(150);
+    }
+    
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
     cleanTabelaVetoresErelatorioPeriodo();
         
@@ -292,8 +306,9 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
     //Quando o radio Buscar todos está selecionado
     if(radioBuscarTodos.isSelected() == true){
 
+        comboBoxImpressoras.removeItem("Todas Impressoras");
         if((!txtDataInicial.getText().equals("  /  /    ")) && (!txtDataFinal.getText().equals("  /  /    "))){
-
+            soma =0;
             ControlePaginasDao cpd = new ControlePaginasDao();
             cpd.zerarIdTabelaReceberVetores();//Para o id da tabela recebervetores sempre iniciar em 1.
             cpd.deletarRelatorioVetores();//limpando a planilha de receber relatório.
@@ -339,7 +354,7 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 int vetor[] = new int[linhas];//Criando vetor com alocação do mesmo tamanho da quantidade de linhas.
 
                 for(int j=0; j < vetor.length; j++){
-                    System.out.println("Coletando linha da tabela.");
+                    //System.out.println("Coletando linha da tabela.");
 
                     //teste para zerar o valor de soma, caso só haja 1 item nesse vetor.
                     if(vetor.length == 1){
@@ -401,13 +416,15 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
         int qtdPaginas = 0;
         
         ControlePaginasDao cpd = new ControlePaginasDao();
+        
         List<ControlePaginas> lista = cpd.listarRelatorioVetores();
+        
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
+
         jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        
+
         model.setNumRows(0);
-        
+
         for(ControlePaginas cp: cpd.listarRelatorioVetores()){
             model.addRow(new Object[]{
                 cp.getIdReceberVetores(),
@@ -417,30 +434,24 @@ public class TelaControlPaginasRel extends javax.swing.JDialog {
                 cp.getSoma()
             });
         }
-        
+
         int linhas = jTable1.getRowCount();
         int vetor[] = new int[linhas];
-        
+
         for(int i=0;i<vetor.length;i++){
             //Selecionar a primeira linha da tabela.
             jTable1.changeSelection(i, jTable1.getRowCount(), false, false);
-            
+
             int linhaSelecionada = jTable1.getSelectedRow();
-            
+
             vetor[i] = (int) jTable1.getModel().getValueAt(linhaSelecionada, 4);
-            
-            qtdPaginas += vetor[i];
-            
+
+            qtdPaginas += vetor[i];    
         }
-        
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(80);
-        jTable1.getColumnModel().getColumn(1).setPreferredWidth(300);
-        jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
-        jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
-        jTable1.getColumnModel().getColumn(4).setPreferredWidth(150);
-        
-        System.out.println(qtdPaginas);
-        txtPagImpressas.setText(Integer.toString(qtdPaginas));
+
+        tamanhoColunasTabela();
+
+        txtPagImpressas.setText(Integer.toString(qtdPaginas));        
     }
     
     private void txtPagImpressasCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtPagImpressasCaretUpdate
@@ -583,11 +594,18 @@ private Dimension d = tk.getScreenSize();
     private void comboBoxImpressorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxImpressorasActionPerformed
       //
     }//GEN-LAST:event_comboBoxImpressorasActionPerformed
+
+    private void radioBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBuscarTodosActionPerformed
+        if(radioBuscarTodos.isSelected()){
+            comboBoxImpressoras.addItem("Todas Impressoras");
+            comboBoxImpressoras.setSelectedItem("Todas Impressoras");
+        }
+    }//GEN-LAST:event_radioBuscarTodosActionPerformed
               
     public void listarRelatorio(Integer idImpressora, String dataInicial, String dataFinal){
         
         ControlePaginasDao cpd = new ControlePaginasDao();
-        //teste
+
         String impressora = (String) comboBoxImpressoras.getSelectedItem();
         
         idImpressora = cpd.getIdJcomboBoxImpressora(impressora);
@@ -601,8 +619,6 @@ private Dimension d = tk.getScreenSize();
         List<ControlePaginas>lista = cpd.listar(idImpressora, dataInicial, dataFinal);
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        
-        jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         
         model.setNumRows(0);
         
@@ -640,15 +656,12 @@ private Dimension d = tk.getScreenSize();
                 }
             }
             
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(80);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(316);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(150);
+            tamanhoColunasTabela();
             setPagImpressas(soma);
         }
         else
         {
+            tamanhoColunasTabela();
             setPagImpressas(0);
         }
         

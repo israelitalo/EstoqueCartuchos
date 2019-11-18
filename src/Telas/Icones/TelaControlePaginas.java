@@ -359,7 +359,11 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         
         int paginaTotal = (int) txtQtdAtual.getValue();
         
-        ControlePaginas cp = new ControlePaginas();
+        if(paginaTotal < getQtdTotalGlobal()){
+            JOptionPane.showMessageDialog(null, "A quantidade de páginas impressas mais recentemente \n não pode ser menor que a quantidade anterior");
+        }
+        else{
+            ControlePaginas cp = new ControlePaginas();
         
             cp.setIdImpressora(idImpressora);
             cp.setData(dataToDB);
@@ -370,9 +374,9 @@ public class TelaControlePaginas extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
                 limparCampos();
                 listarControlePagians();
+                }
             }
         }
-        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jComboBoxImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxImpressoraMouseClicked
@@ -432,6 +436,22 @@ public class TelaControlePaginas extends javax.swing.JDialog {
         txtDataRelatorio.setText("");
     }
     
+    public void limparCamposParcialmente(){
+        qtdTotalGlobal = 0;
+        txtQtdFinal.setValue(getQtdTotalGlobal());
+        jComboBoxData.removeAllItems();
+        jComboBoxData.addItem("Último registro");
+        jComboBoxData.setSelectedItem("Último registro");
+        jLabelData.setText("  /  /    ");
+        //jComboBoxImpressora.addItem("Impressora");
+        //jComboBoxImpressora.setSelectedItem("Impressora");
+        //comboBoxSetor.removeAllItems();
+        //comboBoxSetor.addItem("Setor");
+        //comboBoxSetor.setSelectedItem("Setor");
+        txtQtdAtual.setValue(0);
+        txtDataRelatorio.setText("");
+    }
+    
     private void jComboBoxImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxImpressoraActionPerformed
         ControlePaginasDao cpd = new ControlePaginasDao();
         
@@ -451,10 +471,10 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             
             String setor = cpd.getSetor(idSetor);
 
-            if(setor != null){
-                comboBoxSetor.removeAllItems();
-                comboBoxSetor.addItem(setor);
-            }
+                if(setor != null){
+                    comboBoxSetor.removeAllItems();
+                    comboBoxSetor.addItem(setor);
+                }
             
             if(ultimaData != "Não há registros."){
                 jComboBoxData.removeAllItems();
@@ -478,9 +498,10 @@ public class TelaControlePaginas extends javax.swing.JDialog {
             else
             {
                 JOptionPane.showMessageDialog(null, "Não há histórico para a impressora selecionada.");
-                limparCampos();
+                limparCamposParcialmente();
             }
             listarControlePagians();
+            //limparCampos();
         }
          
     }//GEN-LAST:event_jComboBoxImpressoraActionPerformed
