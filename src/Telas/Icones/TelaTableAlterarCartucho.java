@@ -22,6 +22,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
     private String modelo;
     private String impressora;
     private String cor;
+    private Integer quantidade;
     
     /**
      * Creates new form TelaTableAlterarCartucho
@@ -47,6 +48,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista de cartuchos");
 
+        jTableAlterarCartucho.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTableAlterarCartucho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -63,6 +65,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTableAlterarCartucho.setToolTipText("Clique duas vezes em um item para selecioná-lo.");
         jTableAlterarCartucho.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableAlterarCartuchoMouseClicked(evt);
@@ -74,11 +77,11 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
 
         pack();
@@ -136,23 +139,34 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         return idCartucho;
     }
     
+    public Integer getQuantidade(){
+        return quantidade;
+    }
+    
     private void jTableAlterarCartuchoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAlterarCartuchoMouseClicked
-
-        int linha = jTableAlterarCartucho.getSelectedRow();
+        if(evt.getClickCount() == 2){
+            int linha = jTableAlterarCartucho.getSelectedRow();
         
-        if(linha != -1){
-            this.idCartucho = jTableAlterarCartucho.getModel().getValueAt(linha, 0).toString();
-            this.tipo = jTableAlterarCartucho.getModel().getValueAt(linha, 1).toString();
-            this.modelo = jTableAlterarCartucho.getModel().getValueAt(linha, 2).toString();
-            this.impressora = jTableAlterarCartucho.getModel().getValueAt(linha, 3).toString();
-            this.cor = jTableAlterarCartucho.getModel().getValueAt(linha, 4).toString();
-            this.dispose();
+            if(linha != -1){
+                this.idCartucho = jTableAlterarCartucho.getModel().getValueAt(linha, 0).toString();
+                this.tipo = jTableAlterarCartucho.getModel().getValueAt(linha, 1).toString();
+                this.modelo = jTableAlterarCartucho.getModel().getValueAt(linha, 2).toString();
+                this.impressora = jTableAlterarCartucho.getModel().getValueAt(linha, 3).toString();
+                this.cor = jTableAlterarCartucho.getModel().getValueAt(linha, 4).toString();
+                
+                CartuchoDao cd = new CartuchoDao();
+                this.quantidade = cd.getEstoque((Integer) jTableAlterarCartucho.getModel().getValueAt(linha, 0));
+                
+                this.dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Selecione um cartucho para prosseguir!");
+            }
         }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Selecione um cartucho para prosseguir!");
+        else if(evt.getButton() == 3){
+            jTableAlterarCartucho.getSelectionModel().clearSelection();
         }
-        
     }//GEN-LAST:event_jTableAlterarCartuchoMouseClicked
 
     /**

@@ -93,6 +93,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(900, 700));
 
+        jTableImpressora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTableImpressora.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -116,6 +117,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTableImpressora);
 
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,6 +125,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,6 +133,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,14 +141,23 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
+        txtModelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabelModelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelModelo.setText("Modelo");
 
+        txtSerie.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Serie");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Fabricante");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Setor");
 
+        jComboBoxFabricante.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBoxFabricante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fabricante" }));
         jComboBoxFabricante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,6 +165,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
+        jComboBoxSetor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
         jComboBoxSetor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,6 +173,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
+        txtBusca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtBusca.setToolTipText("Este campo tem a prioridade de busca");
         txtBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,9 +189,11 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
+        jrbTodos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jrbTodos.setText("Buscar todos");
         jrbTodos.setToolTipText("Marque para consultar todas as impressoras");
 
+        RelatorioImpressoras.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         RelatorioImpressoras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/paginas.png"))); // NOI18N
         RelatorioImpressoras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         RelatorioImpressoras.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -185,10 +202,13 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Páginas impressas");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Relatório Pág. impressas");
 
+        labelRelatorios.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         labelRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/folhas.png"))); // NOI18N
         labelRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -205,9 +225,6 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,20 +234,31 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jrbTodos)
-                                .addContainerGap(339, Short.MAX_VALUE))
+                                .addContainerGap(309, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(txtBusca)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(17, 17, 17))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelModelo)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(txtSerie))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelModelo)
+                                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(txtSerie)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(54, 54, 54)
+                                .addComponent(RelatorioImpressoras)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(labelRelatorios)
+                                .addGap(70, 70, 70))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel5)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,20 +269,14 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(17, 17, 17))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(17, 17, 17))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(RelatorioImpressoras)
-                        .addGap(120, 120, 120)
-                        .addComponent(labelRelatorios)))
-                .addContainerGap(652, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,7 +301,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                     .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jrbTodos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,9 +311,9 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                         .addComponent(btnAlterar)
                         .addComponent(btnExcluir)
                         .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 64, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();

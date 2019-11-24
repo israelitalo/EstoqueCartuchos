@@ -23,7 +23,7 @@ public class UsuarioDao {
     
     public UsuarioDao (){
         con = ConexaoJdbc.getConnection();
-        System.out.println("Conexão UsuarioDao iniciada.");   
+        //System.out.println("Conexão UsuarioDao iniciada.");   
     }
     
     //método para inserir usuário logado.

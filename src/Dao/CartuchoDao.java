@@ -29,7 +29,7 @@ public class CartuchoDao {
         
         con = ConexaoJdbc.getConnection();
         
-        System.out.println("CartuchoDao: conexão iniciada!");
+        //System.out.println("CartuchoDao: conexão iniciada!");
         
     }
     
@@ -185,7 +185,7 @@ public class CartuchoDao {
        PreparedStatement stmt = null;
        
        try{
-           System.out.println("Iniciando coleção do estoque...");
+           //System.out.println("Iniciando coleção do estoque...");
            stmt = con.prepareStatement(sql);           
            ResultSet rs = stmt.executeQuery();
            rs.next();
@@ -194,11 +194,11 @@ public class CartuchoDao {
            
            //ConexaoJdbc.closeConnection(con, stmt, rs);
            ConexaoJdbc.closeConnection(rs);
-           System.out.println("Conexão com ResultSet encerrada.");
+           //System.out.println("Conexão com ResultSet encerrada.");
            return estoque;
            
        } catch (SQLException ex) {
-           System.out.println("falha ao coletar quantidade!");
+           //System.out.println("falha ao coletar quantidade!");
            System.err.println("Erro!" + ex);
            return null;
         }
@@ -302,6 +302,26 @@ public class CartuchoDao {
             rs = stmt.executeQuery();
             while(rs.next()){
                 String setor = rs.getString("s.setor");
+                return setor;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CartuchoDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
+    }
+    
+    public Integer getIdSetorImpressora(Integer idImpressora){
+        
+        String sql = "SELECT i.id_setor FROM impressora i WHERE i.id_impressora = '" + idImpressora + "'";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                int setor = rs.getInt("i.id_setor");
                 return setor;
             }
         } catch (SQLException ex) {
