@@ -6,11 +6,25 @@
 package Telas.Icones;
 
 import Dao.CartuchoDao;
+import Dao.ConexaoJdbc;
+import Dao.UsuarioDao;
 import controller.Cartucho;
+import controller.Usuario;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.sql.Connection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -55,15 +69,14 @@ public class TelaCartucho extends javax.swing.JDialog {
         comboBoxSetor = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtBusca = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
-        radioBuscar = new javax.swing.JRadioButton();
         labelVoltar = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         giroQuantidade = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
         txtCor = new javax.swing.JComboBox<>();
         txtTipo = new javax.swing.JComboBox<>();
+        btnImprimirRelatorio = new javax.swing.JButton();
+        btnEstoqueCartucho = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento de Cartuchos");
@@ -120,8 +133,13 @@ public class TelaCartucho extends javax.swing.JDialog {
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnExcluir.setText("Excluir");
-        btnExcluir.setToolTipText("");
+        btnExcluir.setToolTipText("Clique aqui para excluir um item.");
         btnExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         txtModelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtModelo.setToolTipText("Digite o modelo do cartucho");
@@ -132,7 +150,7 @@ public class TelaCartucho extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Tipo");
 
-        comboBoxImpressora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        comboBoxImpressora.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         comboBoxImpressora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Impressora" }));
         comboBoxImpressora.setToolTipText("Selecione a impressora");
         comboBoxImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -145,7 +163,7 @@ public class TelaCartucho extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Impressora");
 
-        comboBoxSetor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        comboBoxSetor.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
         comboBoxSetor.setToolTipText("Selecione o setor");
         comboBoxSetor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -155,28 +173,6 @@ public class TelaCartucho extends javax.swing.JDialog {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Quantidade");
-
-        txtBusca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtBusca.setToolTipText("Buscar palavra digitada");
-
-        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
-        btnBuscar.setText("Buscar");
-        btnBuscar.setToolTipText("Buscar");
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscar.setMaximumSize(new java.awt.Dimension(91, 35));
-        btnBuscar.setMinimumSize(new java.awt.Dimension(91, 35));
-        btnBuscar.setPreferredSize(new java.awt.Dimension(91, 34));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        radioBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        radioBuscar.setText("Buscar todos");
-        radioBuscar.setToolTipText("Ative para mostrar todas as impressoras");
-        radioBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         labelVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Logout_37127.png"))); // NOI18N
         labelVoltar.setToolTipText("Voltar");
@@ -212,11 +208,31 @@ public class TelaCartucho extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("Cor");
 
-        txtCor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtCor.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txtCor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PRETO", "AMARELO", "AZUL", "VERMELHO" }));
 
-        txtTipo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtTipo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txtTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TONER", "TINTA", "CARTUCHO" }));
+
+        btnImprimirRelatorio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnImprimirRelatorio.setText("Imprimir Relatório");
+        btnImprimirRelatorio.setToolTipText("Clique aqui para imprimir um relatório sobre cartuchos");
+        btnImprimirRelatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImprimirRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirRelatorioActionPerformed(evt);
+            }
+        });
+
+        btnEstoqueCartucho.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnEstoqueCartucho.setText("Gerir Estoque");
+        btnEstoqueCartucho.setToolTipText("Clique aqui para movimentar o estoque de cartuchos");
+        btnEstoqueCartucho.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEstoqueCartucho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstoqueCartuchoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -225,59 +241,64 @@ public class TelaCartucho extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelVoltar)
+                        .addGap(31, 31, 31))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(276, 276, 276)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(comboBoxImpressora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtBusca)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
+                                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(276, 276, 276)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(radioBuscar)
-                                                .addGap(37, 37, 37))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addGap(33, 33, 33)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel6)
-                                                    .addComponent(txtCor, 0, 185, Short.MAX_VALUE)))))))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addComponent(comboBoxImpressora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnImprimirRelatorio)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(294, 294, 294)
-                                .addComponent(giroQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelVoltar)
-                        .addGap(19, 19, 19)))
-                .addContainerGap())
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(491, 491, 491)
+                                        .addComponent(btnEstoqueCartucho, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(294, 294, 294)
+                                        .addComponent(giroQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,46 +306,47 @@ public class TelaCartucho extends javax.swing.JDialog {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(comboBoxImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(giroQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(labelVoltar))
+                        .addGap(13, 13, 13)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(comboBoxImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(giroQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(labelVoltar))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radioBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBusca))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnImprimirRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEstoqueCartucho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        txtBusca.getAccessibleContext().setAccessibleName("");
-        btnBuscar.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -344,10 +366,6 @@ public class TelaCartucho extends javax.swing.JDialog {
     private TelaTableAlterarCartucho tabelaAlterarCartuchoTeste;
     private Integer idCartucho;
     
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void comboBoxImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxImpressoraActionPerformed
         if(!comboBoxImpressora.getSelectedItem().equals("Impressora")){
             comboBoxSetor.removeAllItems();
@@ -395,10 +413,10 @@ public class TelaCartucho extends javax.swing.JDialog {
        
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         //Verificando se o botão alterar está desabilitado.
-        if(!btnAlterar.isEnabled()){
+        if(!btnAlterar.isEnabled() && !btnExcluir.isEnabled()){
             if(txtModelo.getText().equals("") || txtTipo.getSelectedItem().equals("") || txtCor.getSelectedItem().equals("") ||
                comboBoxImpressora.getSelectedItem().equals("Impressora") || comboBoxSetor.getSelectedItem().equals("Setor")){
-                JOptionPane.showMessageDialog(null, "Preecha todos os campos.");            
+                JOptionPane.showMessageDialog(null, "Preecha todos os campos.".toUpperCase());            
             }
             else
             {
@@ -420,7 +438,7 @@ public class TelaCartucho extends javax.swing.JDialog {
                 cartucho.setTipo(tipo);
                 
                 if(cd.salvar(cartucho)){
-                    JOptionPane.showMessageDialog(null, "Cartucho incluído com sucesso.");
+                    JOptionPane.showMessageDialog(null, "Cartucho incluído com sucesso.".toUpperCase());
                     listarCartuchos();
                     limparCampos();
                     desabilitarCampos();
@@ -429,15 +447,14 @@ public class TelaCartucho extends javax.swing.JDialog {
                     btnAlterar.setEnabled(true);
                     btnExcluir.setEnabled(true);
                 }else{
-                    JOptionPane.showMessageDialog(null, "Erro ao inserir cartucho.");
+                    JOptionPane.showMessageDialog(null, "Erro ao inserir cartucho.".toUpperCase());
                 }
             }
-        }
-        else{
-            //Com o botão alterar desabilitado segue o código abaixo:
+        }//Verificando se o botão alterar está habilitado e o botão excluir desabilitado.
+        else if(btnAlterar.isEnabled()==true && btnExcluir.isEnabled()==false){
             if(txtModelo.getText().equals("") || txtTipo.getSelectedItem().equals("") || txtCor.getSelectedItem().equals("") ||
                comboBoxImpressora.getSelectedItem().equals("Impressora") || comboBoxSetor.getSelectedItem().equals("Setor")){
-               JOptionPane.showMessageDialog(null, "Preecha todos os campos.");            
+               JOptionPane.showMessageDialog(null, "Preecha todos os campos.".toUpperCase());            
             }
             else
             {
@@ -457,7 +474,7 @@ public class TelaCartucho extends javax.swing.JDialog {
                 cartucho.setTipo(tipo);
                 
                 if(cd.editar(cartucho,idCartucho)){
-                    JOptionPane.showMessageDialog(null, "Cartucho alterado com sucesso.");
+                    JOptionPane.showMessageDialog(null, "Cartucho alterado com sucesso.".toUpperCase());
                     listarCartuchos();
                     limparCampos();
                     desabilitarCampos();
@@ -466,15 +483,38 @@ public class TelaCartucho extends javax.swing.JDialog {
                     //btnAlterar.setEnabled(true);
                     btnExcluir.setEnabled(true);
                 }else{
-                    JOptionPane.showMessageDialog(null, "Erro ao inserir cartucho.");
+                    JOptionPane.showMessageDialog(null, "Erro ao alterar cartucho.".toUpperCase());
                 }
             }
+        }//Verificando se o botão excluir está habilitado e o botão alterar desabilitado.
+        else if(btnExcluir.isEnabled()==true && btnAlterar.isEnabled()==false){
+                      
+            CartuchoDao cd = new CartuchoDao();
+                        
+            Cartucho cartucho = new Cartucho();
+            
+            if(cd.excluir(cartucho, idCartucho)){
+                JOptionPane.showMessageDialog(null, "Cartucho excluído com sucesso.".toUpperCase());
+                cd.cleanAutoIncrementTableCartucho();
+                listarCartuchos();
+                limparCampos();
+                desabilitarCampos();
+                desabilitarBotoes();
+                btnNovo.setEnabled(true);
+                btnAlterar.setEnabled(true);
+                btnExcluir.setEnabled(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Erro ao excluir cartucho.".toUpperCase());
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Feche esta janela e tente realizar a operação mais uma vez.".toUpperCase());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        //Passando dados da tabela da TelaTableAlterarCartucho para a tela Cartucho.
+    //Passando dados da tabela da TelaTableAlterarCartucho para a tela Cartucho.
+    public void getItensTableAlterarCartucho(){
         this.tabelaAlterarCartuchoTeste.setVisible(true);
+        this.tabelaAlterarCartuchoTeste.listarCartuchos();
         
         this.idCartucho = Integer.parseInt(tabelaAlterarCartuchoTeste.getIdCartucho());
         this.txtTipo.setSelectedItem(String.valueOf(tabelaAlterarCartuchoTeste.getTipo()));
@@ -483,11 +523,64 @@ public class TelaCartucho extends javax.swing.JDialog {
         this.txtCor.setSelectedItem(String.valueOf(tabelaAlterarCartuchoTeste.getCor()));
         this.giroQuantidade.setValue(Integer.valueOf(tabelaAlterarCartuchoTeste.getQuantidade()));
         
+    }
+    
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         btnNovo.setEnabled(false);
         btnExcluir.setEnabled(false);
         btnSalvar.setEnabled(true);
         habilitarCampos();
+        //método para chamar a tela TableAlterarCartucho.
+        //teste para atualizar tabela TableAlterar Cartucho.
+        this.tabelaAlterarCartuchoTeste.listarCartuchos();
+        getItensTableAlterarCartucho();
     }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        btnNovo.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        //método para chamar a tela TableAlterarCartucho.
+        //teste para atualizar tabela TableAlterar Cartucho.
+        this.tabelaAlterarCartuchoTeste.listarCartuchos();
+        getItensTableAlterarCartucho();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private Toolkit tk = Toolkit.getDefaultToolkit();
+    private Dimension d = tk.getScreenSize();
+    
+    private void btnImprimirRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirRelatorioActionPerformed
+        String src = "C:\\Tontech\\relatorios\\selectCartuchos.jasper";
+            Connection con = ConexaoJdbc.getConnection();
+            JDialog viewer = new JDialog(new javax.swing.JFrame(), "Relatório", true);  
+            //Pega a Resolução do Video  
+            viewer.setSize(d.width, d.height-25);  
+            viewer.setLocationRelativeTo(null);  
+            //Deixar true pois da problema no relatorio caso deixado false  
+            viewer.setResizable(true);  
+            JasperPrint jasperPrint;  
+            try {
+                //Instanciando o JasperFillManager.fillReport no caminho src, sem parametros (null) e a conexão con para o select do banco.
+                jasperPrint = JasperFillManager.fillReport(src, null, con);
+                
+                JasperViewer jrViewer = new JasperViewer(jasperPrint, true);  
+                
+                //Adicionando o relatorio no Jdialog  
+                viewer.getContentPane().add(jrViewer.getContentPane());
+                
+                //Deixar True para exibir a tela no sistema  
+                viewer.setVisible(true);  
+                
+            } catch (JRException ex) {
+                Logger.getLogger(TelaEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            }    
+    }//GEN-LAST:event_btnImprimirRelatorioActionPerformed
+
+    private void btnEstoqueCartuchoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstoqueCartuchoActionPerformed
+        TelaMovimentarEstoque tela = new TelaMovimentarEstoque(null, rootPaneCheckingEnabled);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnEstoqueCartuchoActionPerformed
 
     public void carregarComboBoxImpressora(){
         CartuchoDao cd = new CartuchoDao();
@@ -614,9 +707,10 @@ public class TelaCartucho extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEstoqueCartucho;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnImprimirRelatorio;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboBoxImpressora;
@@ -631,9 +725,7 @@ public class TelaCartucho extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelVoltar;
-    private javax.swing.JRadioButton radioBuscar;
     private javax.swing.JTable tabelaCartuchos;
-    private javax.swing.JTextField txtBusca;
     private javax.swing.JComboBox<String> txtCor;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JComboBox<String> txtTipo;

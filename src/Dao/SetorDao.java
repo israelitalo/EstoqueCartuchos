@@ -26,7 +26,7 @@ public class SetorDao {
     
     public SetorDao(){
         con = ConexaoJdbc.getConnection();
-        System.out.println("SetorDao conectado.");
+        //System.out.println("SetorDao conectado.");
     }
     
     public boolean salvar(Setor setor){

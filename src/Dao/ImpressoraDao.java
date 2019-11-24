@@ -27,7 +27,7 @@ public class ImpressoraDao {
     
     public ImpressoraDao(){
         con = ConexaoJdbc.getConnection();
-        System.out.println("ImpressoraDao conectado!");
+        //System.out.println("ImpressoraDao conectado!");
     }
     
     public boolean salvar(Impressora impressora){

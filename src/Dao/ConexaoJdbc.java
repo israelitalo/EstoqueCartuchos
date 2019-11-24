@@ -29,7 +29,7 @@ public class ConexaoJdbc {
             
             Class.forName(DRIVER);
             
-            System.out.println("Conexão realizada com sucesso!");
+            //System.out.println("Conexão realizada com sucesso!");
             
             return DriverManager.getConnection(URL, USER, PASS);
             

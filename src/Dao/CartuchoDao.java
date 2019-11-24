@@ -86,7 +86,7 @@ public class CartuchoDao {
         
     }
     
-    public List<Cartucho> selectCartuchoAlterar(){
+    /*public List<Cartucho> selectCartuchoAlterar(){
         
         String sql = "SELECT c.id_cartucho, c.tipo, c.modelo, i.modelo, c.cor FROM cartucho c, impressora i WHERE c.id_impressora = i.id_impressora";
         
@@ -114,7 +114,7 @@ public class CartuchoDao {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-    }
+    }*/
     
     public List<Cartucho> selectCartuchoMovEstoque(){
         
@@ -144,7 +144,6 @@ public class CartuchoDao {
     }
     
     public List<Cartucho> selectCartucho (){
-        //01/07/2019 funcionando, com consulta com chave estrangeira (FOREIGN KEY).
         String sql = "SELECT c.id_cartucho, c.tipo, c.modelo, i.modelo, i.id_setor, c.cor, c.quantidade FROM cartucho c, impressora i WHERE c.id_impressora = i.id_impressora";
         
         List<Cartucho> cartuchos = new ArrayList<Cartucho>();
@@ -168,7 +167,7 @@ public class CartuchoDao {
                 cartuchos.add(cartucho);
             }
             //ConexaoJdbc.closeConnection(con, stmt);
-            System.out.println("Conexão completamente encerrada!");
+            //System.out.println("Conexão completamente encerrada!");
             return cartuchos;
             
         } catch (SQLException ex) {
@@ -241,6 +240,19 @@ public class CartuchoDao {
         } catch (SQLException ex) {
             System.err.println("Erro!" + ex);
             return false;
+        }
+    }
+    
+    public void cleanAutoIncrementTableCartucho(){
+        String sql = "ALTER TABLE cartucho AUTO_INCREMENT = 0";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(CartuchoDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -329,6 +341,34 @@ public class CartuchoDao {
             return null;
         }
         return null;
+    }
+    
+    public List<Cartucho> listaCartuchoTelaTableComLike(String busca){
+        String sql = "SELECT c.id_cartucho, c.modelo, c.tipo, i.modelo, c.cor FROM cartucho c INNER JOIN impressora i ON c.id_impressora = i.id_impressora WHERE c.modelo LIKE '%" + busca + "%' OR c.tipo LIKE '%" + busca + "%' OR i.modelo LIKE '%" + busca + "%' OR c.cor LIKE '%" + busca + "%'";
+    
+        List<Cartucho> lista = new ArrayList<Cartucho>();
+        
+        PreparedStatement stmt = null;
+        
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Cartucho cart = new Cartucho();
+                cart.setIdCartucho(rs.getInt("c.id_cartucho"));
+                cart.setModelo(rs.getString("c.modelo"));
+                cart.setTipo(rs.getString("c.tipo"));
+                cart.setModeloImpressora(rs.getString("i.modelo"));
+                cart.setCor(rs.getString("c.cor"));
+                lista.add(cart);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(CartuchoDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
 }

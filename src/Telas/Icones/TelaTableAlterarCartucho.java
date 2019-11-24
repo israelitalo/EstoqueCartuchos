@@ -7,6 +7,7 @@ package Telas.Icones;
 
 import Dao.CartuchoDao;
 import controller.Cartucho;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -30,7 +31,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
     public TelaTableAlterarCartucho(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listarCartuchos();
+        txtBuscar.requestFocus(true);
     }
 
     /**
@@ -44,9 +45,14 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableAlterarCartucho = new javax.swing.JTable();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        radioBuscarTodos = new javax.swing.JRadioButton();
+        labelVoltar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista de cartuchos");
+        setResizable(false);
 
         jTableAlterarCartucho.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTableAlterarCartucho.setModel(new javax.swing.table.DefaultTableModel(
@@ -54,7 +60,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
 
             },
             new String [] {
-                "CODIGO", "TIPO", "MODELO", "IMPRESSORA", "COR"
+                "CODIGO", "MODELO", "TIPO", "IMPRESSORA", "COR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -73,15 +79,86 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTableAlterarCartucho);
 
+        txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtBuscar.setToolTipText("Digite aqui o item que deseja selecionar");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("Buscar");
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyPressed(evt);
+            }
+        });
+
+        radioBuscarTodos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        radioBuscarTodos.setSelected(true);
+        radioBuscarTodos.setText("Buscar Todos");
+        radioBuscarTodos.setToolTipText("Marque para buscar todos os cartuchos cadastrados");
+        radioBuscarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBuscarTodosActionPerformed(evt);
+            }
+        });
+
+        labelVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Logout_37127.png"))); // NOI18N
+        labelVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelVoltarMouseClicked(evt);
+            }
+        });
+        labelVoltar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                labelVoltarKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(radioBuscarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(labelVoltar)
+                .addGap(9, 9, 9)
+                .addComponent(radioBuscarTodos)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -102,8 +179,8 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
 
             modelo.addRow(new Object[]{
                 c.getIdCartucho(),
-                c.getTipo(),
                 c.getModelo(),
+                c.getTipo(),
                 c.getModeloImpressora(),
                 c.getCor()
             });
@@ -113,10 +190,10 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         jTableAlterarCartucho.setModel(modelo);
         
         jTableAlterarCartucho.getColumnModel().getColumn(0).setPreferredWidth(0);
-        jTableAlterarCartucho.getColumnModel().getColumn(1).setPreferredWidth(0);
+        jTableAlterarCartucho.getColumnModel().getColumn(1).setPreferredWidth(120);
         jTableAlterarCartucho.getColumnModel().getColumn(2).setPreferredWidth(60);
         jTableAlterarCartucho.getColumnModel().getColumn(3).setPreferredWidth(230);
-        jTableAlterarCartucho.getColumnModel().getColumn(4).setPreferredWidth(40);
+        jTableAlterarCartucho.getColumnModel().getColumn(4).setPreferredWidth(60);
     }
     
     public String getModelo(){
@@ -149,8 +226,8 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         
             if(linha != -1){
                 this.idCartucho = jTableAlterarCartucho.getModel().getValueAt(linha, 0).toString();
-                this.tipo = jTableAlterarCartucho.getModel().getValueAt(linha, 1).toString();
-                this.modelo = jTableAlterarCartucho.getModel().getValueAt(linha, 2).toString();
+                this.tipo = jTableAlterarCartucho.getModel().getValueAt(linha, 2).toString();
+                this.modelo = jTableAlterarCartucho.getModel().getValueAt(linha, 1).toString();
                 this.impressora = jTableAlterarCartucho.getModel().getValueAt(linha, 3).toString();
                 this.cor = jTableAlterarCartucho.getModel().getValueAt(linha, 4).toString();
                 
@@ -168,6 +245,115 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
             jTableAlterarCartucho.getSelectionModel().clearSelection();
         }
     }//GEN-LAST:event_jTableAlterarCartuchoMouseClicked
+    
+    public void listarCartuchosComLike(String buscar){
+        
+        CartuchoDao cd = new CartuchoDao();
+            
+        List<Cartucho> listaCartucho = cd.listaCartuchoTelaTableComLike(buscar);
+
+        DefaultTableModel modelo = (DefaultTableModel) jTableAlterarCartucho.getModel();
+
+        modelo.setNumRows(0);
+
+        for (Cartucho c : cd.listaCartuchoTelaTableComLike(buscar)) {
+
+            modelo.addRow(new Object[]{
+                c.getIdCartucho(),
+                c.getModelo(),
+                c.getTipo(),
+                c.getModeloImpressora(),
+                c.getCor()
+            });
+
+        }
+
+        jTableAlterarCartucho.setModel(modelo);
+
+        jTableAlterarCartucho.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTableAlterarCartucho.getColumnModel().getColumn(1).setPreferredWidth(120);
+        jTableAlterarCartucho.getColumnModel().getColumn(2).setPreferredWidth(60);
+        jTableAlterarCartucho.getColumnModel().getColumn(3).setPreferredWidth(230);
+        jTableAlterarCartucho.getColumnModel().getColumn(4).setPreferredWidth(60);
+    }
+    
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+        if(radioBuscarTodos.isSelected()==true){
+            listarCartuchos();
+            txtBuscar.requestFocus(true);
+        }
+        else{
+            String buscar = txtBuscar.getText().toUpperCase();
+        
+            if(!buscar.equals("")){
+                listarCartuchosComLike(buscar);
+                txtBuscar.setText("");
+                txtBuscar.requestFocus(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.");
+                txtBuscar.requestFocus(true);
+            }
+        }
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        btnBuscar.requestFocus(true);
+    }//GEN-LAST:event_txtBuscarActionPerformed
+    
+    public void eventoRadioBuscarTodos(){
+        if(radioBuscarTodos.isSelected()==true){
+            btnBuscar.requestFocus(true);
+        }
+        else{
+            txtBuscar.requestFocus(true);
+        }
+    }
+    
+    private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(radioBuscarTodos.isSelected()==true){
+                listarCartuchos();
+                txtBuscar.requestFocus(true);
+            }
+            else{
+                String buscar = txtBuscar.getText().toUpperCase();
+        
+                if(!buscar.equals("")){
+                    listarCartuchosComLike(buscar);
+                    txtBuscar.setText("");
+                    txtBuscar.requestFocus(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.");
+                    txtBuscar.requestFocus(true);
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_btnBuscarKeyPressed
+
+    private void radioBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBuscarTodosActionPerformed
+        if(radioBuscarTodos.isSelected()==true){
+            btnBuscar.requestFocus(true);
+        }
+        else{
+            txtBuscar.requestFocus(true);
+        }
+    }//GEN-LAST:event_radioBuscarTodosActionPerformed
+
+    private void labelVoltarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_labelVoltarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
+            dispose();
+        }
+    }//GEN-LAST:event_labelVoltarKeyPressed
+
+    private void labelVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelVoltarMouseClicked
+        dispose();
+    }//GEN-LAST:event_labelVoltarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -212,7 +398,11 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableAlterarCartucho;
+    private javax.swing.JLabel labelVoltar;
+    private javax.swing.JRadioButton radioBuscarTodos;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
