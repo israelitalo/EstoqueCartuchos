@@ -44,17 +44,19 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         this.data = data;
     }
     
-    ImpressoraTableModel tableModel = new ImpressoraTableModel();
+    //ImpressoraTableModel tableModel = new ImpressoraTableModel();
     
     public TelaImpressora2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         JComboBoxFabricante();
         JComboBoxSetor();
-        jrbTodos.setSelected(true);
+        desabilitarCamposInicias();
+        //jrbTodos.setSelected(true);
         receberUsuarioLogado();
         //jTableImpressora.setModel(tableModel);//É nessa linha que os nomes das colunas são resgatadas do modelo, para a tabela.
-        //listarImpressora();
+        listarImpressora();
+        this.tabelaTelaImpressora = new TelaTableAlterarImpressora(parent, rootPaneCheckingEnabled);
     }
 
     /**
@@ -66,32 +68,59 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableImpressora = new javax.swing.JTable();
-        btnSalvar = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
-        txtModelo = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         jLabelModelo = new javax.swing.JLabel();
         txtSerie = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jComboBoxFabricante = new javax.swing.JComboBox<>();
+        txtModelo = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableImpressora = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
         jComboBoxSetor = new javax.swing.JComboBox<>();
-        txtBusca = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
-        jrbTodos = new javax.swing.JRadioButton();
-        RelatorioImpressoras = new javax.swing.JLabel();
+        btnSalvar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        labelRelatorios = new javax.swing.JLabel();
+        btnInserirPaginas = new javax.swing.JButton();
+        btnRelPagImpressas = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuInserirPaginas = new javax.swing.JMenu();
+        menuRelatorioPaginas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Controle de impressoras");
+        setTitle("Gerenciamento de impressoras");
         setResizable(false);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(900, 700));
+        jLabelModelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelModelo.setText("Modelo");
+
+        txtSerie.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtSerie.setToolTipText("Digite a série da impressora");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("Serie");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setText("Fabricante");
+
+        jComboBoxFabricante.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jComboBoxFabricante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fabricante" }));
+        jComboBoxFabricante.setToolTipText("selecione o fabricante da impressora");
+        jComboBoxFabricante.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxFabricante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFabricanteActionPerformed(evt);
+            }
+        });
+
+        txtModelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtModelo.setToolTipText("Digite o modelo da impressora");
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(950, 700));
 
         jTableImpressora.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTableImpressora.setModel(new javax.swing.table.DefaultTableModel(
@@ -110,6 +139,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTableImpressora.setToolTipText("Informação rápida sobre as impressoras cadastradas");
         jTableImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableImpressoraMouseClicked(evt);
@@ -117,8 +147,23 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTableImpressora);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("Setor");
+
+        jComboBoxSetor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jComboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
+        jComboBoxSetor.setToolTipText("Selecione o setor que a impressora encontra-se");
+        jComboBoxSetor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxSetor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxSetorActionPerformed(evt);
+            }
+        });
+
         btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.setToolTipText("Clique aqui para sallvar operações iniciadas");
+        btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -127,199 +172,218 @@ public class TelaImpressora2 extends javax.swing.JDialog {
 
         btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.setToolTipText("Clique aqui para alterar uma impressora");
+        btnAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
             }
         });
 
+        btnCancelar.setBackground(new java.awt.Color(255, 204, 204));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCancelar.setText("Cancelar Operação");
+        btnCancelar.setToolTipText("Clique aqui para cancelar uma operação iniciada");
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setBackground(new java.awt.Color(204, 255, 204));
+        btnNovo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.setToolTipText("Clique aqui para incluir uma nova impressora");
+        btnNovo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.setToolTipText("Clique aqui para excluir uma impressora");
+        btnExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
             }
         });
 
-        txtModelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        jLabelModelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelModelo.setText("Modelo");
-
-        txtSerie.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Serie");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Fabricante");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Setor");
-
-        jComboBoxFabricante.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBoxFabricante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fabricante" }));
-        jComboBoxFabricante.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxFabricanteActionPerformed(evt);
-            }
-        });
-
-        jComboBoxSetor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Setor" }));
-        jComboBoxSetor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxSetorActionPerformed(evt);
-            }
-        });
-
-        txtBusca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtBusca.setToolTipText("Este campo tem a prioridade de busca");
-        txtBusca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscaActionPerformed(evt);
-            }
-        });
-
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
-        btnBuscar.setPreferredSize(new java.awt.Dimension(65, 41));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        jrbTodos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jrbTodos.setText("Buscar todos");
-        jrbTodos.setToolTipText("Marque para consultar todas as impressoras");
-
-        RelatorioImpressoras.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        RelatorioImpressoras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/paginas.png"))); // NOI18N
-        RelatorioImpressoras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        RelatorioImpressoras.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Logout_37127.png"))); // NOI18N
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                RelatorioImpressorasMouseClicked(evt);
+                jLabel4MouseClicked(evt);
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Páginas impressas");
+        btnInserirPaginas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnInserirPaginas.setText("Inserir pág. impressas");
+        btnInserirPaginas.setToolTipText("Clique para inserir relatório de pág. impressas");
+        btnInserirPaginas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInserirPaginas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirPaginasActionPerformed(evt);
+            }
+        });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setText("Relatório Pág. impressas");
+        btnRelPagImpressas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRelPagImpressas.setText("Relatório de pág. impressas");
+        btnRelPagImpressas.setToolTipText("Clique aqui para emitir relatório de pág. impressas");
+        btnRelPagImpressas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRelPagImpressas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelPagImpressasActionPerformed(evt);
+            }
+        });
 
-        labelRelatorios.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        labelRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/folhas.png"))); // NOI18N
-        labelRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        labelRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, Short.MAX_VALUE)
+                                        .addComponent(jComboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabelModelo)
+                                        .addGap(219, 219, 219)
+                                        .addComponent(jLabel3)))
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtSerie, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jComboBoxFabricante, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addGap(6, 6, 6))
+                            .addComponent(btnInserirPaginas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRelPagImpressas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabelModelo)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel4))
+                .addGap(11, 11, 11)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInserirPaginas))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRelPagImpressas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCancelar)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        menuInserirPaginas.setText("Inserir páginas Impressas");
+        menuInserirPaginas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuInserirPaginas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        menuInserirPaginas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelRelatoriosMouseClicked(evt);
+                menuInserirPaginasMouseClicked(evt);
             }
         });
+        menuInserirPaginas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuInserirPaginasActionPerformed(evt);
+            }
+        });
+        menuInserirPaginas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                menuInserirPaginasKeyPressed(evt);
+            }
+        });
+        jMenuBar1.add(menuInserirPaginas);
+
+        menuRelatorioPaginas.setText("Relatório de páginas impressas");
+        menuRelatorioPaginas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuRelatorioPaginas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        menuRelatorioPaginas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuRelatorioPaginasMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuRelatorioPaginas);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jrbTodos)
-                                .addContainerGap(309, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(txtBusca)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelModelo)
-                                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(txtSerie)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(RelatorioImpressoras)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(labelRelatorios)
-                                .addGap(70, 70, 70))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel5)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxSetor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(17, 17, 17))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelRelatorios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RelatorioImpressoras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelModelo)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jrbTodos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSalvar)
-                        .addComponent(btnAlterar)
-                        .addComponent(btnExcluir)
-                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private TelaTableAlterarImpressora tabelaTelaImpressora;
+    private Integer idImpressora;
+    
     public void receberUsuarioLogado(){
         UsuarioDao ud = new UsuarioDao();
         String usuario = ud.getUsuarioLogado();
@@ -327,159 +391,183 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         String adm = ud.verSeUsuarioEadm(idUsuarioLogado);
         
         if(adm.equals("nao")){
-            RelatorioImpressoras.setEnabled(false);   
-            labelRelatorios.setEnabled(false);
+            menuInserirPaginas.setEnabled(false);   
+            menuRelatorioPaginas.setEnabled(false);
             btnSalvar.setEnabled(false);   
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
         } 
     }
+   
+    public void desabilitarCamposInicias(){
+        txtModelo.setEnabled(false);
+        txtSerie.setEnabled(false);
+        jComboBoxFabricante.setEnabled(false);
+        jComboBoxSetor.setEnabled(false);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
+    
+    public void habilitarCampos(){
+        txtModelo.setEnabled(true);
+        txtSerie.setEnabled(true);
+        jComboBoxFabricante.setEnabled(true);
+        jComboBoxSetor.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
     
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        ImpressoraDao impDao = new ImpressoraDao();
-        
-        String fabricante = jComboBoxFabricante.getSelectedItem().toString();
-        
-        Integer idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
-        
-        String setor = jComboBoxSetor.getSelectedItem().toString();
-        
-        Integer idSetor = impDao.getIdSetorJComboBox(setor);
-        
-        Impressora impressora = new Impressora();
-        
-        impressora.setModelo(txtModelo.getText());
-        impressora.setSerie(txtSerie.getText());
-        impressora.setId_fabricante(idFabricante);
-        impressora.setId_setor(idSetor);
-
-        if(txtModelo.getText().equals("") || txtSerie.getText().equals("") || jComboBoxFabricante.getSelectedItem().equals("Fabricante") || jComboBoxSetor.getSelectedItem().equals("Setor")){
-            JOptionPane.showMessageDialog(null, "Operação não realizada!");
-            listarImpressora();
-        }
-        else
-        {
-            if(impDao.salvar(impressora) == true){
-                JOptionPane.showMessageDialog(null, "Impressora salva com sucesso!");
-                listarImpressora();
+        //Verificando se o botão alterar está desabilitado.
+        if(!btnAlterar.isEnabled() && !btnExcluir.isEnabled()){
+            if(txtModelo.getText().equals("") || txtSerie.getText().equals("") || jComboBoxFabricante.getSelectedItem().equals("Fabricante")
+            || jComboBoxSetor.getSelectedItem().equals("")){
+                JOptionPane.showMessageDialog(null, "Preecha todos os campos.".toUpperCase());
             }
+            else{
+                ImpressoraDao impDao = new ImpressoraDao();
+        
+                String fabricante = jComboBoxFabricante.getSelectedItem().toString().toUpperCase();
 
-        }
-            
-        tableModel.addRow(impressora);
-        
-        limparCampos();
-        
-    }//GEN-LAST:event_btnSalvarActionPerformed
+                Integer idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
 
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        
-        int linha = jTableImpressora.getSelectedRow();
-        
-        String idString = jTableImpressora.getModel().getValueAt(linha, 0).toString();
-        
-        int idInt = Integer.parseInt(idString);
-        
-        if(linha != -1){
+                String setor = jComboBoxSetor.getSelectedItem().toString().toUpperCase();
+
+                Integer idSetor = impDao.getIdSetorJComboBox(setor);
+
+                Impressora impressora = new Impressora();
+
+                impressora.setModelo(txtModelo.getText().toUpperCase());
+                impressora.setSerie(txtSerie.getText().toUpperCase());
+                impressora.setId_fabricante(idFabricante);
+                impressora.setId_setor(idSetor);
+
+                if(impDao.salvar(impressora) == true){
+                    JOptionPane.showMessageDialog(null, "Impressora salva com sucesso!");
+                    desabilitarCamposInicias();
+                    btnNovo.setEnabled(true);
+                    btnAlterar.setEnabled(true);
+                    btnExcluir.setEnabled(true);
+                    limparCampos();
+                    listarImpressora();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Operação não realizada!");
+                    limparCampos();
+                }
+            }
+        }//Verificando se o botão alterar está habilitado e o botão excluir desabilitado.
+        else if(btnAlterar.isEnabled()==true && btnExcluir.isEnabled()==false){
+            if(txtModelo.getText().equals("") || txtSerie.getText().equals("") || jComboBoxFabricante.getSelectedItem().equals("Fabricante")
+            || jComboBoxSetor.getSelectedItem().equals("")){
+                JOptionPane.showMessageDialog(null, "Preecha todos os campos.".toUpperCase());
+            }
+            else{
+                String fabricante = jComboBoxFabricante.getSelectedItem().toString();
+                String setor = jComboBoxSetor.getSelectedItem().toString();
+                
+                ImpressoraDao impDao = new ImpressoraDao();
+                
+                int idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
+                int idSetor = impDao.getIdSetorJComboBox(setor);
+                
+                Impressora imp = new Impressora();
+                
+                imp.setId_impressora(this.idImpressora);
+                imp.setModelo(txtModelo.getText());
+                imp.setSerie(txtSerie.getText());
+                imp.setId_fabricante(idFabricante);
+                imp.setId_setor(idSetor);
+                
+                if(impDao.editar(imp, idImpressora) == true){
+                    JOptionPane.showMessageDialog(null, "Impressora alterada com sucesso.");
+                    desabilitarCamposInicias();
+                    btnNovo.setEnabled(true);
+                    btnAlterar.setEnabled(true);
+                    btnExcluir.setEnabled(true);
+                    limparCampos();
+                    listarImpressora();
+                    clearItensTableAlterarImpressora();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Erro ao alterar impressora");
+                    limparCampos();
+                }
+            }
+        }//Verificando se o botão excluir está habilitado e o botão alterar desabilitado.
+        else if(btnExcluir.isEnabled()==true && btnAlterar.isEnabled()==false){
+            Impressora imp = new Impressora();
             
             int teste = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o item selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
 
             if(teste == JOptionPane.YES_OPTION){
                 ImpressoraDao impDao = new ImpressoraDao();
-                if(impDao.excluir(idInt) == true){
-                impDao.excluir(idInt);
-                JOptionPane.showMessageDialog(null, "Operação realizada.", "Exclusão confirmada", JOptionPane.INFORMATION_MESSAGE);
-                listarImpressora();
+                if(impDao.excluir(idImpressora) == true){
+                    JOptionPane.showMessageDialog(null, "Operação realizada.", "Exclusão confirmada", JOptionPane.INFORMATION_MESSAGE);
+                    listarImpressora();
+                    limparCampos();
+                    desabilitarCamposInicias();
+                    btnNovo.setEnabled(true);
+                    btnAlterar.setEnabled(true);
+                    btnExcluir.setEnabled(true);
+                    btnCancelar.setEnabled(false);
+                    clearItensTableAlterarImpressora();
                 }
             }
             else if (teste == JOptionPane.NO_OPTION)
             {
                 JOptionPane.showMessageDialog(null, "Operação não realizada.", "Exclusão cancelada", JOptionPane.INFORMATION_MESSAGE);
             }
-
         }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Selecione um item para excluí-lo!");
+        else{
+            JOptionPane.showMessageDialog(null, "Feche esta janela e tente realizar a operação mais uma vez.".toUpperCase());
         }
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        btnNovo.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        //método para chamar a tela TableAlterarCartucho.
+        //teste para atualizar tabela TableAlterar Cartucho.
+        this.tabelaTelaImpressora.listarImpressora();
+        getItensTableAlterarImpressora();
     }//GEN-LAST:event_btnExcluirActionPerformed
         
+    public void getItensTableAlterarImpressora(){
+        this.tabelaTelaImpressora.setVisible(true);
+        
+        this.idImpressora = Integer.parseInt(tabelaTelaImpressora.getIdImpressora());
+        this.txtModelo.setText(String.valueOf(tabelaTelaImpressora.getModeloImpressora()));
+        this.txtSerie.setText(String.valueOf(tabelaTelaImpressora.getSerieImpressora()));
+        this.jComboBoxFabricante.setSelectedItem(String.valueOf(tabelaTelaImpressora.getFabImpressora()));
+        this.jComboBoxSetor.setSelectedItem(String.valueOf(tabelaTelaImpressora.getSetorImpressora()));
+    }
+    
+    public void clearItensTableAlterarImpressora(){
+        tabelaTelaImpressora.setImpModelo("");
+        tabelaTelaImpressora.setImpSerie("");
+        tabelaTelaImpressora.setImpFabricante("");
+        tabelaTelaImpressora.setImpSetor("");
+    }
+    
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        
-        int linha = jTableImpressora.getSelectedRow();
-        
-        if(linha != -1){
-            
-            int idImpressora = getIdLinha();
-            
-            Impressora impressora = new Impressora();
-            ImpressoraDao impDao = new ImpressoraDao();
-            
-            String fabricante = (String)jComboBoxFabricante.getSelectedItem();
-            String setor = (String)jComboBoxSetor.getSelectedItem();
-            
-            int idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
-            int idSetor = impDao.getIdSetorJComboBox(setor);
-            
-            String serieLinha = jTableImpressora.getModel().getValueAt(linha, 2).toString();
-            
-            impressora.setModelo(txtModelo.getText());
-            impressora.setSerie(txtSerie.getText());
-            impressora.setId_fabricante(idFabricante);
-            impressora.setId_setor(idSetor);
-            
-            if(!txtSerie.getText().equals(serieLinha)){
-                if(impDao.editar(impressora, idImpressora) == true){
-                impDao.editar(impressora, idImpressora);
-                JOptionPane.showMessageDialog(null, "Impressora alterada com sucesso!");
-                listarImpressora();
-                limparCampos();
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Operação não realizada!");
-                listarImpressora();
-            }
-            /*jTableImpressora.setValueAt(txtModelo.getText(), linha, 1);
-            jTableImpressora.setValueAt(txtSerie.getText(), linha, 2);
-            jTableImpressora.setValueAt(jComboBoxFabricante.getSelectedItem(), linha, 3);
-            jTableImpressora.setValueAt(jComboBoxSetor.getSelectedItem(), linha, 4);*/
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Selecione um item para alterá-lo!");
-        }
-        
+    btnNovo.setEnabled(false);
+    btnExcluir.setEnabled(false);
+    btnSalvar.setEnabled(true);
+    btnCancelar.setEnabled(true);
+    
+    habilitarCampos();
+    //método para chamar a tela TableAlterarCartucho.
+    //teste para atualizar tabela TableAlterar Cartucho.
+    this.tabelaTelaImpressora.listarImpressora();
+    getItensTableAlterarImpressora();    
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void jTableImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableImpressoraMouseClicked
-            UsuarioDao ud = new UsuarioDao();
-            String usuario = ud.getUsuarioLogado();
-            int idUsuarioLogado = ud.getIdUsuarioLogado(usuario);
-            String adm = ud.verSeUsuarioEadm(idUsuarioLogado);
-            
-            if(adm.equals("sim")){
-                int linha = jTableImpressora.getSelectedRow();
-        
-                txtModelo.setText(jTableImpressora.getValueAt(linha, 1).toString());
-                txtSerie.setText(jTableImpressora.getValueAt(linha, 2).toString());
-                jComboBoxFabricante.setSelectedItem(jTableImpressora.getValueAt(linha, 3).toString());
-                jComboBoxSetor.setSelectedItem(jTableImpressora.getValueAt(linha, 4).toString());
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
-            }
+        //
     }//GEN-LAST:event_jTableImpressoraMouseClicked
- 
-    //Método para adquirir o id da impressora correspondente à linha a qual o usuário clicar.
-    public Integer getIdLinha(){
-        int linha = jTableImpressora.getSelectedRow();
-        String idLinha = jTableImpressora.getModel().getValueAt(linha, 0).toString();
-        int idLinhaInt = Integer.parseInt(idLinha);
-        return idLinhaInt;
-    }
     
     public void listarImpressora(){
         ImpressoraDao impDao = new ImpressoraDao();
@@ -504,7 +592,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         jTableImpressora.getColumnModel().getColumn(1).setPreferredWidth(250);
         jTableImpressora.getColumnModel().getColumn(2).setPreferredWidth(200);
         jTableImpressora.getColumnModel().getColumn(3).setPreferredWidth(150);
-        jTableImpressora.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTableImpressora.getColumnModel().getColumn(4).setPreferredWidth(160);
         
         }
         
@@ -554,46 +642,62 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxFabricanteActionPerformed
 
-    private void txtBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscaActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-              
-        this.busca = this.txtBusca.getText();
-        
-        if(jrbTodos.isSelected() == true){
-            listarImpressora();
-        }
-        else if (jrbTodos.isSelected() == false){
-            listarImpressoraLike(busca);
-        }
-               
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
     private void jComboBoxSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSetorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxSetorActionPerformed
 
-    private void RelatorioImpressorasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RelatorioImpressorasMouseClicked
-        if(RelatorioImpressoras.isEnabled()){
-            TelaControlePaginas controlePaginas = new TelaControlePaginas(null, rootPaneCheckingEnabled);
-            controlePaginas.setVisible(true);
-        }        
-        else{
-            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
-        }
-    }//GEN-LAST:event_RelatorioImpressorasMouseClicked
+    private void menuInserirPaginasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuInserirPaginasActionPerformed
+//
+    }//GEN-LAST:event_menuInserirPaginasActionPerformed
 
-    private void labelRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRelatoriosMouseClicked
-        if(labelRelatorios.isEnabled()){
-            TelaControlPaginasRel telaRel = new TelaControlPaginasRel(null, rootPaneCheckingEnabled);
-            telaRel.setVisible(true);
-        }     
-        else{
-            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador.");
-        }
-    }//GEN-LAST:event_labelRelatoriosMouseClicked
+    private void menuInserirPaginasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_menuInserirPaginasKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuInserirPaginasKeyPressed
+
+    private void menuInserirPaginasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuInserirPaginasMouseClicked
+        TelaControlePaginas controlePaginas = new TelaControlePaginas(null, rootPaneCheckingEnabled);
+        controlePaginas.setVisible(true);
+    }//GEN-LAST:event_menuInserirPaginasMouseClicked
+
+    private void menuRelatorioPaginasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatorioPaginasMouseClicked
+        TelaControlPaginasRel telaRelatorioPaginas = new TelaControlPaginasRel(null, rootPaneCheckingEnabled);
+        telaRelatorioPaginas.setVisible(true);
+    }//GEN-LAST:event_menuRelatorioPaginasMouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        dispose();
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void btnInserirPaginasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirPaginasActionPerformed
+        TelaControlePaginas tela = new TelaControlePaginas(null, rootPaneCheckingEnabled);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnInserirPaginasActionPerformed
+
+    private void btnRelPagImpressasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelPagImpressasActionPerformed
+        TelaControlPaginasRel tela = new TelaControlPaginasRel(null, rootPaneCheckingEnabled);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnRelPagImpressasActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        habilitarCampos();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        txtModelo.setEnabled(false);
+        txtSerie.setEnabled(false);
+        jComboBoxFabricante.setEnabled(false);
+        jComboBoxSetor.setEnabled(false);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnAlterar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnNovo.setEnabled(true);
+        limparCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     public void JComboBoxFabricante(){
         ImpressoraDao impDao = new ImpressoraDao();
@@ -648,10 +752,12 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel RelatorioImpressoras;
     private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnInserirPaginas;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnRelPagImpressas;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> jComboBoxFabricante;
     private javax.swing.JComboBox<String> jComboBoxSetor;
@@ -659,13 +765,13 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelModelo;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableImpressora;
-    private javax.swing.JRadioButton jrbTodos;
-    private javax.swing.JLabel labelRelatorios;
-    private javax.swing.JTextField txtBusca;
+    private javax.swing.JMenu menuInserirPaginas;
+    private javax.swing.JMenu menuRelatorioPaginas;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtSerie;
     // End of variables declaration//GEN-END:variables

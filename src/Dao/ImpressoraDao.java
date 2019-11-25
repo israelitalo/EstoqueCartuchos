@@ -254,4 +254,19 @@ public class ImpressoraDao {
         
     }
     
+    public void cleanAutoIncrementTableImpressora(){
+        
+        String sql = "ALTER TABLE impressora AUTO_INCREMENT = 0";
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ImpressoraDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
 }

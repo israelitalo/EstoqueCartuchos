@@ -25,6 +25,52 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
     private String cor;
     private Integer quantidade;
     
+    public String getModelo(){
+        return modelo;
+    }
+    
+    public String getCor(){
+        return cor;
+    }
+    
+    public String getTipo(){
+        return tipo;
+    }
+    
+    public String getImpressora(){
+        return impressora;
+    }
+    
+    public String getIdCartucho(){
+        return idCartucho;
+    }
+    
+    public Integer getQuantidade(){
+        return quantidade;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public void setImpressora(String impressora) {
+        this.impressora = impressora;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+    
+    
+    
     /**
      * Creates new form TelaTableAlterarCartucho
      */
@@ -72,6 +118,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
             }
         });
         jTableAlterarCartucho.setToolTipText("Clique duas vezes em um item para selecioná-lo.");
+        jTableAlterarCartucho.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableAlterarCartucho.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableAlterarCartuchoMouseClicked(evt);
@@ -107,6 +154,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         radioBuscarTodos.setSelected(true);
         radioBuscarTodos.setText("Buscar Todos");
         radioBuscarTodos.setToolTipText("Marque para buscar todos os cartuchos cadastrados");
+        radioBuscarTodos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         radioBuscarTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioBuscarTodosActionPerformed(evt);
@@ -114,6 +162,7 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         });
 
         labelVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Logout_37127.png"))); // NOI18N
+        labelVoltar.setToolTipText("Voltar");
         labelVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -134,31 +183,33 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(radioBuscarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(radioBuscarTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(12, 12, 12))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelVoltar)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(14, 14, 14)
                 .addComponent(labelVoltar)
-                .addGap(9, 9, 9)
+                .addGap(18, 18, 18)
                 .addComponent(radioBuscarTodos)
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -194,30 +245,6 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         jTableAlterarCartucho.getColumnModel().getColumn(2).setPreferredWidth(60);
         jTableAlterarCartucho.getColumnModel().getColumn(3).setPreferredWidth(230);
         jTableAlterarCartucho.getColumnModel().getColumn(4).setPreferredWidth(60);
-    }
-    
-    public String getModelo(){
-        return modelo;
-    }
-    
-    public String getCor(){
-        return cor;
-    }
-    
-    public String getTipo(){
-        return tipo;
-    }
-    
-    public String getImpressora(){
-        return impressora;
-    }
-    
-    public String getIdCartucho(){
-        return idCartucho;
-    }
-    
-    public Integer getQuantidade(){
-        return quantidade;
     }
     
     private void jTableAlterarCartuchoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAlterarCartuchoMouseClicked
