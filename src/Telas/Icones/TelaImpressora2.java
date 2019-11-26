@@ -180,7 +180,6 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
-        btnCancelar.setBackground(new java.awt.Color(255, 204, 204));
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCancelar.setText("Cancelar Operação");
         btnCancelar.setToolTipText("Clique aqui para cancelar uma operação iniciada");
@@ -191,7 +190,6 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
         });
 
-        btnNovo.setBackground(new java.awt.Color(204, 255, 204));
         btnNovo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.setToolTipText("Clique aqui para incluir uma nova impressora");
