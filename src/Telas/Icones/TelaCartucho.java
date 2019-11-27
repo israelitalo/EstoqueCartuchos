@@ -285,12 +285,12 @@ public class TelaCartucho extends javax.swing.JDialog {
         labelVoltar.setToolTipText("Voltar");
         labelVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelVoltar.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 labelVoltarAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         labelVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -316,9 +316,7 @@ public class TelaCartucho extends javax.swing.JDialog {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel6)
                             .addComponent(txtCor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 1, Short.MAX_VALUE)
@@ -377,6 +375,11 @@ public class TelaCartucho extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Busca", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
@@ -390,6 +393,11 @@ public class TelaCartucho extends javax.swing.JDialog {
 
         radioBuscarTodos.setSelected(true);
         radioBuscarTodos.setText("Buscar Todos");
+        radioBuscarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBuscarTodosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -517,33 +525,38 @@ public class TelaCartucho extends javax.swing.JDialog {
             else
             {
                 String modelo = txtModelo.getText().toUpperCase();
-                String tipo = txtTipo.getSelectedItem().toString();
-                int quantidade = (int) giroQuantidade.getValue();
-                String cor = txtCor.getSelectedItem().toString();
-                String impressora = comboBoxImpressora.getSelectedItem().toString();
-                
                 CartuchoDao cd = new CartuchoDao();
-                
-                int idImpressora = cd.getIdJcomboBoxImpressora(impressora);
-                
-                Cartucho cartucho = new Cartucho();
-                cartucho.setCor(cor);
-                cartucho.setImpressora(idImpressora);
-                cartucho.setModelo(modelo);
-                cartucho.setQuantidade(quantidade);
-                cartucho.setTipo(tipo);
-                
-                if(cd.salvar(cartucho)){
-                    JOptionPane.showMessageDialog(null, "Cartucho incluído com sucesso.".toUpperCase());
-                    listarCartuchos();
-                    limparCampos();
-                    desabilitarCampos();
-                    desabilitarBotoes();
-                    btnNovo.setEnabled(true);
-                    btnAlterar.setEnabled(true);
-                    btnExcluir.setEnabled(true);
-                }else{
-                    JOptionPane.showMessageDialog(null, "Erro ao inserir cartucho.".toUpperCase());
+                if(cd.verSeCartuchoEstaCadastrado(modelo) == true){
+                    String tipo = txtTipo.getSelectedItem().toString();
+                    int quantidade = (int) giroQuantidade.getValue();
+                    String cor = txtCor.getSelectedItem().toString();
+                    String impressora = comboBoxImpressora.getSelectedItem().toString();
+
+                    int idImpressora = cd.getIdJcomboBoxImpressora(impressora);
+
+                    Cartucho cartucho = new Cartucho();
+                    cartucho.setCor(cor);
+                    cartucho.setImpressora(idImpressora);
+                    cartucho.setModelo(modelo);
+                    cartucho.setQuantidade(quantidade);
+                    cartucho.setTipo(tipo);
+
+                    if(cd.salvar(cartucho)){
+                        JOptionPane.showMessageDialog(null, "Cartucho incluído com sucesso.".toUpperCase());
+                        listarCartuchos();
+                        limparCampos();
+                        desabilitarCampos();
+                        desabilitarBotoes();
+                        btnNovo.setEnabled(true);
+                        btnAlterar.setEnabled(true);
+                        btnExcluir.setEnabled(true);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Erro ao inserir cartucho.".toUpperCase());
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Esse cartucho já está cadastrado.".toUpperCase());
+                    txtModelo.requestFocus(true);
                 }
             }
         }//Verificando se o botão alterar está habilitado e o botão excluir desabilitado.
@@ -637,10 +650,6 @@ public class TelaCartucho extends javax.swing.JDialog {
     }
     
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        btnNovo.setEnabled(false);
-        btnExcluir.setEnabled(false);
-        btnInserirImpressora.setEnabled(false);
-        btnSalvar.setEnabled(true);
         
         //método para chamar a tela TableAlterarCartucho.
         //teste para atualizar tabela TableAlterar Cartucho.
@@ -649,13 +658,20 @@ public class TelaCartucho extends javax.swing.JDialog {
         
         int linha = tabelaCartuchos.getSelectedRow();
         
-        if(linha > -1){
+        if(linha > -1 && this.coletaDadosTabela == true){
+            btnNovo.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            btnInserirImpressora.setEnabled(false);
+            btnSalvar.setEnabled(true);
             this.idCartucho = (Integer) tabelaCartuchos.getModel().getValueAt(linha, 0); 
             habilitarCampos();
         }
         else{
             JOptionPane.showMessageDialog(null, "Escolha um item da lista para alterá-lo.");
-            btnCancelar.setEnabled(true);
+            btnCancelar.setEnabled(false);
+            btnSalvar.setEnabled(false);
+            btnNovo.setEnabled(true);
+            btnExcluir.setEnabled(true);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -672,7 +688,7 @@ public class TelaCartucho extends javax.swing.JDialog {
         
         int linha = tabelaCartuchos.getSelectedRow();
         
-        if(linha > -1){
+        if(linha > -1 && coletaDadosTabela == true){
             this.idCartucho = (Integer) tabelaCartuchos.getModel().getValueAt(linha, 0); 
                 if(btnExcluir.isEnabled()==true && btnAlterar.isEnabled()==false){
                       
@@ -702,14 +718,20 @@ public class TelaCartucho extends javax.swing.JDialog {
                         btnCancelar.setEnabled(true);
                         btnSalvar.setEnabled(false);
                         btnNovo.setEnabled(true);
+                        coletaDadosTabela = false;
+                        limparCampos();
                     }
                     }else{
                         JOptionPane.showMessageDialog(null, "Feche esta janela e tente realizar a operação mais uma vez.".toUpperCase());
                     }
                 }
-            else{
-            JOptionPane.showMessageDialog(null, "Escolha um item da lista para excluí-lo.");
-            btnCancelar.setEnabled(true);
+                else
+                {
+                JOptionPane.showMessageDialog(null, "Escolha um item da lista para excluí-lo.".toUpperCase());
+                btnCancelar.setEnabled(false);
+                btnSalvar.setEnabled(false);
+                btnNovo.setEnabled(true);
+                btnAlterar.setEnabled(true);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -752,7 +774,8 @@ public class TelaCartucho extends javax.swing.JDialog {
         TelaImpressora2 tela = new TelaImpressora2(null, rootPaneCheckingEnabled);
         tela.setVisible(true);
     }//GEN-LAST:event_btnInserirImpressoraActionPerformed
-
+    
+    boolean coletaDadosTabela = false;
     private void tabelaCartuchosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCartuchosMouseClicked
         if(evt.getClickCount() == 2){
             int linha = tabelaCartuchos.getSelectedRow();
@@ -772,10 +795,12 @@ public class TelaCartucho extends javax.swing.JDialog {
                 txtTipo.setSelectedItem(tipo);
                 comboBoxImpressora.setSelectedItem(impressora);
                 txtCor.setSelectedItem(cor);
+                this.coletaDadosTabela = true;
             }
             else
             {
                 JOptionPane.showMessageDialog(null, "Selecione um cartucho para prosseguir!");
+                this.coletaDadosTabela = false;
             }
         }
         else if(evt.getButton() == 3){
@@ -839,6 +864,28 @@ public class TelaCartucho extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+                if(!txtBuscar.getText().equals("") && radioBuscarTodos.isSelected()==false){
+            btnBuscar.requestFocus(true);
+        }
+        else if(txtBuscar.getText().equals("") && radioBuscarTodos.isSelected()==true){
+            btnBuscar.requestFocus(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.");
+        }
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void radioBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBuscarTodosActionPerformed
+        if(!txtBuscar.getText().equals("") && radioBuscarTodos.isSelected()==false){
+            btnBuscar.requestFocus(true);
+        }
+        else if(txtBuscar.getText().equals("") && radioBuscarTodos.isSelected()==true){
+            btnBuscar.requestFocus(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.");
+        }
+    }//GEN-LAST:event_radioBuscarTodosActionPerformed
 
     public void carregarComboBoxImpressora(){
         CartuchoDao cd = new CartuchoDao();

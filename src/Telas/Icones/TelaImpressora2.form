@@ -120,12 +120,9 @@
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtSerie" alignment="0" pref="386" max="32767" attributes="0"/>
-                              <Component id="txtModelo" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="txtSerie" alignment="0" pref="386" max="32767" attributes="0"/>
+                          <Component id="txtModelo" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="41" max="32767" attributes="0"/>
@@ -553,6 +550,9 @@
               <Font name="Tahoma" size="16" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnBuscar">
           <Properties>
@@ -569,6 +569,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="btnBuscarKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrbTodos">
@@ -576,6 +577,9 @@
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Buscar Todos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbTodosActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -373,4 +373,28 @@ public class CartuchoDao {
         }
     }
     
+    public boolean verSeCartuchoEstaCadastrado(String modeloCartucho){
+        
+        String sql = "SELECT c.modelo FROM cartucho c WHERE c.modelo = '" + modeloCartucho + "'";
+        
+        PreparedStatement stmt = null;
+        
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            if(rs.next() == false){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ImpressoraDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+    }
+    
 }

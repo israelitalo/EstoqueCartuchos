@@ -9,6 +9,7 @@ import Dao.ImpressoraDao;
 import Dao.UsuarioDao;
 import controller.Impressora;
 import controller.ImpressoraTableModel;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -55,8 +56,9 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         //jrbTodos.setSelected(true);
         receberUsuarioLogado();
         //jTableImpressora.setModel(tableModel);//É nessa linha que os nomes das colunas são resgatadas do modelo, para a tabela.
-        listarImpressora();
-        this.tabelaTelaImpressora = new TelaTableAlterarImpressora(parent, rootPaneCheckingEnabled);
+        //listarImpressora();
+        btnBuscar.requestFocus(true);
+        //this.tabelaTelaImpressora = new TelaTableAlterarImpressora(parent, rootPaneCheckingEnabled);
     }
 
     /**
@@ -162,11 +164,9 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                             .addComponent(jLabel1)
                             .addComponent(jLabelModelo))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtSerie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtSerie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                        .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
@@ -339,6 +339,11 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Busca", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         txtBusca.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscaActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
@@ -349,9 +354,19 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                 btnBuscarActionPerformed(evt);
             }
         });
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyPressed(evt);
+            }
+        });
 
         jrbTodos.setSelected(true);
         jrbTodos.setText("Buscar Todos");
+        jrbTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbTodosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -482,35 +497,43 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             }
             else{
                 ImpressoraDao impDao = new ImpressoraDao();
-        
-                String fabricante = jComboBoxFabricante.getSelectedItem().toString().toUpperCase();
+                
+                String serie = txtSerie.getText().toUpperCase();
+                
+                if(impDao.verSeImpressoraEstaCadastrada(serie) == true){
+                    String fabricante = jComboBoxFabricante.getSelectedItem().toString().toUpperCase();
 
-                Integer idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
+                    Integer idFabricante = impDao.getIdFabricanteJcomboBox(fabricante);
 
-                String setor = jComboBoxSetor.getSelectedItem().toString().toUpperCase();
+                    String setor = jComboBoxSetor.getSelectedItem().toString().toUpperCase();
 
-                Integer idSetor = impDao.getIdSetorJComboBox(setor);
+                    Integer idSetor = impDao.getIdSetorJComboBox(setor);
 
-                Impressora impressora = new Impressora();
+                    Impressora impressora = new Impressora();
 
-                impressora.setModelo(txtModelo.getText().toUpperCase());
-                impressora.setSerie(txtSerie.getText().toUpperCase());
-                impressora.setId_fabricante(idFabricante);
-                impressora.setId_setor(idSetor);
+                    impressora.setModelo(txtModelo.getText().toUpperCase());
+                    impressora.setSerie(txtSerie.getText().toUpperCase());
+                    impressora.setId_fabricante(idFabricante);
+                    impressora.setId_setor(idSetor);
 
-                if(impDao.salvar(impressora) == true){
-                    JOptionPane.showMessageDialog(null, "Impressora salva com sucesso!");
-                    desabilitarCamposInicias();
-                    btnNovo.setEnabled(true);
-                    btnAlterar.setEnabled(true);
-                    btnExcluir.setEnabled(true);
-                    limparCampos();
-                    listarImpressora();
+                    if(impDao.salvar(impressora) == true){
+                        JOptionPane.showMessageDialog(null, "Impressora salva com sucesso!".toUpperCase());
+                        desabilitarCamposInicias();
+                        btnNovo.setEnabled(true);
+                        btnAlterar.setEnabled(true);
+                        btnExcluir.setEnabled(true);
+                        limparCampos();
+                        listarImpressora();
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "Erro ao cadastrar nova impressora.".toUpperCase());
+                        limparCampos();
+                    }
                 }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Operação não realizada!");
-                    limparCampos();
+                else{
+                    JOptionPane.showMessageDialog(null, "Esta impressora já está cadastrada.".toUpperCase());
+                    txtSerie.requestFocus(true);
                 }
             }
         }//Verificando se o botão alterar está habilitado e o botão excluir desabilitado.
@@ -552,30 +575,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
                 }
             }
         }//Verificando se o botão excluir está habilitado e o botão alterar desabilitado.
-        else if(btnExcluir.isEnabled()==true && btnAlterar.isEnabled()==false){
-            Impressora imp = new Impressora();
-            
-            int teste = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o item selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
-
-            if(teste == JOptionPane.YES_OPTION){
-                ImpressoraDao impDao = new ImpressoraDao();
-                if(impDao.excluir(idImpressora) == true){
-                    JOptionPane.showMessageDialog(null, "Operação realizada.", "Exclusão confirmada", JOptionPane.INFORMATION_MESSAGE);
-                    listarImpressora();
-                    limparCampos();
-                    desabilitarCamposInicias();
-                    btnNovo.setEnabled(true);
-                    btnAlterar.setEnabled(true);
-                    btnExcluir.setEnabled(true);
-                    btnCancelar.setEnabled(false);
-                    clearItensTableAlterarImpressora();
-                }
-            }
-            else if (teste == JOptionPane.NO_OPTION)
-            {
-                JOptionPane.showMessageDialog(null, "Operação não realizada.", "Exclusão cancelada", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
+        
         else{
             JOptionPane.showMessageDialog(null, "Feche esta janela e tente realizar a operação mais uma vez.".toUpperCase());
         }
@@ -588,8 +588,52 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         btnCancelar.setEnabled(true);
         //método para chamar a tela TableAlterarCartucho.
         //teste para atualizar tabela TableAlterar Cartucho.
-        this.tabelaTelaImpressora.listarImpressora();
-        getItensTableAlterarImpressora();
+        //this.tabelaTelaImpressora.listarImpressora();
+        //getItensTableAlterarImpressora();
+        
+        int linha = jTableImpressora.getSelectedRow();
+        
+        if(linha > -1 && coletaDadosTabela == true){
+            this.idImpressora = (int) jTableImpressora.getModel().getValueAt(linha, 0);
+            
+            if(btnExcluir.isEnabled()==true && btnAlterar.isEnabled()==false){
+                Impressora imp = new Impressora();
+
+                int teste = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o item selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+
+                if(teste == JOptionPane.YES_OPTION){
+                    ImpressoraDao impDao = new ImpressoraDao();
+                    if(impDao.excluir(idImpressora) == true){
+                        JOptionPane.showMessageDialog(null, "Operação realizada.", "Exclusão confirmada", JOptionPane.INFORMATION_MESSAGE);
+                        listarImpressora();
+                        limparCampos();
+                        desabilitarCamposInicias();
+                        btnNovo.setEnabled(true);
+                        btnAlterar.setEnabled(true);
+                        btnExcluir.setEnabled(true);
+                        btnCancelar.setEnabled(false);
+                        clearItensTableAlterarImpressora();
+                    }
+                }
+                else if (teste == JOptionPane.NO_OPTION)
+                {
+                    JOptionPane.showMessageDialog(null, "Operação não realizada.", "Exclusão cancelada", JOptionPane.INFORMATION_MESSAGE);
+                    btnCancelar.setEnabled(false);
+                    btnAlterar.setEnabled(true);
+                    btnSalvar.setEnabled(false);
+                    btnNovo.setEnabled(true);
+                    coletaDadosTabela = false;
+                    limparCampos();
+                }
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Escolha um item da lista, com dois cliques, para excluí-lo.".toUpperCase());
+            btnCancelar.setEnabled(false);
+            btnSalvar.setEnabled(false);
+            btnNovo.setEnabled(true);
+            btnAlterar.setEnabled(true);
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
         
     public void getItensTableAlterarImpressora(){
@@ -610,28 +654,53 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     }
     
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-    btnNovo.setEnabled(false);
-    btnExcluir.setEnabled(false);
-    btnSalvar.setEnabled(true);
-    btnCancelar.setEnabled(true);
-    
-    habilitarCampos();
-    //método para chamar a tela TableAlterarCartucho.
-    //teste para atualizar tabela TableAlterar Cartucho.
-    this.tabelaTelaImpressora.listarImpressora();
-    getItensTableAlterarImpressora();    
+        btnNovo.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+
+        int linha = jTableImpressora.getSelectedRow();
+
+        if(linha > -1 && coletaDadosTabela == true){
+            habilitarCampos();
+            this.idImpressora = (Integer)jTableImpressora.getModel().getValueAt(linha, 0);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione um item na tabela, com dois cliques, abaixo para alterá-lo".toUpperCase());
+            btnCancelar.setEnabled(false);
+            btnSalvar.setEnabled(false);
+            btnNovo.setEnabled(true);
+            btnExcluir.setEnabled(true);
+        } 
     }//GEN-LAST:event_btnAlterarActionPerformed
 
+    boolean coletaDadosTabela = false; 
+    
     private void jTableImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableImpressoraMouseClicked
         if(evt.getClickCount() == 2){
             int linha = jTableImpressora.getSelectedRow();
             
             if(linha > -1){
-                //Demis código aqui.
+                this.idImpressora = (int) jTableImpressora.getModel().getValueAt(linha, 0);
+                String modeloImpressora = jTableImpressora.getModel().getValueAt(linha, 1).toString();
+                String serie = jTableImpressora.getModel().getValueAt(linha, 2).toString();
+                String fabricante = jTableImpressora.getModel().getValueAt(linha, 3).toString();
+                String setor = jTableImpressora.getModel().getValueAt(linha, 4).toString();
+                
+                txtModelo.setText(modeloImpressora);
+                txtSerie.setText(serie);
+                jComboBoxFabricante.setSelectedItem(fabricante);
+                jComboBoxSetor.setSelectedItem(setor);
+                this.coletaDadosTabela = true;
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Selecione uma impressora para prosseguir!".toUpperCase());
             }
         }
         else if(evt.getButton() == 3){
             jTableImpressora.getSelectionModel().clearSelection();
+            limparCampos();
+            this.coletaDadosTabela = false;
         }
     
     }//GEN-LAST:event_jTableImpressoraMouseClicked
@@ -751,6 +820,8 @@ public class TelaImpressora2 extends javax.swing.JDialog {
         btnNovo.setEnabled(false);
         btnSalvar.setEnabled(true);
         habilitarCampos();
+        limparCampos();
+        this.idImpressora = null;
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -769,19 +840,63 @@ public class TelaImpressora2 extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.busca = this.txtBusca.getText().toUpperCase();
         
-        if(jrbTodos.isSelected() == true){
-            listarImpressora();
-            txtBusca.requestFocus(true);
-        }
-        else
-        {
-            if(jrbTodos.isSelected() == false && !this.busca.equals("")){
-                listarImpressoraLike(busca);
-                txtBusca.setText("");
+            if(jrbTodos.isSelected() == true){
+                listarImpressora();
                 txtBusca.requestFocus(true);
             }
-        }
+            else
+            {
+                if(jrbTodos.isSelected()== false && !this.busca.equals("")){
+                    listarImpressoraLike(busca);
+                    txtBusca.setText("");
+                    txtBusca.requestFocus(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Digite um termo para poder buscá-lo");
+                    txtBusca.requestFocus(true);
+                }
+            }
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            this.busca = this.txtBusca.getText().toUpperCase();
+
+            if(jrbTodos.isSelected() == true){
+                listarImpressora();
+                txtBusca.requestFocus(true);
+            }
+            else
+            {
+                if(jrbTodos.isSelected() == false && !this.busca.equals("")){
+                    listarImpressoraLike(busca);
+                    txtBusca.setText("");
+                    txtBusca.requestFocus(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnBuscarKeyPressed
+
+    private void jrbTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTodosActionPerformed
+        if(jrbTodos.isSelected()== true){
+            btnBuscar.requestFocus(true);
+        }else if(jrbTodos.isSelected()== false){
+            txtBusca.requestFocus(true);
+        }
+    }//GEN-LAST:event_jrbTodosActionPerformed
+
+    private void txtBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaActionPerformed
+        
+        if(!txtBusca.getText().equals("") && jrbTodos.isSelected()==false){
+            btnBuscar.requestFocus(true);
+        }
+        else if(txtBusca.getText().equals("") && jrbTodos.isSelected()==true){
+            btnBuscar.requestFocus(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.");
+        }
+    }//GEN-LAST:event_txtBuscaActionPerformed
 
     public void JComboBoxFabricante(){
         ImpressoraDao impDao = new ImpressoraDao();

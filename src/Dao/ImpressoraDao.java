@@ -269,4 +269,28 @@ public class ImpressoraDao {
         
     }
     
+    public boolean verSeImpressoraEstaCadastrada(String serie){
+        
+        String sql = "SELECT i.serie FROM impressora i WHERE i.serie = '" + serie + "'";
+        
+        PreparedStatement stmt = null;
+        
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            if(rs.next() == false){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ImpressoraDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+    }
+    
 }
