@@ -13,6 +13,7 @@ import controller.Usuario;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,6 +43,8 @@ public class TelaCartucho extends javax.swing.JDialog {
         //listarCartuchos();
         desabilitarCampos();
         desabilitarBotoes();
+        receberUsuarioLogado();
+        btnBuscar.requestFocus(true);
         this.tabelaAlterarCartuchoTeste = new TelaTableAlterarCartucho(parent, rootPaneCheckingEnabled);
     }
 
@@ -390,6 +393,11 @@ public class TelaCartucho extends javax.swing.JDialog {
                 btnBuscarActionPerformed(evt);
             }
         });
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyPressed(evt);
+            }
+        });
 
         radioBuscarTodos.setSelected(true);
         radioBuscarTodos.setText("Buscar Todos");
@@ -469,6 +477,21 @@ public class TelaCartucho extends javax.swing.JDialog {
     
     private TelaTableAlterarCartucho tabelaAlterarCartuchoTeste;
     private Integer idCartucho;
+    
+        public void receberUsuarioLogado(){
+        UsuarioDao ud = new UsuarioDao();
+        String usuario = ud.getUsuarioLogado();
+        int idUsuarioLogado = ud.getIdUsuarioLogado(usuario);
+        String adm = ud.verSeUsuarioEadm(idUsuarioLogado);
+        
+        if(adm.equals("nao")){
+            btnEstoqueCartucho.setEnabled(false);   
+            btnSalvar.setEnabled(false);   
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            btnNovo.setEnabled(false);
+        } 
+    }
     
     private void comboBoxImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxImpressoraActionPerformed
         if(!comboBoxImpressora.getSelectedItem().equals("Impressora")){
@@ -667,7 +690,7 @@ public class TelaCartucho extends javax.swing.JDialog {
             habilitarCampos();
         }
         else{
-            JOptionPane.showMessageDialog(null, "Escolha um item da lista para alterá-lo.");
+            JOptionPane.showMessageDialog(null, "Escolha um item da lista para alterá-lo.".toUpperCase());
             btnCancelar.setEnabled(false);
             btnSalvar.setEnabled(false);
             btnNovo.setEnabled(true);
@@ -799,7 +822,7 @@ public class TelaCartucho extends javax.swing.JDialog {
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Selecione um cartucho para prosseguir!");
+                JOptionPane.showMessageDialog(null, "Selecione um cartucho para prosseguir!".toUpperCase());
                 this.coletaDadosTabela = false;
             }
         }
@@ -858,7 +881,7 @@ public class TelaCartucho extends javax.swing.JDialog {
                 txtBuscar.requestFocus(true);
             }
             else{
-                JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.");
+                JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.".toUpperCase());
                 txtBuscar.requestFocus(true);
             }
         }
@@ -866,26 +889,48 @@ public class TelaCartucho extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
-                if(!txtBuscar.getText().equals("") && radioBuscarTodos.isSelected()==false){
-            btnBuscar.requestFocus(true);
-        }
-        else if(txtBuscar.getText().equals("") && radioBuscarTodos.isSelected()==true){
-            btnBuscar.requestFocus(true);
-        }else{
-            JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.");
-        }
-    }//GEN-LAST:event_txtBuscarActionPerformed
-
-    private void radioBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBuscarTodosActionPerformed
         if(!txtBuscar.getText().equals("") && radioBuscarTodos.isSelected()==false){
             btnBuscar.requestFocus(true);
         }
         else if(txtBuscar.getText().equals("") && radioBuscarTodos.isSelected()==true){
             btnBuscar.requestFocus(true);
         }else{
-            JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.");
+            JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.".toUpperCase());
+        }
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void radioBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBuscarTodosActionPerformed
+        if(radioBuscarTodos.isSelected()== true){
+            btnBuscar.requestFocus(true);
+        }else if(radioBuscarTodos.isSelected()== false){
+            txtBuscar.requestFocus(true);
         }
     }//GEN-LAST:event_radioBuscarTodosActionPerformed
+
+    private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(radioBuscarTodos.isSelected()==true){
+            listarCartuchos();
+            txtBuscar.requestFocus(true);
+            }
+            else
+            {
+            String buscar = txtBuscar.getText().toUpperCase();
+        
+            if(!buscar.equals("")){
+                listarCartuchosComLike(buscar);
+                txtBuscar.setText("");
+                txtBuscar.requestFocus(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.".toUpperCase());
+                txtBuscar.requestFocus(true);
+            }
+            }
+        }
+        
+    }//GEN-LAST:event_btnBuscarKeyPressed
 
     public void carregarComboBoxImpressora(){
         CartuchoDao cd = new CartuchoDao();

@@ -49,7 +49,7 @@ public class TelaMovimentarEstoque extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Incluir/subtrair estoque");
 
-        tabelaMovEstoque.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tabelaMovEstoque.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tabelaMovEstoque.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -73,25 +73,25 @@ public class TelaMovimentarEstoque extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tabelaMovEstoque);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/remover_pequeno.png"))); // NOI18N
         jLabel8.setText("Subtrair");
 
-        txtAddMovEstoque.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtAddMovEstoque.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        txtRemoveMovEstoque.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtRemoveMovEstoque.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txtRemoveMovEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRemoveMovEstoqueActionPerformed(evt);
             }
         });
 
-        icone_add_estetica.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        icone_add_estetica.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         icone_add_estetica.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/add_pequeno.png"))); // NOI18N
         icone_add_estetica.setText("Adicionar");
 
         btnMovEstoque.setBackground(new java.awt.Color(255, 255, 255));
-        btnMovEstoque.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnMovEstoque.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnMovEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/ok.png"))); // NOI18N
         btnMovEstoque.setText("Confirmar Operação");
         btnMovEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

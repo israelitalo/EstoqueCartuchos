@@ -468,6 +468,7 @@ public class TelaImpressora2 extends javax.swing.JDialog {
             btnSalvar.setEnabled(false);   
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
+            btnNovo.setEnabled(false);
         } 
     }
    
