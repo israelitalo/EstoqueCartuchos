@@ -4,10 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/israe/Documents/NetBeansProjects/EstoqueCartuchos/src/Telas/Icones/TelaTableAlterarImpressora.java</file>
-            <file>file:/C:/Users/israe/Documents/NetBeansProjects/EstoqueCartuchos/src/Telas/Icones/TelaPrincipal.java</file>
             <file>file:/C:/Users/israe/Documents/NetBeansProjects/EstoqueCartuchos/src/Telas/Icones/TelaImpressora2.java</file>
             <file>file:/C:/Users/israe/Documents/NetBeansProjects/EstoqueCartuchos/src/Telas/Icones/TelaCartucho.java</file>
-            <file>file:/C:/Users/israe/Documents/NetBeansProjects/EstoqueCartuchos/src/Telas/Icones/TelaTableAlterarCartucho.java</file>
+            <file>file:/C:/Users/israe/Documents/NetBeansProjects/EstoqueCartuchos/src/Dao/CartuchoDao.java</file>
         </group>
     </open-files>
 </project-private>

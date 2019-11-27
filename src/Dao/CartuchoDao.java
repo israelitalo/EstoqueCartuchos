@@ -344,8 +344,8 @@ public class CartuchoDao {
     }
     
     public List<Cartucho> listaCartuchoTelaTableComLike(String busca){
-        String sql = "SELECT c.id_cartucho, c.modelo, c.tipo, i.modelo, c.cor FROM cartucho c INNER JOIN impressora i ON c.id_impressora = i.id_impressora WHERE c.modelo LIKE '%" + busca + "%' OR c.tipo LIKE '%" + busca + "%' OR i.modelo LIKE '%" + busca + "%' OR c.cor LIKE '%" + busca + "%'";
-    
+        String sql = "SELECT c.id_cartucho, c.modelo, c.tipo, i.modelo, s.setor, c.cor, c.quantidade FROM cartucho c INNER JOIN impressora i ON c.id_impressora = i.id_impressora INNER JOIN setor s ON i.id_setor = s.id_setor WHERE c.modelo LIKE '%" + busca + "%' OR c.tipo LIKE '%" + busca + "%' OR i.modelo LIKE '%" + busca + "%' OR c.cor LIKE '%" + busca + "%' OR s.setor LIKE '%" + busca + "%'";
+            
         List<Cartucho> lista = new ArrayList<Cartucho>();
         
         PreparedStatement stmt = null;
@@ -361,7 +361,9 @@ public class CartuchoDao {
                 cart.setModelo(rs.getString("c.modelo"));
                 cart.setTipo(rs.getString("c.tipo"));
                 cart.setModeloImpressora(rs.getString("i.modelo"));
+                cart.setSetor(rs.getString("s.setor"));
                 cart.setCor(rs.getString("c.cor"));
+                cart.setQuantidade(rs.getInt("c.quantidade"));
                 lista.add(cart);
             }
             return lista;
