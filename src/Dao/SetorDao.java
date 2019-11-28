@@ -122,4 +122,29 @@ public class SetorDao {
         }
     }
     
+    public List<Setor> listarSetorLike(String busca){
+        String sql = "SELECT s.id_setor, s.setor FROM setor s WHERE s.id_setor like '%" + busca + "%' OR s.setor LIKE '%" + busca + "%'";
+        
+        List<Setor> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Setor setor = new Setor();
+                setor.setIdSetor(rs.getInt("s.id_setor"));
+                setor.setSetor(rs.getString("s.setor"));
+                lista.add(setor);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(SetorDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
 }

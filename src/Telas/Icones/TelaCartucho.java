@@ -733,6 +733,7 @@ public class TelaCartucho extends javax.swing.JDialog {
                         btnAlterar.setEnabled(true);
                         btnExcluir.setEnabled(true);
                         clearItensTableAlterarCartucho();
+                        coletaDadosTabela = false;
                         }
                     }
                     else if (teste == JOptionPane.NO_OPTION)
@@ -828,6 +829,7 @@ public class TelaCartucho extends javax.swing.JDialog {
         }
         else if(evt.getButton() == 3){
             tabelaCartuchos.getSelectionModel().clearSelection();
+            this.coletaDadosTabela = false;
         }
     }//GEN-LAST:event_tabelaCartuchosMouseClicked
 
