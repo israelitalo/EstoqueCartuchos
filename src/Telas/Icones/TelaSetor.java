@@ -154,7 +154,7 @@ public class TelaSetor extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(49, 49, 49)
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,7 +164,7 @@ public class TelaSetor extends javax.swing.JDialog {
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
+                .addGap(53, 53, 53))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +194,7 @@ public class TelaSetor extends javax.swing.JDialog {
         txtId.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setText("Id");
+        jLabel2.setText("Id Setor");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/Logout_37127.png"))); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -254,6 +254,11 @@ public class TelaSetor extends javax.swing.JDialog {
 
         radioBuscarTodos.setSelected(true);
         radioBuscarTodos.setText("Buscar todos");
+        radioBuscarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioBuscarTodosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -313,7 +318,9 @@ public class TelaSetor extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -324,7 +331,7 @@ public class TelaSetor extends javax.swing.JDialog {
     
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         int linha = getLinhaTable();
-            if(linha > -1 && this.coletaDadosTabela == true){
+        if(linha > -1 && this.coletaDadosTabela == true){
             btnExcluir.setEnabled(false);
             btnNovo.setEnabled(false);
             btnCancelar.setEnabled(true);
@@ -332,7 +339,7 @@ public class TelaSetor extends javax.swing.JDialog {
             int idSetor = Integer.parseInt(getValorLinhaTable(linha, 0));
             String idSetorString = Integer.toString(idSetor);
             String nomeSetorTabela = getValorLinhaTable(linha, 1);
-            
+
             txtSetor.setText(nomeSetorTabela);
             txtId.setText(idSetorString);
             ativarCampos();   
@@ -425,9 +432,9 @@ public class TelaSetor extends javax.swing.JDialog {
         if(evt.getClickCount() == 2){
             int linha = getLinhaTable();
             if(linha > -1){
-                btnSalvar.setEnabled(false);
+                //btnSalvar.setEnabled(false);
                 btnAlterar.setEnabled(true);
-                btnExcluir.setEnabled(true);
+                //btnExcluir.setEnabled(true);
                 String idSetor = getValorLinhaTable(linha, 0).toString();
                 this.idSetor = Integer.parseInt(idSetor);
                 String setor = getValorLinhaTable(linha, 1);
@@ -476,6 +483,7 @@ public class TelaSetor extends javax.swing.JDialog {
                         listarSetor();
                         limparCampos();
                         coletaDadosTabela = false;
+                        desativarCampos();
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Erro ao excluir setor.".toUpperCase());
@@ -569,6 +577,14 @@ public class TelaSetor extends javax.swing.JDialog {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void radioBuscarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBuscarTodosActionPerformed
+        if(radioBuscarTodos.isSelected()== true){
+            btnBuscar.requestFocus(true);
+        }else if(radioBuscarTodos.isSelected()== false){
+            txtBuscar.requestFocus(true);
+        }
+    }//GEN-LAST:event_radioBuscarTodosActionPerformed
 
     public void listarSetor(){
         SetorDao std = new SetorDao();

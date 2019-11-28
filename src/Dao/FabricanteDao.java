@@ -111,4 +111,29 @@ public class FabricanteDao {
         }
     }
     
+    public List<Fabricante> listarFabricanteLike(String busca){
+        String sql = "SELECT f.id_fabricante, f.nome FROM fabricante f WHERE f.id_fabricante like '%" + busca + "%' OR f.nome LIKE '%" + busca + "%'";
+        
+        List<Fabricante> lista = new ArrayList<>();
+        
+        PreparedStatement stmt = null;
+        
+        ResultSet rs = null;
+        
+        try{
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                Fabricante fabricante = new Fabricante();
+                fabricante.setIdFabricante(rs.getInt("f.id_fabricante"));
+                fabricante.setNome(rs.getString("f.nome"));
+                lista.add(fabricante);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            Logger.getLogger(SetorDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
 }
