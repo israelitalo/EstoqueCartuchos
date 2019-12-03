@@ -476,9 +476,10 @@ public class TelaCartucho extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     
     private TelaTableAlterarCartucho tabelaAlterarCartuchoTeste;
+
     private Integer idCartucho;
     
-        public void receberUsuarioLogado(){
+    public void receberUsuarioLogado(){
         UsuarioDao ud = new UsuarioDao();
         String usuario = ud.getUsuarioLogado();
         int idUsuarioLogado = ud.getIdUsuarioLogado(usuario);
@@ -592,62 +593,40 @@ public class TelaCartucho extends javax.swing.JDialog {
             else
             {
                 String modelo = txtModelo.getText().toUpperCase();
+                int linha = tabelaCartuchos.getSelectedRow();
+                String modeloDaTabela = tabelaCartuchos.getModel().getValueAt(linha, 1).toString();
                 String tipo = txtTipo.getSelectedItem().toString();
                 String cor = txtCor.getSelectedItem().toString();
                 String impressora = comboBoxImpressora.getSelectedItem().toString();
+                if(!modeloDaTabela.equals(modelo)){
+                    CartuchoDao cd = new CartuchoDao();
                 
-                CartuchoDao cd = new CartuchoDao();
-                
-                int idImpressora = cd.getIdJcomboBoxImpressora(impressora);
-                
-                Cartucho cartucho = new Cartucho();
-                cartucho.setCor(cor);
-                cartucho.setImpressora(idImpressora);
-                cartucho.setModelo(modelo);
-                cartucho.setTipo(tipo);
-                
-                if(cd.editar(cartucho,idCartucho)){
-                    JOptionPane.showMessageDialog(null, "Cartucho alterado com sucesso.".toUpperCase());
-                    listarCartuchos();
-                    limparCampos();
-                    desabilitarCampos();
-                    desabilitarBotoes();
-                    btnNovo.setEnabled(true);
-                    btnExcluir.setEnabled(true);
-                    clearItensTableAlterarCartucho();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Erro ao alterar cartucho.".toUpperCase());
-                }
-            }
-        }//Verificando se o botão excluir está habilitado e o botão alterar desabilitado.
-        //Excluindo um cartucho.
-        /*else if(btnExcluir.isEnabled()==true && btnAlterar.isEnabled()==false){
-                      
-            CartuchoDao cd = new CartuchoDao();
-                        
-            Cartucho cartucho = new Cartucho();
-            
-            int teste = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o item selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+                    int idImpressora = cd.getIdJcomboBoxImpressora(impressora);
 
-            if(teste == JOptionPane.YES_OPTION){
-                if(cd.excluir(cartucho, idCartucho)){
-                JOptionPane.showMessageDialog(null, "Cartucho excluído com sucesso.".toUpperCase());
-                cd.cleanAutoIncrementTableCartucho();
-                listarCartuchos();
-                limparCampos();
-                desabilitarCampos();
-                desabilitarBotoes();
-                btnNovo.setEnabled(true);
-                btnAlterar.setEnabled(true);
-                btnExcluir.setEnabled(true);
-                clearItensTableAlterarCartucho();
+                    Cartucho cartucho = new Cartucho();
+                    cartucho.setCor(cor);
+                    cartucho.setImpressora(idImpressora);
+                    cartucho.setModelo(modelo);
+                    cartucho.setTipo(tipo);
+
+                    if(cd.editar(cartucho,idCartucho)){
+                        JOptionPane.showMessageDialog(null, "Cartucho alterado com sucesso.".toUpperCase());
+                        listarCartuchos();
+                        limparCampos();
+                        desabilitarCampos();
+                        desabilitarBotoes();
+                        btnNovo.setEnabled(true);
+                        btnExcluir.setEnabled(true);
+                        clearItensTableAlterarCartucho();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Erro ao tentar alterar cartucho".toUpperCase());
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Altere algum campo para validar a alteração do cartucho.".toUpperCase());
                 }
             }
-            else if (teste == JOptionPane.NO_OPTION)
-            {
-                JOptionPane.showMessageDialog(null, "Operação não realizada.", "Exclusão cancelada", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }*/else{
+        }else{
             JOptionPane.showMessageDialog(null, "Feche esta janela e tente realizar a operação mais uma vez.".toUpperCase());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -790,15 +769,17 @@ public class TelaCartucho extends javax.swing.JDialog {
     }//GEN-LAST:event_btnImprimirRelatorioActionPerformed
 
     private void btnEstoqueCartuchoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstoqueCartuchoActionPerformed
+        DefaultTableModel modelo = (DefaultTableModel) tabelaCartuchos.getModel();
+        modelo.setNumRows(0);
         TelaMovimentarEstoque tela = new TelaMovimentarEstoque(null, rootPaneCheckingEnabled);
         tela.setVisible(true);
+        btnBuscar.requestFocus(true);
     }//GEN-LAST:event_btnEstoqueCartuchoActionPerformed
 
     private void btnInserirImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirImpressoraActionPerformed
         TelaImpressora2 tela = new TelaImpressora2(null, rootPaneCheckingEnabled);
         tela.setVisible(true);
     }//GEN-LAST:event_btnInserirImpressoraActionPerformed
-    
     boolean coletaDadosTabela = false;
     private void tabelaCartuchosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCartuchosMouseClicked
         if(evt.getClickCount() == 2){
@@ -1085,7 +1066,7 @@ public class TelaCartucho extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelVoltar;
     private javax.swing.JRadioButton radioBuscarTodos;
-    private javax.swing.JTable tabelaCartuchos;
+    public javax.swing.JTable tabelaCartuchos;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JComboBox<String> txtCor;
     private javax.swing.JTextField txtModelo;

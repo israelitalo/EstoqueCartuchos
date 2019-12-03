@@ -7,6 +7,7 @@ package Telas.Icones;
 
 import Dao.SetorDao;
 import controller.Setor;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +26,7 @@ public class TelaSetor extends javax.swing.JDialog {
         initComponents();
         desativarCampos();
         desativarBotoes();
+        btnBuscar.requestFocus(true);
     }
 
     /**
@@ -241,6 +243,11 @@ public class TelaSetor extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Busca", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
@@ -249,6 +256,11 @@ public class TelaSetor extends javax.swing.JDialog {
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyPressed(evt);
             }
         });
 
@@ -585,6 +597,34 @@ public class TelaSetor extends javax.swing.JDialog {
             txtBuscar.requestFocus(true);
         }
     }//GEN-LAST:event_radioBuscarTodosActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        if(radioBuscarTodos.isSelected() == false){
+            btnBuscar.requestFocus(true);
+        }
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(radioBuscarTodos.isSelected()==true){
+                listarSetor();
+                txtBuscar.requestFocus(true);
+            }
+            else{
+                String buscar = txtBuscar.getText().toUpperCase();
+
+                if(!buscar.equals("")){
+                    listarSetorLike(buscar);
+                    txtBuscar.setText("");
+                    txtBuscar.requestFocus(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.".toUpperCase());
+                    txtBuscar.requestFocus(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnBuscarKeyPressed
 
     public void listarSetor(){
         SetorDao std = new SetorDao();

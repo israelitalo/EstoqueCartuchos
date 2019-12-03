@@ -20,11 +20,25 @@ public class TelaMovimentarEstoque extends javax.swing.JDialog {
     /**
      * Creates new form TelaMovimentarEstoque
      */
+    
+    private Integer quantidade;
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+    
+    private TelaCartucho tabelaCartucho;    
+    
     public TelaMovimentarEstoque(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         listarCartuchos();
         zerarCamposIniciais();
+        this.tabelaCartucho = new TelaCartucho(parent, rootPaneCheckingEnabled);
     }
 
     /**
@@ -171,6 +185,8 @@ public class TelaMovimentarEstoque extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRemoveMovEstoqueActionPerformed
 
+    
+    
     public void listarCartuchos(){
         CartuchoDao cd = new CartuchoDao();
         
@@ -244,6 +260,7 @@ public class TelaMovimentarEstoque extends javax.swing.JDialog {
                     if(quantidade > 0){
                         JOptionPane.showMessageDialog(null, "Quantidade inserida com sucesso!");
                         zerarCamposIniciais();
+                        this.tabelaCartucho.listarCartuchos();
                     }
                 }
                 else if(quantidade > 6){
@@ -280,6 +297,7 @@ public class TelaMovimentarEstoque extends javax.swing.JDialog {
                         if(diminuirQuantidade > 0){
                             JOptionPane.showMessageDialog(null, "Quantidade subtraída com sucesso!");
                             zerarCamposIniciais();
+                            this.tabelaCartucho.listarCartuchos();
                         }
                     }
                     else
@@ -304,6 +322,7 @@ public class TelaMovimentarEstoque extends javax.swing.JDialog {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         dispose();
+        this.tabelaCartucho.listarCartuchos();
     }//GEN-LAST:event_jLabel1MouseClicked
 
     /**

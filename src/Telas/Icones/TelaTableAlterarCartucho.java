@@ -69,8 +69,6 @@ public class TelaTableAlterarCartucho extends javax.swing.JDialog {
         this.quantidade = quantidade;
     }
     
-    
-    
     /**
      * Creates new form TelaTableAlterarCartucho
      */

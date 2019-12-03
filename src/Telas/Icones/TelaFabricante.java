@@ -7,6 +7,7 @@ package Telas.Icones;
 
 import Dao.FabricanteDao;
 import controller.Fabricante;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,9 +24,10 @@ public class TelaFabricante extends javax.swing.JDialog {
     public TelaFabricante(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        listarFabricante();
+        //listarFabricante();
         botoesEstadoInicial();
         desativarCampos();
+        btnBuscar.requestFocus(true);
     }
 
     /**
@@ -202,8 +204,7 @@ public class TelaFabricante extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -211,13 +212,19 @@ public class TelaFabricante extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Busca", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         txtBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Telas/Icones/icones/magnifier.png"))); // NOI18N
@@ -226,6 +233,11 @@ public class TelaFabricante extends javax.swing.JDialog {
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyPressed(evt);
             }
         });
 
@@ -530,6 +542,34 @@ public class TelaFabricante extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        if(radioBuscarTodos.isSelected()== false){
+            btnBuscar.requestFocus(true);
+        }
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(radioBuscarTodos.isSelected()==true){
+                listarFabricante();
+                txtBuscar.requestFocus(true);
+            }
+            else{
+                String buscar = txtBuscar.getText().toUpperCase();
+        
+                if(!buscar.equals("")){
+                    listarFabricanteLike(buscar);
+                    txtBuscar.setText("");
+                    txtBuscar.requestFocus(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Digite um termo para pesquisa.".toUpperCase());
+                    txtBuscar.requestFocus(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnBuscarKeyPressed
 
     public void listarFabricante(){
         FabricanteDao fd = new FabricanteDao();
